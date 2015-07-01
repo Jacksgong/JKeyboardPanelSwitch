@@ -7,6 +7,11 @@
 但是实际中，简单的 键盘与面板切换 是会有闪动，问题的。今天我们就实践分析与解决这个问题。
 
 <!--more-->
+## 最终效果对比:
+
+![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_mv.gif)![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_mv.gif)
+
+
 ## I. 准备
 
 > 以下建立在`android:windowSoftInputMode`带有`adjustResize`的基础上。
