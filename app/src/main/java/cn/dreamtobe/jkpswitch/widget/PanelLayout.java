@@ -14,23 +14,23 @@ import cn.dreamtobe.jkpswitch.R;
  * <p/>
  * Detail: http://blog.dreamtobe.cn/2015/06/29/keybord-panel-switch/
  */
-public class PanelRootLayout extends BasePanelRootLayout {
+public class PanelLayout extends BasePanelRootLayout {
 
     private final static String TAG = "JFrame.InputPanelLayout";
 
     private int mHeight;
 
-    public PanelRootLayout(Context context) {
+    public PanelLayout(Context context) {
         super(context);
         init();
     }
 
-    public PanelRootLayout(Context context, AttributeSet attrs) {
+    public PanelLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public PanelRootLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PanelLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -46,6 +46,7 @@ public class PanelRootLayout extends BasePanelRootLayout {
         }
 
         if (mIsKeybordShowing) {
+            //只有在键盘显示的时候才需要处理 keybord -> panel切换的布局冲突问题
             setIsNeedHeight(false);
 
             ViewGroup.LayoutParams l = getLayoutParams();
@@ -70,23 +71,20 @@ public class PanelRootLayout extends BasePanelRootLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    @Override
-    public void setLayoutParams(ViewGroup.LayoutParams params) {
-        super.setLayoutParams(params);
-        Log.d(TAG, "get new height: " + params.height);
-    }
-
 
     private boolean mIsKeybordShowing = false;
-
     public void setIsKeybordShowing(final boolean isKeybordShowing) {
         this.mIsKeybordShowing = isKeybordShowing;
     }
 
     private boolean mIsNeedHeight = true;
-
     public void setIsNeedHeight(final boolean isNeedheight) {
         this.mIsNeedHeight = isNeedheight;
     }
 
+    @Override
+    public void setLayoutParams(ViewGroup.LayoutParams params) {
+        super.setLayoutParams(params);
+        Log.d(TAG, "get new height: " + params.height);
+    }
 }

@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.dreamtobe.jkpswitch.R;
-import cn.dreamtobe.jkpswitch.widget.PanelRootLayout;
+import cn.dreamtobe.jkpswitch.widget.PanelLayout;
 
 /**
  * Created by Jacksgong on 15/7/1.
@@ -31,7 +31,7 @@ public class JChattingActivity extends FragmentActivity {
     private TextView mSendVoiceBtn;
     private ImageView mPlusIv;
     private TextView mSendBtn;
-    private PanelRootLayout mPanelRoot;
+    private PanelLayout mPanelRoot;
     private ImageView mSendImgIv;
     private ImageView mSendSiteIv;
 
@@ -43,7 +43,7 @@ public class JChattingActivity extends FragmentActivity {
         mSendVoiceBtn = (TextView) findViewById(R.id.send_voice_btn);
         mPlusIv = (ImageView) findViewById(R.id.plus_iv);
         mSendBtn = (TextView) findViewById(R.id.send_btn);
-        mPanelRoot = (PanelRootLayout) findViewById(R.id.panel_root);
+        mPanelRoot = (PanelLayout) findViewById(R.id.panel_root);
         mSendImgIv = (ImageView) findViewById(R.id.send_img_iv);
         mSendSiteIv = (ImageView) findViewById(R.id.send_site_iv);
     }

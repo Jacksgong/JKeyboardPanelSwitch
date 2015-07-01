@@ -14,24 +14,24 @@ import android.widget.LinearLayout;
  * <p/>
  * Detail: http://blog.dreamtobe.cn/2015/06/29/keybord-panel-switch/
  */
-public class CustomContentRootLayout extends LinearLayout {
+public class CustomRootLayout extends LinearLayout {
 
-    private final static String TAG = "JFrame.CustomContentRootLayout";
+    private final static String TAG = "JFrame.CustomRootLayout";
 
-    public CustomContentRootLayout(Context context) {
+    public CustomRootLayout(Context context) {
         super(context);
     }
 
-    public CustomContentRootLayout(Context context, AttributeSet attrs) {
+    public CustomRootLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CustomContentRootLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomRootLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CustomContentRootLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CustomRootLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -64,7 +64,7 @@ public class CustomContentRootLayout extends LinearLayout {
                 break;
             }
 
-            final PanelRootLayout bottom = getPanelView(this);
+            final PanelLayout bottom = getPanelLayout(this);
 
             if (bottom == null) {
                 Log.d(TAG, "bottom == null break;");
@@ -80,24 +80,24 @@ public class CustomContentRootLayout extends LinearLayout {
 
     }
 
-    private PanelRootLayout mPanelRootLayout;
+    private PanelLayout mPanelLayout;
 
-    private PanelRootLayout getPanelView(final View view) {
-        if (mPanelRootLayout != null) {
-            return mPanelRootLayout;
+    private PanelLayout getPanelLayout(final View view) {
+        if (mPanelLayout != null) {
+            return mPanelLayout;
         }
 
-        if (view instanceof PanelRootLayout) {
-            mPanelRootLayout = (PanelRootLayout) view;
-            return mPanelRootLayout;
+        if (view instanceof PanelLayout) {
+            mPanelLayout = (PanelLayout) view;
+            return mPanelLayout;
         }
 
         if (view instanceof ViewGroup) {
             for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                PanelRootLayout v = getPanelView(((ViewGroup) view).getChildAt(i));
+                PanelLayout v = getPanelLayout(((ViewGroup) view).getChildAt(i));
                 if (v != null) {
-                    mPanelRootLayout = v;
-                    return mPanelRootLayout;
+                    mPanelLayout = v;
+                    return mPanelLayout;
                 }
             }
         }
@@ -115,10 +115,10 @@ public class CustomContentRootLayout extends LinearLayout {
         if (b >= maxBottom && maxBottom != 0) {
             // 在底部，键盘隐藏状态
             Log.d(TAG, "keybor hiding");
-            getPanelView(this).setIsKeybordShowing(false);
-        } else if(maxBottom != 0){
+            getPanelLayout(this).setIsKeybordShowing(false);
+        } else if (maxBottom != 0) {
             Log.d(TAG, "keybor showing");
-            getPanelView(this).setIsKeybordShowing(true);
+            getPanelLayout(this).setIsKeybordShowing(true);
         }
 
         if (maxBottom < b) {
