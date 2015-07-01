@@ -1,14 +1,4 @@
-title: Android键盘面板冲突 布局闪动处理方案
-date: 2015-06-29 23:35:03
-tags:
-- 优化
-- Android
-- 键盘
-- 面板
-- 闪动
-- 布局
-
----
+#Android键盘面板冲突 布局闪动处理方案
 
 > 之前有写过一篇核心思想: [Switching between the panel and the keyboard in Wechat](http://blog.dreamtobe.cn/2015/02/07/Switching-between-the-panel-and-the-keyboard/)
 
