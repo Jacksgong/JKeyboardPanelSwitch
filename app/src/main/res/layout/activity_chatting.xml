@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.dreamtobe.jkpswitch.widget.CustomContentRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/content_ryv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:background="@color/chatting_list_background" />
+
+    <LinearLayout
+        android:id="@+id/sendMsgLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:background="#fefefe"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/voice_text_switch_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/chatting_voice_btn_icon" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1.0">
+
+
+            <EditText
+                android:id="@+id/send_edt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chattting_edit_bg"
+                android:gravity="center_vertical|left"
+                android:minHeight="38dp"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/send_voice_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="38dp"
+                android:background="@drawable/chatting_voice_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:soundEffectsEnabled="true"
+                android:text="@string/press_say"
+                android:textColor="#b3b3b3"
+                android:textSize="16sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/plus_iv"
+                android:layout_width="wrap_content"
+                android:onClick="onClickPlusIv"
+                android:clickable="true"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/chatting_plus_btn_icon"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/send_btn"
+                android:layout_width="50dp"
+                android:layout_height="34dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/chatting_send_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/press_say"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <cn.dreamtobe.jkpswitch.widget.PanelRootLayout
+        android:id="@+id/panel_root"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/panel_height"
+        android:background="#fffefefe"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#d5d3d5" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/send_img_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/chatting_pic_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:text="@string/picture"
+                    android:textColor="#b3b3b3"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/send_site_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/chatting_site_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:text="@string/site"
+                    android:textColor="#b3b3b3"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </cn.dreamtobe.jkpswitch.widget.PanelRootLayout>
+
+</cn.dreamtobe.jkpswitch.widget.CustomContentRootLayout>

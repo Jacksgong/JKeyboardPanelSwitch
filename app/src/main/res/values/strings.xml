@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">JKeyBordPanelSwitch</string>
+    <string name="press_say">按住说话</string>
+    <string name="send">发送</string>
+    <string name="site">位置</string>
+    <string name="picture">照片</string>
+</resources>
