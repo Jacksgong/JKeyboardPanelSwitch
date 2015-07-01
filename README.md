@@ -13,7 +13,7 @@
 
 > 如图，为了方便分析，我们分出3个View:
 
-![](/img/wechat-keybord-panel.jpg)
+![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/WeChat_1435588322.png)
 
 - `CustomRootView`: 除去statusBar与ActionBar(ToolBar...balabala)
 - `FootRootView`: 整个底部（包括输入框与底部面板在内的整个View）
