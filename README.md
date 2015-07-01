@@ -23,13 +23,13 @@
 
 1. 从`PanelView`切换到`Keybord`
  
-**现象: ** 由于显示`Keybord`时直接`PanelView#setVisibility(View.GONE)`，导致会出现整个`FooterRootView`到底部然后又被键盘顶起。
+**现象:** 由于显示`Keybord`时直接`PanelView#setVisibility(View.GONE)`，导致会出现整个`FooterRootView`到底部然后又被键盘顶起。
 
 **符合预期的应该: ** 直接被键盘顶起，不需要到底部再顶起。
 
 2. 从`Keybord`切换到`PanelView`
 
-**现象: ** 由于隐藏`Keybord`时，直接`PanelView#setVisibility(View.VISIBLE)`，导致会出现整个`FootRootView`先被顶到键盘上面，然后再随着键盘的动画，下到底部。
+**现象:** 由于隐藏`Keybord`时，直接`PanelView#setVisibility(View.VISIBLE)`，导致会出现整个`FootRootView`先被顶到键盘上面，然后再随着键盘的动画，下到底部。
 
 **符合预期的应该: ** 随着键盘收下直接切换到底部，而配有被键盘顶起的闪动。
 
