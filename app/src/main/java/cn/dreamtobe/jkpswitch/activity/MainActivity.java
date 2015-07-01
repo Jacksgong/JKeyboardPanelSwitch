@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("解决 面板<->键盘切换冲突导致 布局跳动问题");
+        setTitle(R.string.activity_main_title);
 
     }
 

@@ -62,7 +62,7 @@ public class JChattingActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
-        setTitle("聊天 - 解决了切换冲突");
+        setTitle(R.string.activity_jchatting_title);
 
         assignViews();
 
