@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 /**
- * Copyright 2015 Jacks Blog.
+ * Copyright 2015 Jacks Blog(blog.dreamtobe.cn).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
