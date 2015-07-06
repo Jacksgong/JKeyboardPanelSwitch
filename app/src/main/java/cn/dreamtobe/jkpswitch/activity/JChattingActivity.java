@@ -25,27 +25,13 @@ import cn.dreamtobe.jkpswitch.widget.PanelLayout;
 public class JChattingActivity extends FragmentActivity {
 
     private RecyclerView mContentRyv;
-    private LinearLayout mSendMsgLayout;
-    private ImageView mVoiceTextSwitchIv;
     private EditText mSendEdt;
-    private TextView mSendVoiceBtn;
-    private ImageView mPlusIv;
-    private TextView mSendBtn;
     private PanelLayout mPanelRoot;
-    private ImageView mSendImgIv;
-    private ImageView mSendSiteIv;
 
     private void assignViews() {
         mContentRyv = (RecyclerView) findViewById(R.id.content_ryv);
-        mSendMsgLayout = (LinearLayout) findViewById(R.id.sendMsgLayout);
-        mVoiceTextSwitchIv = (ImageView) findViewById(R.id.voice_text_switch_iv);
         mSendEdt = (EditText) findViewById(R.id.send_edt);
-        mSendVoiceBtn = (TextView) findViewById(R.id.send_voice_btn);
-        mPlusIv = (ImageView) findViewById(R.id.plus_iv);
-        mSendBtn = (TextView) findViewById(R.id.send_btn);
         mPanelRoot = (PanelLayout) findViewById(R.id.panel_root);
-        mSendImgIv = (ImageView) findViewById(R.id.send_img_iv);
-        mSendSiteIv = (ImageView) findViewById(R.id.send_site_iv);
     }
 
 
@@ -54,6 +40,7 @@ public class JChattingActivity extends FragmentActivity {
             showKeybord();
         } else {
             hideKeybord();
+            //这里有两种情况，1. 键盘没有弹起(需要适配)、2. 键盘没有弹起（不用适配）
             mPanelRoot.setVisibility(View.VISIBLE);
         }
     }
@@ -67,15 +54,6 @@ public class JChattingActivity extends FragmentActivity {
         assignViews();
 
         mContentRyv.setLayoutManager(new LinearLayoutManager(this));
-
-//        mSendEdt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean b) {
-//                if (b) {
-//                    mPanelRoot.setIsHide(true);
-//                }
-//            }
-//        });
 
         mContentRyv.setOnTouchListener(new View.OnTouchListener() {
             @Override

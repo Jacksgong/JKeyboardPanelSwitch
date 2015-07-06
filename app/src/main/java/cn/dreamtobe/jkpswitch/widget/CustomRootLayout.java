@@ -27,6 +27,8 @@ import android.widget.LinearLayout;
  * Created by Jacksgong on 15/6/29.
  * <p/>
  * Detail: http://blog.dreamtobe.cn/2015/06/29/keybord-panel-switch/
+ *
+ * @see PanelLayout
  */
 public class CustomRootLayout extends LinearLayout {
 
@@ -91,7 +93,7 @@ public class CustomRootLayout extends LinearLayout {
                 bottom.setIsHide(true);
             } else {
                 //键盘收回 (offset < 0，高度变大)
-                bottom.setIsNeedHeight(true);
+                bottom.setIsShow(true);
             }
 
         } while (false);
