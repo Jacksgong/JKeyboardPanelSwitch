@@ -2,6 +2,8 @@
 
 > 之前有写过一篇核心思想: [Switching between the panel and the keyboard in Wechat](http://blog.dreamtobe.cn/2015/02/07/Switching-between-the-panel-and-the-keyboard/)
 
+> 这里主要是根据核心思想的实践，实践原理是通过`CustomRootLayout`布局变化，来获知是否是键盘引起的真正的布局变化，进而处理到接下来`PanelLayout`的`onMersure`中。
+
 我们可以看到微信中的 从键盘与微信的切换是无缝的，而且是无闪动的，这种基础体验是符合预期的。
 
 但是实际中，简单的 键盘与面板切换 是会有闪动，问题的。今天我们就实践分析与解决这个问题。
@@ -40,35 +42,9 @@
 
 ## II. 处理
 
-### 1. 从`PanelView`切换到`Keybord`
-
-#### 原理 
-
-屏蔽由于`PanelView#setVisibility(View.GONE)`导致，到底部的那一帧。
-
-#### 方法: 
-
-> 不直接调用`PanelView#setVisibility(View.GONE)`来隐藏`PanelView`，由于调用`setVisiblility`会促发`requestLayout`，将直接导致这帧被绘制。而是设置一个标志位，在由于键盘显示导致`PanelView`重新mearsure调用`onMeasure`的时候处理。
-
-如代码:
-
-```
-@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		if (isHide) {
-			setVisibility(View.GONE);
-			widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
-			heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
-		}
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	}
-```
-
-### 2. 从`Keybord`切换到`PanelView`
-
 #### 原理
 
-在真正由`Keybord`导致布局**真正**将要变化的时候，才给`PanelView`有效高度。否则直接给0高度。（**注意**，所有的判断处理要在`Super.onMeasure`之前完成判断）
+在真正由`Keybord`导致布局**真正**将要变化的时候，才对`PanelView`做出适配。（**注意**，所有的判断处理要在`Super.onMeasure`之前完成判断）
 
 #### 方法:
 
@@ -76,11 +52,10 @@
 
 #### 需要注意:
 
-> 1) 在`adjustResize`模式下，键盘弹起会导致`CustomRootView`的高度变小，键盘收回会导致`CustomRootView`的高度变大。因此可以通过这个机制获知真正的`PanelView`将要变化的时机。
+> 1) 在`adjustResize`模式下，键盘弹起会导致`CustomRootView`的高度变小，键盘收回会导致`CustomRootView`的高度变大，反之变小。因此可以通过这个机制获知真正的`PanelView`将要变化的时机。
 
 
 > 2) 由于到了`onLayout`，clipRect的大小已经确定了，又要避免不多次调用`onMeasure`因此要在`Super.onMeasure`之前 
-
 
 > 3) 由于键盘收回的时候，会触发多次`measure`，如果 不判断真正的由于键盘收回导致布局将要变化，就直接给有效高度，依然会有闪动的情况。
 
@@ -114,9 +89,8 @@ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final int offset = mOldHeight - height;
         mOldHeight = height;
 
-        if (offset >= 0) {
-            //键盘弹起 (offset > 0，高度变小)
-            Log.d(TAG, "" + offset + " >= 0 break;");
+        if (offset == 0) {
+            Log.d(TAG, "" + offset + " == 0 break;");
             break;
         }
 
@@ -128,7 +102,14 @@ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         }
 
         // 检测到真正的 由于键盘收起触发了本次的布局变化
-        bottom.setIsNeedHeight(true);
+
+        if (offset > 0) {
+            //键盘弹起 (offset > 0，高度变小)
+            bottom.setIsHide(true);
+        } else {
+            //键盘收回 (offset < 0，高度变大)
+            bottom.setIsShow(true);
+        }
 
     } while (false);
 
@@ -172,7 +153,7 @@ protected void onLayout(boolean changed, int l, int t, int r, int b) {
         // 在底部，键盘隐藏状态
         Log.d(TAG, "keybor hiding");
         getPanelLayout(this).setIsKeybordShowing(false);
-    } else if(maxBottom != 0){
+    } else if (maxBottom != 0) {
         Log.d(TAG, "keybor showing");
         getPanelLayout(this).setIsKeybordShowing(true);
     }
@@ -187,47 +168,57 @@ protected void onLayout(boolean changed, int l, int t, int r, int b) {
 `PanelView`
 
 ```
+/**
+ * @param visibility {@value View#VISIBLE: 这里有两种情况，1. 键盘没有弹起(需要适配)、2. 键盘没有弹起（不用适配）}
+ */
 @Override
 public void setVisibility(int visibility) {
+    if (visibility == VISIBLE) {
+        this.mIsHide = false;
+    }
+
     if (visibility == getVisibility()) {
         return;
     }
 
-    if (mIsKeybordShowing) {
-        //只有在键盘显示的时候才需要处理 keybord -> panel切换的布局冲突问题
-        setIsNeedHeight(false);
 
-        ViewGroup.LayoutParams l = getLayoutParams();
-        l.height = 0;
-        setLayoutParams(l);
+    if (mIsKeybordShowing && visibility == VISIBLE) {
+        return;
     }
+
     super.setVisibility(visibility);
 
 }
 
 @Override
 protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
-    if (getVisibility() == View.VISIBLE && mIsNeedHeight) {
-        // 真正需要高度的时候（是否需要高度由是否是键盘触发布局真正要发生变化时告知 & visible）。
-        ViewGroup.LayoutParams l = getLayoutParams();
-        setVisibility(View.VISIBLE);
-        l.height = mHeight;
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(mHeight, MeasureSpec.EXACTLY);
+    if (mIsHide) {
+        setVisibility(View.GONE);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
     }
-
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 }
 
-
+/**
+ * 这里只是一个状态，是在{@link #onMeasure}之前{@link CustomRootLayout#onLayout(boolean, int, int, int, int)}中获知
+ */
 private boolean mIsKeybordShowing = false;
+
 public void setIsKeybordShowing(final boolean isKeybordShowing) {
     this.mIsKeybordShowing = isKeybordShowing;
 }
 
-private boolean mIsNeedHeight = true;
-public void setIsNeedHeight(final boolean isNeedheight) {
-    this.mIsNeedHeight = isNeedheight;
+
+public void setIsShow(final boolean isShow) {
+    this.mIsShow = isShow;
+    if (mIsShow) {
+        super.setVisibility(View.VISIBLE);
+    }
+}
+
+public void setIsHide(final boolean isHide) {
+    this.mIsHide = isHide;
 }
 ```
 

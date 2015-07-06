@@ -47,57 +47,57 @@ public class PanelLayout extends LinearLayout {
     }
 
 
-    /**
-     * @param visibility {@value View#VISIBLE: 这里有两种情况，1. 键盘没有弹起(需要适配)、2. 键盘没有弹起（不用适配）}
-     */
-    @Override
-    public void setVisibility(int visibility) {
-        if (visibility == VISIBLE) {
-            this.mIsHide = false;
-        }
-
-        if (visibility == getVisibility()) {
-            return;
-        }
-
-
-        if (mIsKeybordShowing && visibility == VISIBLE) {
-            return;
-        }
-
-        super.setVisibility(visibility);
-
+/**
+ * @param visibility {@value View#VISIBLE: 这里有两种情况，1. 键盘没有弹起(需要适配)、2. 键盘没有弹起（不用适配）}
+ */
+@Override
+public void setVisibility(int visibility) {
+    if (visibility == VISIBLE) {
+        this.mIsHide = false;
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mIsHide) {
-            setVisibility(View.GONE);
-            widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    /**
-     * 这里只是一个状态，是在{@link #onMeasure}之前{@link CustomRootLayout#onLayout(boolean, int, int, int, int)}中获知
-     */
-    private boolean mIsKeybordShowing = false;
-
-    public void setIsKeybordShowing(final boolean isKeybordShowing) {
-        this.mIsKeybordShowing = isKeybordShowing;
+    if (visibility == getVisibility()) {
+        return;
     }
 
 
-    public void setIsShow(final boolean isShow) {
-        this.mIsShow = isShow;
-        if (mIsShow) {
-            super.setVisibility(View.VISIBLE);
-        }
+    if (mIsKeybordShowing && visibility == VISIBLE) {
+        return;
     }
 
-    public void setIsHide(final boolean isHide) {
-        this.mIsHide = isHide;
+    super.setVisibility(visibility);
+
+}
+
+@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    if (mIsHide) {
+        setVisibility(View.GONE);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
     }
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+}
+
+/**
+ * 这里只是一个状态，是在{@link #onMeasure}之前{@link CustomRootLayout#onLayout(boolean, int, int, int, int)}中获知
+ */
+private boolean mIsKeybordShowing = false;
+
+public void setIsKeybordShowing(final boolean isKeybordShowing) {
+    this.mIsKeybordShowing = isKeybordShowing;
+}
+
+
+public void setIsShow(final boolean isShow) {
+    this.mIsShow = isShow;
+    if (mIsShow) {
+        super.setVisibility(View.VISIBLE);
+    }
+}
+
+public void setIsHide(final boolean isHide) {
+    this.mIsHide = isHide;
+}
 
 }
