@@ -47,15 +47,19 @@ public class PanelLayout extends LinearLayout {
     }
 
 
+    /**
+     * @param visibility {@value View#VISIBLE: 这里有两种情况，1. 键盘没有弹起(需要适配)、2. 键盘没有弹起（不用适配）}
+     */
     @Override
     public void setVisibility(int visibility) {
+        if (visibility == VISIBLE) {
+            this.mIsHide = false;
+        }
+
         if (visibility == getVisibility()) {
             return;
         }
 
-        if (visibility == VISIBLE) {
-            this.mIsHide = false;
-        }
 
         if (mIsKeybordShowing && visibility == VISIBLE) {
             return;

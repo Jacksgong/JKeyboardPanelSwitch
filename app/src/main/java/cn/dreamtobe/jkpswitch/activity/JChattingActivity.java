@@ -1,6 +1,5 @@
 package cn.dreamtobe.jkpswitch.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,13 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import cn.dreamtobe.jkpswitch.R;
+import cn.dreamtobe.jkpswitch.util.KeybordUtil;
 import cn.dreamtobe.jkpswitch.widget.PanelLayout;
 
 /**
@@ -37,10 +33,9 @@ public class JChattingActivity extends FragmentActivity {
 
     public void onClickPlusIv(final View view) {
         if (mPanelRoot.getVisibility() == View.VISIBLE) {
-            showKeybord();
+            KeybordUtil.showKeybord(mSendEdt);
         } else {
-            hideKeybord();
-            //这里有两种情况，1. 键盘没有弹起(需要适配)、2. 键盘没有弹起（不用适配）
+            KeybordUtil.hideKeybord(mSendEdt);
             mPanelRoot.setVisibility(View.VISIBLE);
         }
     }
@@ -59,7 +54,7 @@ public class JChattingActivity extends FragmentActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    hideKeybord();
+                    KeybordUtil.hideKeybord(mSendEdt);
                     mPanelRoot.setVisibility(View.GONE);
                 }
 
@@ -68,20 +63,7 @@ public class JChattingActivity extends FragmentActivity {
         });
     }
 
-    private void showKeybord() {
-        mSendEdt.requestFocus();
-        InputMethodManager inputManager =
-                (InputMethodManager) mSendEdt.getContext().getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(mSendEdt, 0);
-    }
 
-    public void hideKeybord() {
-        InputMethodManager imm =
-                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        mSendEdt.clearFocus();
-        imm.hideSoftInputFromWindow(mSendEdt.getWindowToken(), 0);
-    }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
