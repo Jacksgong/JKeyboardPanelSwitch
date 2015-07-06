@@ -72,9 +72,8 @@ public class CustomRootLayout extends LinearLayout {
             final int offset = mOldHeight - height;
             mOldHeight = height;
 
-            if (offset >= 0) {
-                //键盘弹起 (offset > 0，高度变小)
-                Log.d(TAG, "" + offset + " >= 0 break;");
+            if (offset == 0) {
+                Log.d(TAG, "" + offset + " == 0 break;");
                 break;
             }
 
@@ -86,7 +85,14 @@ public class CustomRootLayout extends LinearLayout {
             }
 
             // 检测到真正的 由于键盘收起触发了本次的布局变化
-            bottom.setIsNeedHeight(true);
+
+            if (offset > 0) {
+                //键盘弹起 (offset > 0，高度变小)
+                bottom.setIsHide(true);
+            } else {
+                //键盘收回 (offset < 0，高度变大)
+                bottom.setIsNeedHeight(true);
+            }
 
         } while (false);
 

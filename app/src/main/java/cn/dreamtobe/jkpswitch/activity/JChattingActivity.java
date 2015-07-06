@@ -68,14 +68,14 @@ public class JChattingActivity extends FragmentActivity {
 
         mContentRyv.setLayoutManager(new LinearLayoutManager(this));
 
-        mSendEdt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    mPanelRoot.setIsHide(true);
-                }
-            }
-        });
+//        mSendEdt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean b) {
+//                if (b) {
+//                    mPanelRoot.setIsHide(true);
+//                }
+//            }
+//        });
 
         mContentRyv.setOnTouchListener(new View.OnTouchListener() {
             @Override
