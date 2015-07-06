@@ -57,9 +57,11 @@
 
 > 2) 由于到了`onLayout`，clipRect的大小已经确定了，又要避免不多次调用`onMeasure`因此要在`Super.onMeasure`之前 
 
-> 3) 由于键盘收回的时候，会触发多次`measure`，如果 不判断真正的由于键盘收回导致布局将要变化，就直接给有效高度，依然会有闪动的情况。
+> 3) 由于键盘收回的时候，会触发多次`measure`，如果 不判断真正的由于键盘收回导致布局将要变化，就直接给`View#VISIBLE`，依然会有闪动的情况。
 
-> 4) 从`Keybord`切换到`PanelView`导致的布局冲突，只有在`Keybord`正在显示的时候，才有可能触发，因此我们需要过滤掉`Keybord`未显示的情况。
+> 4) 从`Keybord`切换到`PanelView`导致的布局冲突，只有在`Keybord`正在显示的时候。
+
+> 5) 从`PanelView`切换到`Keybord`导致的布局冲突，已经在`PanelView`与`CustomRootView`中内部处理。
 
 代码:
 
