@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import cn.dreamtobe.jkpswitch.R;
-import cn.dreamtobe.jkpswitch.util.KeybordUtil;
+import cn.dreamtobe.jkpswitch.util.KeyboardUtil;
 import cn.dreamtobe.jkpswitch.widget.PanelLayout;
 
 /**
@@ -33,9 +33,9 @@ public class JChattingActivity extends FragmentActivity {
 
     public void onClickPlusIv(final View view) {
         if (mPanelRoot.getVisibility() == View.VISIBLE) {
-            KeybordUtil.showKeybord(mSendEdt);
+            KeyboardUtil.showKeybord(mSendEdt);
         } else {
-            KeybordUtil.hideKeybord(mSendEdt);
+            KeyboardUtil.hideKeybord(mSendEdt);
             mPanelRoot.setVisibility(View.VISIBLE);
         }
     }
@@ -54,7 +54,7 @@ public class JChattingActivity extends FragmentActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    KeybordUtil.hideKeybord(mSendEdt);
+                    KeyboardUtil.hideKeybord(mSendEdt);
                     mPanelRoot.setVisibility(View.GONE);
                 }
 

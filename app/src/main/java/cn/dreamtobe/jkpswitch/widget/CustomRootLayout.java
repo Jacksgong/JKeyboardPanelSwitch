@@ -7,7 +7,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
+
+import cn.dreamtobe.jkpswitch.util.KeyboardUtil;
 
 /**
  * Copyright 2015 Jacks Blog(blog.dreamtobe.cn).
@@ -30,25 +33,33 @@ import android.widget.LinearLayout;
  *
  * @see PanelLayout
  */
-public class CustomRootLayout extends LinearLayout {
+public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener{
 
     private final static String TAG = "JFrame.CustomRootLayout";
 
     public CustomRootLayout(Context context) {
         super(context);
+        init();
     }
 
     public CustomRootLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public CustomRootLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public CustomRootLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
+    private void init(){
+       getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     private int mOldHeight = -1;
@@ -148,5 +159,35 @@ public class CustomRootLayout extends LinearLayout {
         }
 
     }
+    private int mLastHeight = 0;
+
+    @Override
+    public void onGlobalLayout() {
+        final int height = getHeight();
+
+        if (mLastHeight == 0) {
+            mLastHeight = height;
+            return;
+        }
+
+        if (mLastHeight == height) {
+            return;
+        }
+
+        final int keybordHeight = Math.abs(mLastHeight - height);
+        mLastHeight = height;
+
+        final boolean change = KeyboardUtil.saveKeybordHeight(keybordHeight);
+        if (change) {
+            final int panelHeight = getPanelLayout(this).getHeight();
+            final int validPanelHeight = KeyboardUtil.getValidPanelHeight();
+            if (panelHeight != validPanelHeight) {
+                Log.d(TAG, "refresh panel height");
+                getPanelLayout(this).refreshHeight();
+            }
+        }
+
+    }
+
 }
 
