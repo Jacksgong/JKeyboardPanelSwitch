@@ -58,6 +58,10 @@ public class PanelLayout extends LinearLayout {
     }
 
     public void refreshHeight() {
+        if (isInEditMode()) {
+            return;
+        }
+
         if (getHeight() == KeyboardUtil.getValidPanelHeight()) {
             return;
         }
