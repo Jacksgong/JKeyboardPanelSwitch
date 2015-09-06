@@ -8,8 +8,8 @@ android {
         applicationId "cn.dreamtobe.jkpswitch"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
     }
     buildTypes {
         release {
@@ -20,8 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
-
-    compile 'com.android.support:recyclerview-v7:21.0.0'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
 }

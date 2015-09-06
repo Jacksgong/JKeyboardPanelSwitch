@@ -102,7 +102,10 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
             if (offset > 0) {
                 //键盘弹起 (offset > 0，高度变小)
                 bottom.setIsHide(true);
-            } else {
+            } else if (mIsKeyboardShowing){
+                // 1. 总得来首，在监听到键盘已经显示的前提下，键盘收回才是有效有意义的。
+                // 2. 修复在Android L下使用V7.Theme.AppCompat主题，进入Activity，默认弹起面板bug，
+                // 第2点的bug出现原因:在Android L下使用V7.Theme.AppCompat主题，并且不使用系统的ActionBar/ToolBar，V7.Theme.AppCompat主题,还是会先默认绘制一帧默认ActionBar，然后再将他去掉（略无语）
                 //键盘收回 (offset < 0，高度变大)
                 bottom.setIsShow(true);
             }
@@ -139,6 +142,11 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
 
     }
 
+    private boolean mIsKeyboardShowing = false;
+    protected void onKeyboardShowing(final boolean isShowing){
+        this.mIsKeyboardShowing = isShowing;
+        getPanelLayout(this).setIsKeybordShowing(isShowing);
+    }
     private int maxBottom = 0;
 
     @Override
@@ -148,10 +156,10 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         if (b >= maxBottom && maxBottom != 0) {
             // 在底部，键盘隐藏状态
             Log.d(TAG, "keybor hiding");
-            getPanelLayout(this).setIsKeybordShowing(false);
+            onKeyboardShowing(false);
         } else if (maxBottom != 0) {
             Log.d(TAG, "keybor showing");
-            getPanelLayout(this).setIsKeybordShowing(true);
+            onKeyboardShowing(true);
         }
 
         if (maxBottom < b) {
