@@ -2,8 +2,15 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo">
-    <!--<style name="AppTheme" parent="Base.V7.Theme.AppCompat">-->
+        <!--<style name="AppTheme" parent="Base.V7.Theme.AppCompat">-->
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="TranslucentFullSceenTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/translucent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>

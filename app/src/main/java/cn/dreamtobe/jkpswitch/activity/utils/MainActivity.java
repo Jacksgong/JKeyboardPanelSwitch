@@ -1,4 +1,4 @@
-package cn.dreamtobe.jkpswitch.activity;
+package cn.dreamtobe.jkpswitch.activity.utils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import cn.dreamtobe.jkpswitch.R;
+import cn.dreamtobe.jkpswitch.activity.ChattingActivity;
+import cn.dreamtobe.jkpswitch.activity.JChattingActivity;
 
 /**
  * Created by Jacksgong on 15/7/1.

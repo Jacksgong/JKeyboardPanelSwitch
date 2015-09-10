@@ -120,6 +120,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:clickable="true"
+                android:onClick="onClickPhoto"
                 android:orientation="vertical"
                 android:padding="10dp">
 

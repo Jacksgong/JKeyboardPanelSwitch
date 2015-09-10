@@ -1,5 +1,6 @@
 package cn.dreamtobe.jkpswitch.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import cn.dreamtobe.jkpswitch.R;
+import cn.dreamtobe.jkpswitch.activity.utils.TranslucentActivity;
 import cn.dreamtobe.jkpswitch.util.KeyboardUtil;
 import cn.dreamtobe.jkpswitch.widget.PanelLayout;
 
@@ -75,5 +77,9 @@ public class JChattingActivity extends FragmentActivity {
             }
         }
         return super.dispatchKeyEvent(event);
+    }
+
+    public void onClickPhoto(final View view) {
+        startActivity(new Intent(this, TranslucentActivity.class));
     }
 }

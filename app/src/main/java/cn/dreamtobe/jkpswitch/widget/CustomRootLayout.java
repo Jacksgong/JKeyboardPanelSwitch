@@ -58,9 +58,29 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         init();
     }
 
-    private void init(){
-       getViewTreeObserver().addOnGlobalLayoutListener(this);
+    private final static String STATUS_BAR_DEFPACKAGE = "android";
+    private final static String STATUS_BAR_DEFTYPE = "dimen";
+    private final static String STATUS_BAR_NAME = "status_bar_height";
+
+    private void init() {
+        getViewTreeObserver().addOnGlobalLayoutListener(this);
+
+        if (!mAlreadyGetStatusBarHeight) {
+            int resourceId = getResources().getIdentifier(STATUS_BAR_NAME, STATUS_BAR_DEFTYPE, STATUS_BAR_DEFPACKAGE);
+            if (resourceId > 0) {
+                mStatusBarHeight = getResources().getDimensionPixelSize(resourceId);
+                mAlreadyGetStatusBarHeight = true;
+                Log.d(TAG, String.format("Get status bar height %d", mStatusBarHeight));
+            }
+        }
+
     }
+
+    private int mStatusBarHeight = 50;
+
+    private boolean mAlreadyGetStatusBarHeight = false;
+
+
 
     private int mOldHeight = -1;
 
@@ -83,13 +103,19 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
             }
 
             final int offset = mOldHeight - height;
-            mOldHeight = height;
 
             if (offset == 0) {
                 Log.d(TAG, "" + offset + " == 0 break;");
                 break;
             }
 
+            if (offset == -mStatusBarHeight) {
+                Log.w(TAG, String.format("offset just equal statusBar height %d", offset));
+                // 极有可能是 上次的页面是全屏&主题是透明，但是本次页面不是全屏，因此会先绘制一帧没有status bar的
+                break;
+            }
+
+            mOldHeight = height;
             final PanelLayout bottom = getPanelLayout(this);
 
             if (bottom == null) {

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="chatting_list_background">#ebebeb</color>
+    <color name="translucent">#00000000</color>
 </resources>
