@@ -111,7 +111,7 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
 
             if (offset == -mStatusBarHeight) {
                 Log.w(TAG, String.format("offset just equal statusBar height %d", offset));
-                // 极有可能是 上次的页面是全屏&主题是透明，但是本次页面不是全屏，因此会先绘制一帧没有status bar的
+                // 极有可能是 相对本页面的二级页面的主题是全屏&是透明，但是本页面不是全屏，因此会有status bar的布局变化差异，进行调过
                 break;
             }
 
