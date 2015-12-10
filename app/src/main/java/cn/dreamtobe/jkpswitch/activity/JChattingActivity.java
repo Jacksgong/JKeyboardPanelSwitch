@@ -35,9 +35,9 @@ public class JChattingActivity extends FragmentActivity {
 
     public void onClickPlusIv(final View view) {
         if (mPanelRoot.getVisibility() == View.VISIBLE) {
-            KeyboardUtil.showKeybord(mSendEdt);
+            KeyboardUtil.showKeyboard(mSendEdt);
         } else {
-            KeyboardUtil.hideKeybord(mSendEdt);
+            KeyboardUtil.hideKeyboard(mSendEdt);
             mPanelRoot.setVisibility(View.VISIBLE);
         }
     }
@@ -56,7 +56,7 @@ public class JChattingActivity extends FragmentActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    KeyboardUtil.hideKeybord(mSendEdt);
+                    KeyboardUtil.hideKeyboard(mSendEdt);
                     mPanelRoot.setVisibility(View.GONE);
                 }
 

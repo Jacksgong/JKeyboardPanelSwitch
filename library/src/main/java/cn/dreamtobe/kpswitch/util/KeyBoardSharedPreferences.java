@@ -7,23 +7,23 @@ import android.content.SharedPreferences;
 /**
  * Created by Jacksgong on 9/1/15.
  */
-public class JKeyBordSharedPreferences {
+public class KeyBoardSharedPreferences {
 
-    private final static String FILE_NAME = "jkeybord.common";
+    private final static String FILE_NAME = "keyboard.common";
 
-    private final static String KEY_KEYBORD_HEIGHT = "sp.key.keybord.height";
+    private final static String KEY_KEYBORD_HEIGHT = "sp.key.keyboard.height";
 
     volatile static SharedPreferences SP;
 
-    public static boolean save(final Context context, final int keybordHeight) {
+    public static boolean save(final Context context, final int keyboardHeight) {
         return with(context).edit()
-                .putInt(KEY_KEYBORD_HEIGHT, keybordHeight)
+                .putInt(KEY_KEYBORD_HEIGHT, keyboardHeight)
                 .commit();
     }
 
     public static SharedPreferences with(final Context context) {
         if (SP == null) {
-            synchronized (JKeyBordSharedPreferences.class) {
+            synchronized (KeyBoardSharedPreferences.class) {
                 if (SP == null) {
                     SP = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
                 }
