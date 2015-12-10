@@ -34,7 +34,7 @@ import cn.dreamtobe.kpswitch.util.KeyboardUtil;
  *
  * @see PanelLayout
  */
-public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener{
+public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener {
 
     private final static String TAG = "JFrame.CustomRootLayout";
 
@@ -80,7 +80,6 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
     private int mStatusBarHeight = 50;
 
     private boolean mAlreadyGetStatusBarHeight = false;
-
 
 
     private int mOldHeight = -1;
@@ -129,7 +128,7 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
             if (offset > 0) {
                 //键盘弹起 (offset > 0，高度变小)
                 bottom.setIsHide(true);
-            } else if (mIsKeyboardShowing){
+            } else if (mIsKeyboardShowing) {
                 // 1. 总得来首，在监听到键盘已经显示的前提下，键盘收回才是有效有意义的。
                 // 2. 修复在Android L下使用V7.Theme.AppCompat主题，进入Activity，默认弹起面板bug，
                 // 第2点的bug出现原因:在Android L下使用V7.Theme.AppCompat主题，并且不使用系统的ActionBar/ToolBar，V7.Theme.AppCompat主题,还是会先默认绘制一帧默认ActionBar，然后再将他去掉（略无语）
@@ -170,22 +169,29 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
     }
 
     private boolean mIsKeyboardShowing = false;
-    protected void onKeyboardShowing(final boolean isShowing){
+
+    protected void onKeyboardShowing(final boolean isShowing) {
         this.mIsKeyboardShowing = isShowing;
         getPanelLayout(this).setIsKeybordShowing(isShowing);
     }
+
     private int maxBottom = 0;
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
 
+        if (Math.abs(maxBottom - b) == mStatusBarHeight) {
+            Log.w(TAG, String.format("customRootLayout on layout get max bottom value offset just equal statusBar height %d", mStatusBarHeight));
+            return;
+        }
+
         if (b >= maxBottom && maxBottom != 0) {
             // 在底部，键盘隐藏状态
-            Log.d(TAG, "keybor hiding");
+            Log.d(TAG, "keyboard hiding");
             onKeyboardShowing(false);
         } else if (maxBottom != 0) {
-            Log.d(TAG, "keybor showing");
+            Log.d(TAG, "keyboard showing");
             onKeyboardShowing(true);
         }
 
@@ -194,6 +200,7 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         }
 
     }
+
     private int mLastHeight = 0;
 
     @Override
@@ -210,6 +217,11 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         }
 
         final int keyboardHeight = Math.abs(mLastHeight - height);
+        if (keyboardHeight == mStatusBarHeight) {
+            Log.w(TAG, String.format("On global layout change get keyboard hight just equal statusBar height %d", keyboardHeight));
+            return;
+        }
+
         mLastHeight = height;
 
         final boolean change = KeyboardUtil.saveKeyboardHeight(getContext(), keyboardHeight);
