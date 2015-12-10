@@ -26,7 +26,7 @@ import cn.dreamtobe.kpswitch.util.KeyboardUtil;
  * <p/>
  * Created by Jacksgong on 15/6/29.
  * <p/>
- * Detail: http://blog.dreamtobe.cn/2015/06/29/keybord-panel-switch/
+ * Detail: http://blog.dreamtobe.cn/2015/09/01/keyboard-panel-switch/
  *
  * @see CustomRootLayout
  */

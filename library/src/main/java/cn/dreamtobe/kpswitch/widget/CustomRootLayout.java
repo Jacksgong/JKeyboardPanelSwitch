@@ -30,7 +30,7 @@ import cn.dreamtobe.kpswitch.util.KeyboardUtil;
  * <p/>
  * Created by Jacksgong on 15/6/29.
  * <p/>
- * Detail: http://blog.dreamtobe.cn/2015/06/29/keybord-panel-switch/
+ * Detail: http://blog.dreamtobe.cn/2015/09/01/keyboard-panel-switch/
  *
  * @see PanelLayout
  */
@@ -209,10 +209,10 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
             return;
         }
 
-        final int keybordHeight = Math.abs(mLastHeight - height);
+        final int keyboardHeight = Math.abs(mLastHeight - height);
         mLastHeight = height;
 
-        final boolean change = KeyboardUtil.saveKeybordHeight(getContext(), keybordHeight);
+        final boolean change = KeyboardUtil.saveKeyboardHeight(getContext(), keyboardHeight);
         if (change) {
             final int panelHeight = getPanelLayout(this).getHeight();
             final int validPanelHeight = KeyboardUtil.getValidPanelHeight(getContext());
