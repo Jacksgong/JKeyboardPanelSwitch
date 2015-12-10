@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="panel_height">200dp</dimen>
-    <dimen name="min_panel_height">220dp</dimen>
-    <dimen name="max_panel_height">380dp</dimen>
 </resources>

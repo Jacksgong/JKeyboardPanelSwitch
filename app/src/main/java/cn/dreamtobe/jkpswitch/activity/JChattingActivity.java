@@ -12,8 +12,8 @@ import android.widget.EditText;
 
 import cn.dreamtobe.jkpswitch.R;
 import cn.dreamtobe.jkpswitch.activity.utils.TranslucentActivity;
-import cn.dreamtobe.jkpswitch.util.KeyboardUtil;
-import cn.dreamtobe.jkpswitch.widget.PanelLayout;
+import cn.dreamtobe.kpswitch.util.KeyboardUtil;
+import cn.dreamtobe.kpswitch.widget.PanelLayout;
 
 /**
  * Created by Jacksgong on 15/7/1.
