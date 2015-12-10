@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cn.dreamtobe.jkpswitch.widget.CustomRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.dreamtobe.kpswitch.widget.CustomRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -97,7 +97,7 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <cn.dreamtobe.jkpswitch.widget.PanelLayout
+    <cn.dreamtobe.kpswitch.widget.PanelLayout
         android:id="@+id/panel_root"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/panel_height"
@@ -163,6 +163,6 @@
 
             </LinearLayout>
         </LinearLayout>
-    </cn.dreamtobe.jkpswitch.widget.PanelLayout>
+    </cn.dreamtobe.kpswitch.widget.PanelLayout>
 
-</cn.dreamtobe.jkpswitch.widget.CustomRootLayout>
+</cn.dreamtobe.kpswitch.widget.CustomRootLayout>

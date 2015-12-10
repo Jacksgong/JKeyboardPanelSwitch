@@ -1,4 +1,4 @@
-package cn.dreamtobe.jkpswitch.widget;
+package cn.dreamtobe.kpswitch.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
-import cn.dreamtobe.jkpswitch.util.KeyboardUtil;
+import cn.dreamtobe.kpswitch.util.KeyboardUtil;
+
 
 /**
  * Copyright 2015 Jacks Blog(blog.dreamtobe.cn).
@@ -211,10 +212,10 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         final int keybordHeight = Math.abs(mLastHeight - height);
         mLastHeight = height;
 
-        final boolean change = KeyboardUtil.saveKeybordHeight(keybordHeight);
+        final boolean change = KeyboardUtil.saveKeybordHeight(getContext(), keybordHeight);
         if (change) {
             final int panelHeight = getPanelLayout(this).getHeight();
-            final int validPanelHeight = KeyboardUtil.getValidPanelHeight();
+            final int validPanelHeight = KeyboardUtil.getValidPanelHeight(getContext());
             if (panelHeight != validPanelHeight) {
                 Log.d(TAG, "refresh panel height");
                 getPanelLayout(this).refreshHeight();

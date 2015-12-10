@@ -1,4 +1,4 @@
-package cn.dreamtobe.jkpswitch.widget;
+package cn.dreamtobe.kpswitch.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import cn.dreamtobe.jkpswitch.util.KeyboardUtil;
+import cn.dreamtobe.kpswitch.util.KeyboardUtil;
 
 
 /**
@@ -62,7 +62,7 @@ public class PanelLayout extends LinearLayout {
             return;
         }
 
-        if (getHeight() == KeyboardUtil.getValidPanelHeight()) {
+        if (getHeight() == KeyboardUtil.getValidPanelHeight(getContext())) {
             return;
         }
 
@@ -71,9 +71,9 @@ public class PanelLayout extends LinearLayout {
             public void run() {
                 ViewGroup.LayoutParams layoutParams = getLayoutParams();
                 if (layoutParams == null) {
-                    layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KeyboardUtil.getValidPanelHeight());
+                    layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KeyboardUtil.getValidPanelHeight(getContext()));
                 } else {
-                    layoutParams.height = KeyboardUtil.getValidPanelHeight();
+                    layoutParams.height = KeyboardUtil.getValidPanelHeight(getContext());
                 }
 
                 setLayoutParams(layoutParams);
