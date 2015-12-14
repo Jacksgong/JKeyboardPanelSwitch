@@ -35,8 +35,6 @@ public class PanelLayout extends LinearLayout {
     private boolean mIsHide = false;
     private boolean mIsShow = true;
 
-    private final static String TAG = "JFrame.InputPanelLayout";
-
     public PanelLayout(Context context) {
         super(context);
         init();
@@ -97,7 +95,7 @@ public class PanelLayout extends LinearLayout {
         }
 
 
-        if (mIsKeybordShowing && visibility == VISIBLE) {
+        if (mIsKeyboardShowing && visibility == VISIBLE) {
             return;
         }
 
@@ -118,10 +116,10 @@ public class PanelLayout extends LinearLayout {
     /**
      * 这里只是一个状态，是在{@link #onMeasure}之前{@link CustomRootLayout#onLayout(boolean, int, int, int, int)}中获知
      */
-    private boolean mIsKeybordShowing = false;
+    private boolean mIsKeyboardShowing = false;
 
-    public void setIsKeybordShowing(final boolean isKeybordShowing) {
-        this.mIsKeybordShowing = isKeybordShowing;
+    public void setIsKeyboardShowing(final boolean isKeyboardShowing) {
+        this.mIsKeyboardShowing = isKeyboardShowing;
     }
 
 

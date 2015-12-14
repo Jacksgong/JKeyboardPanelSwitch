@@ -58,15 +58,15 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         init();
     }
 
-    private final static String STATUS_BAR_DEFPACKAGE = "android";
-    private final static String STATUS_BAR_DEFTYPE = "dimen";
+    private final static String STATUS_BAR_DEF_PACKAGE = "android";
+    private final static String STATUS_BAR_DEF_TYPE = "dimen";
     private final static String STATUS_BAR_NAME = "status_bar_height";
 
     private void init() {
         getViewTreeObserver().addOnGlobalLayoutListener(this);
 
         if (!mAlreadyGetStatusBarHeight) {
-            int resourceId = getResources().getIdentifier(STATUS_BAR_NAME, STATUS_BAR_DEFTYPE, STATUS_BAR_DEFPACKAGE);
+            int resourceId = getResources().getIdentifier(STATUS_BAR_NAME, STATUS_BAR_DEF_TYPE, STATUS_BAR_DEF_PACKAGE);
             if (resourceId > 0) {
                 mStatusBarHeight = getResources().getDimensionPixelSize(resourceId);
                 mAlreadyGetStatusBarHeight = true;
@@ -171,7 +171,7 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
 
     protected void onKeyboardShowing(final boolean isShowing) {
         this.mIsKeyboardShowing = isShowing;
-        getPanelLayout(this).setIsKeybordShowing(isShowing);
+        getPanelLayout(this).setIsKeyboardShowing(isShowing);
     }
 
     private int maxBottom = 0;
@@ -217,7 +217,7 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
 
         final int keyboardHeight = Math.abs(mLastHeight - height);
         if (keyboardHeight == mStatusBarHeight) {
-            Log.w(TAG, String.format("On global layout change get keyboard hight just equal statusBar height %d", keyboardHeight));
+            Log.w(TAG, String.format("On global layout change get keyboard height just equal statusBar height %d", keyboardHeight));
             return;
         }
 

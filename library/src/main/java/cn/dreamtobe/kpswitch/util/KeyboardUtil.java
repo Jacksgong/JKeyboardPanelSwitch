@@ -9,6 +9,20 @@ import android.view.inputmethod.InputMethodManager;
 import cn.dreamtobe.kpswitch.R;
 
 /**
+ * Copyright (C) 2015 Jacks Blog
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Created by Jacksgong on 15/7/6.
  */
 public class KeyboardUtil {
@@ -29,10 +43,10 @@ public class KeyboardUtil {
     }
 
 
-    private static int LAST_SAVE_KEYBORD_HEIGHT = 0;
+    private static int LAST_SAVE_KEYBOARD_HEIGHT = 0;
 
     public static boolean saveKeyboardHeight(final Context context, int keyboardHeight) {
-        if (LAST_SAVE_KEYBORD_HEIGHT == keyboardHeight) {
+        if (LAST_SAVE_KEYBOARD_HEIGHT == keyboardHeight) {
             return false;
         }
 
@@ -40,29 +54,29 @@ public class KeyboardUtil {
             return false;
         }
 
-        LAST_SAVE_KEYBORD_HEIGHT = keyboardHeight;
+        LAST_SAVE_KEYBOARD_HEIGHT = keyboardHeight;
         Log.d("KeyBordUtil", String.format("save keyboard: %d", keyboardHeight));
 
         return KeyBoardSharedPreferences.save(context, keyboardHeight);
     }
 
-    public static int getKeybordHeight(final Context context) {
-        if (LAST_SAVE_KEYBORD_HEIGHT == 0) {
-            LAST_SAVE_KEYBORD_HEIGHT = KeyBoardSharedPreferences.get(context, getMinPanelHeight(context.getResources()));
+    public static int getKeyboardHeight(final Context context) {
+        if (LAST_SAVE_KEYBOARD_HEIGHT == 0) {
+            LAST_SAVE_KEYBOARD_HEIGHT = KeyBoardSharedPreferences.get(context, getMinPanelHeight(context.getResources()));
         }
 
-        return LAST_SAVE_KEYBORD_HEIGHT;
+        return LAST_SAVE_KEYBOARD_HEIGHT;
     }
 
     public static int getValidPanelHeight(final Context context) {
         final int maxPanelHeight = getMaxPanelHeight(context.getResources());
         final int minPanelHeight = getMinPanelHeight(context.getResources());
 
-        int validPanelheight = getKeybordHeight(context);
+        int validPanelHeight = getKeyboardHeight(context);
 
-        validPanelheight = Math.max(minPanelHeight, validPanelheight);
-        validPanelheight = Math.min(maxPanelHeight, validPanelheight);
-        return validPanelheight;
+        validPanelHeight = Math.max(minPanelHeight, validPanelHeight);
+        validPanelHeight = Math.min(maxPanelHeight, validPanelHeight);
+        return validPanelHeight;
 
 
     }
