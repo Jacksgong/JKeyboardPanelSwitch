@@ -23,6 +23,14 @@
 ![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_mv.gif)![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_mv.gif)
 
 
+## 如何使用
+
+在`build.gradle`中:
+
+```
+compile 'cn.dreamtobe.kpswitch:library:1.2.1'
+```
+
 ## I. 准备
 
 > 以下建立在`android:windowSoftInputMode`带有`adjustResize`的基础上。
