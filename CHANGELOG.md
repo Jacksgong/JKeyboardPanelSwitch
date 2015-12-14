@@ -3,7 +3,7 @@
 
 ### Version 1.2.1 (2015-12-14)
 
-- minSdkVersion 8->1
+- minSdkVersion 8->3
 
 ### Version 1.2.0 (2015-12-13)
 
