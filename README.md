@@ -31,6 +31,85 @@
 compile 'cn.dreamtobe.kpswitch:library:1.2.1'
 ```
 
+在面板页面的layout中:
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<cn.dreamtobe.kpswitch.widget.CustomRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 布局内容 -->
+    ...
+
+    <cn.dreamtobe.kpswitch.widget.PanelLayout
+        android:id="@+id/panel_root"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/panel_height"
+        android:visibility="gone">
+        <!-- 面板内容 -->
+        ...
+    </cn.dreamtobe.kpswitch.widget.PanelLayout>
+
+</cn.dreamtobe.kpswitch.widget.CustomRootLayout>
+```
+
+在Activity中:
+
+```
+
+...
+
+private PanelLayout mPanelLayout;
+// 任何的可以用于收键盘输入的View，可有可无，用于显示keyboard的时候传入
+private EditText mSendEdt;
+
+@Override
+public void onCreate(Bundle saveInstanceState){
+    ...
+
+    mPanelLayout = (PanelLayout)findViewById(R.id.panel_root)
+}
+
+...
+
+// Keyboard与面板相互切换
+public void switchPanel(){
+    if (mPanelLayout.getVisibility() == View.VISIBLE){
+        KeyboardUtil.showKeyboard(mSendEdt);
+    } else {
+        KeyboardUtil.hideKeyboard(mSendEdt);
+        showPanel()
+    }
+}
+
+public void hidePanel(){
+    mPanelLayout.setVisibility(View.GONE);
+}
+
+public void showPanel(){
+    mPanelLayout.setVisibility(View.VISIBLE);
+}
+
+...
+
+// 如果需要处理返回收起面板的话
+@Override
+public boolean dispatchKeyEvent(KeyEvent event){
+    if (event.getAction() == KeyEvent.ACTION_UP &&
+            event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+        if (mPanelLayout.getVisibility() == View.VISIBLE) {
+            hidePanel();
+            return true;
+        }
+    }
+    return super.dispatchKeyEvent(event);
+}
+```
+
+> 还有不明白或者要测试的，建议参考项目demo中的`JChattingActivity`
+
 ## I. 准备
 
 > 以下建立在`android:windowSoftInputMode`带有`adjustResize`的基础上。
