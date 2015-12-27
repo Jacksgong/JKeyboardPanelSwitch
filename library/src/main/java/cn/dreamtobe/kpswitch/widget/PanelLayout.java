@@ -1,16 +1,3 @@
-package cn.dreamtobe.kpswitch.widget;
-
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.os.Build;
-import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-
-import cn.dreamtobe.kpswitch.util.KeyboardUtil;
-
-
 /**
  * Copyright 2015 Jacks gong
  *
@@ -25,9 +12,21 @@ import cn.dreamtobe.kpswitch.util.KeyboardUtil;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Detail: http://blog.dreamtobe.cn/2015/09/01/keyboard-panel-switch/
- *
+ */
+package cn.dreamtobe.kpswitch.widget;
+
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.os.Build;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import cn.dreamtobe.kpswitch.util.KeyboardUtil;
+
+
+/**
  * @see CustomRootLayout
  */
 public class PanelLayout extends LinearLayout {

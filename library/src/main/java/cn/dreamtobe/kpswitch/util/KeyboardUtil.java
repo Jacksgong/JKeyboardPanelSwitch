@@ -1,13 +1,3 @@
-package cn.dreamtobe.kpswitch.util;
-
-import android.content.Context;
-import android.content.res.Resources;
-import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-
-import cn.dreamtobe.kpswitch.R;
-
 /**
  * Copyright (C) 2015 Jacks Blog
  *
@@ -22,7 +12,18 @@ import cn.dreamtobe.kpswitch.R;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ */
+package cn.dreamtobe.kpswitch.util;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
+import cn.dreamtobe.kpswitch.R;
+
+/**
  * Created by Jacksgong on 15/7/6.
  */
 public class KeyboardUtil {
