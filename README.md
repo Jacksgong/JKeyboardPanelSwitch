@@ -2,16 +2,16 @@
 
 [![Download][bintray_svg]][bintray_link]
 
+---
+
+> 起源，之前在微信工作的时候，为了给用户带来更好的基础体验，做了很多尝试，在微信实践的时候，踩了很多输入法的坑，特别是动态调整键盘高度，二级页面是透明背景，魅族早期的smartbar, 后来逐一完善了，后面就有了这个repo
+
+---
+
 > 之前有写过一篇核心思想: [Switching between the panel and the keyboard in Wechat](http://blog.dreamtobe.cn/2015/02/07/Switching-between-the-panel-and-the-keyboard/)
 
+
 > 这里主要是根据核心思想的实践，实践原理是通过`CustomRootLayout`布局变化，来获知是否是键盘引起的真正的布局变化，进而处理到接下来`PanelLayout`的`onMersure`中。
-
----
-
-- 新算法不再动态修改`View#LayoutParams`，而是更加简单明了的方式
-- 最新代码在原基础上**自动动态适配面板高度与键盘高度等高**，很大程度上优化了体验。
-
----
 
 我们可以看到微信中的 从键盘与微信的切换是无缝的，而且是无闪动的，这种基础体验是符合预期的。
 
