@@ -110,56 +110,7 @@ public boolean dispatchKeyEvent(KeyEvent event){
 
 > 还有不明白或者要测试的，建议参考项目demo中的`JChattingActivity`
 
-## I. 准备
-
-> 以下建立在`android:windowSoftInputMode`带有`adjustResize`的基础上。
-
-> 如图，为了方便分析，我们分出3个View:
-
-![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/WeChat_1435588322.png)
-
-- `CustomRootView`: 除去statusBar与ActionBar(ToolBar...balabala)
-- `FootRootView`: 整个底部（包括输入框与底部面板在内的整个View）
-- `PanelView`: 面板View
-
-> 整个处理过程，其实需要分为两块处理:
-
-1. 从`PanelView`切换到`Keybord`
-
-**现象:** 由于显示`Keybord`时直接`PanelView#setVisibility(View.GONE)`，导致会出现整个`FooterRootView`到底部然后又被键盘顶起。
-
-**符合预期的应该:** 直接被键盘顶起，不需要到底部再顶起。
-
-2. 从`Keybord`切换到`PanelView`
-
-**现象:** 由于隐藏`Keybord`时，直接`PanelView#setVisibility(View.VISIBLE)`，导致会出现整个`FootRootView`先被顶到键盘上面，然后再随着键盘的动画，下到底部。
-
-**符合预期的应该:** 随着键盘收下直接切换到底部，而配有被键盘顶起的闪动。
-
-## II. 处理
-
-#### 原理
-
-在真正由`Keybord`导致布局**真正**将要变化的时候，才对`PanelView`做出适配。（**注意**，所有的判断处理要在`Super.onMeasure`之前完成判断）
-
-#### 方法:
-
-> 通过`CustomRootView`高度的变化，来保证在`Super.onMeasure`之前获得**真正**的由于键盘导致布局将要变化，然后告知`PanelView`，让其在`Super.onMeasure`之前给到有效高度。
-
-#### 需要注意:
-
-> 1) 在`adjustResize`模式下，键盘弹起会导致`CustomRootView`的高度变小，键盘收回会导致`CustomRootView`的高度变大，反之变小。因此可以通过这个机制获知真正的`PanelView`将要变化的时机。
-
-
-> 2) 由于到了`onLayout`，clipRect的大小已经确定了，又要避免不多次调用`onMeasure`因此要在`Super.onMeasure`之前
-
-> 3) 由于键盘收回的时候，会触发多次`measure`，如果 不判断真正的由于键盘收回导致布局将要变化，就直接给`View#VISIBLE`，依然会有闪动的情况。
-
-> 4) 从`Keybord`切换到`PanelView`导致的布局冲突，只有在`Keybord`正在显示的时候。
-
-> 5) 从`PanelView`切换到`Keybord`导致的布局冲突，已经在`PanelView`与`CustomRootView`中内部处理。
-
-## III. License
+## License
 
 ```
 Copyright 2015 Jacks gong.
