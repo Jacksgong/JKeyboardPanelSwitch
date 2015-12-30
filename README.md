@@ -31,6 +31,23 @@
 compile 'cn.dreamtobe.kpswitch:library:1.2.1'
 ```
 
+对应的Activity，在Manifest中配置`android:windowSoftInputMode=adjustResize`:
+
+```
+<manifest
+  ...>
+  <application
+    ...>
+
+    <activity
+      android:name=".activity.ChattingActivity"
+      android:windowSoftInputMode=adjustResize"/>
+      ...
+  </application>
+  ...
+</manifest>
+```
+
 在面板页面的layout中:
 
 ```
