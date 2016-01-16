@@ -1,8 +1,8 @@
 package cn.dreamtobe.jkpswitch.activity.utils;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import cn.dreamtobe.jkpswitch.R;
@@ -12,7 +12,7 @@ import cn.dreamtobe.jkpswitch.activity.JChattingActivity;
 /**
  * Created by Jacksgong on 15/7/1.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

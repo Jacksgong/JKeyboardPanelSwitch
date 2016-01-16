@@ -2,7 +2,7 @@ package cn.dreamtobe.jkpswitch.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -20,7 +20,7 @@ import cn.dreamtobe.kpswitch.widget.PanelLayout;
  * <p/>
  * Desc: 适配了 Panel<->Keybord 切换冲突
  */
-public class JChattingActivity extends FragmentActivity {
+public class JChattingActivity extends AppCompatActivity {
 
     private RecyclerView mContentRyv;
     private EditText mSendEdt;
