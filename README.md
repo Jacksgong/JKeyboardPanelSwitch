@@ -126,7 +126,35 @@ public boolean dispatchKeyEvent(KeyEvent event){
 }
 ```
 
+> 如果发现你的键盘切换底色为黑色那是因为你的主题使用的是黑色背景，将对应的主题背景颜色改为白色即可，还有任何问题欢迎提[issue](https://github.com/Jacksgong/JKeyboardPanelSwitch/issues/new)
+
 > 还有不明白或者要测试的，建议参考项目demo中的`JChattingActivity`
+
+---
+
+## 基本原理答疑
+
+### 为什么`onMeasure`、`onLayout`、`onGlobalLayout` 分别在这三个里面做不同的处理?
+
+##### 1. 为什么需要在`CustomRootLayout`的`onMeasure`中判断，而不是其他地方判断是否是真正键盘引起变化的?
+
+ 必须要在`PanelLayout`的`onMeasure`之前获知键盘变化，因此比较恰当的地方就是`PanelLayout`的父布局的`onMeasure`，ps: 其实真正感知键盘变化我们可以非常确定(肯定会受到键盘变化影响的)的也只有对我们可见的最外层的布局。综合之，并且就就封装而言就只能是`CustomRootLayout`的`onMeasure`。
+
+##### 2. 为什么需要在`PanelLayout`的`onMeasure`中做防止面板闪现而不是其他地方?
+
+如果在onLayout或者其他点中处理，都没有`onMeasure`中处理简单精准，`PanelLayout`的`onMeasure`结果的影响不仅仅是`PanelLayout`自己将要进行的大小与layout，还有其他View的布局layout与大小。
+
+##### 3. 为什么要在`CustomRootLayout`的`onLayout`来判断是否键盘弹起，而不是其他地方?
+
+`CustomRootLayout`的`onLayout`中判断，是准确 与 获知变化时间比较早 的权衡结果。
+
+##### 4. 为什么要在`onGlobalLayout`中处理真正的键盘变化并且进行键盘高度变化存储?
+
+由于`onMeasure`与`onLayout`可能被多次调用，而`onGlobalLayout`是布局变化后只会被一次调用，并且我们需要处理所有键盘高度的变化(如搜狗输入法的动态调整键盘高度)因此在`onGlobalLayout`中计算键盘高度变化以及有效高度进行存储更为恰当。
+
+### 能不能只在一个View里面做所有的处理啊?
+
+我们需要较早的布局变化中获知是否是键盘变化，至少要在面板大小变化进而导致布局变化之前获知，并且需要十分确定该布局受到键盘影响肯定会随之变化(对我们而言只能是可见的顶层布局) ，并且需要处理掉面板闪动的那一帧，结合前面问题的解答。这里无法避免就引入了两个布局, 对于我们可见的顶级布局(`CustomRootLayout`)与面板布局(`PanelLayout`)。
 
 ## License
 
