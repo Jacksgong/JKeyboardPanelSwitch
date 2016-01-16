@@ -21,8 +21,8 @@
 <!--more-->
 ## 最终效果对比:
 
-![][resolve_mv_gif]![][unresolve_mv.gif]
-![][resolve_dynamic_mv_gif]![][unresolve_dynamic_mv.gif]
+![][resolve_mv_gif]![][unresolve_mv_gif]
+![][resolve_dynamic_mv_gif]![][unresolve_dynamic_mv_gif]
 
 
 ## 如何使用
