@@ -21,7 +21,8 @@
 <!--more-->
 ## 最终效果对比:
 
-![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_mv.gif)![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_mv.gif)
+![][resolve_mv_gif]![][unresolve_mv.gif]
+![][resolve_dynamic_mv_gif]![][unresolve_dynamic_mv.gif]
 
 
 ## 如何使用
@@ -176,3 +177,7 @@ limitations under the License.
 [license_2_svg]: https://img.shields.io/hexpm/l/plug.svg
 [bintray_link]: https://bintray.com/jacksgong/maven/JKeyboardPanelSwitch/_latestVersion
 [bintray_svg]: https://api.bintray.com/packages/jacksgong/maven/JKeyboardPanelSwitch/images/download.svg
+[resolve_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_mv.gif
+[unresolve_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_mv.gif
+[resolve_dynamic_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_dynamic_mv.gif
+[unresolve_dynamic_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_dynamic_mv.gif
