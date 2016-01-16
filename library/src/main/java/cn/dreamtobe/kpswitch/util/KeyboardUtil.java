@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2015 Jacks Blog
+/*
+ * Copyright (C) 2015-2016 Jacksgong(blog.dreamtobe.cn)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
