@@ -134,7 +134,7 @@ public boolean dispatchKeyEvent(KeyEvent event){
 
 ## 基本原理答疑
 
-### 为什么`onMeasure`、`onLayout`、`onGlobalLayout` 分别在这三个里面做不同的处理?
+#### 为什么`onMeasure`、`onLayout`、`onGlobalLayout` 分别在这三个里面做不同的处理?
 
 ##### 1. 为什么需要在`CustomRootLayout`的`onMeasure`中判断，而不是其他地方判断是否是真正键盘引起变化的?
 
@@ -152,7 +152,7 @@ public boolean dispatchKeyEvent(KeyEvent event){
 
 由于`onMeasure`与`onLayout`可能被多次调用，而`onGlobalLayout`是布局变化后只会被一次调用，并且我们需要处理所有键盘高度的变化(如搜狗输入法的动态调整键盘高度)因此在`onGlobalLayout`中计算键盘高度变化以及有效高度进行存储更为恰当。
 
-### 能不能只在一个View里面做所有的处理啊?
+#### 能不能只在一个View里面做所有的处理?
 
 我们需要较早的布局变化中获知是否是键盘变化，至少要在面板大小变化进而导致布局变化之前获知，并且需要十分确定该布局受到键盘影响肯定会随之变化(对我们而言只能是可见的顶层布局) ，并且需要处理掉面板闪动的那一帧，结合前面问题的解答。这里无法避免就引入了两个布局, 对于我们可见的顶级布局(`CustomRootLayout`)与面板布局(`PanelLayout`)。
 
