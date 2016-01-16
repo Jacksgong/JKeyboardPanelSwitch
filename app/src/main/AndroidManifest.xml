@@ -23,6 +23,7 @@
 
         <activity
             android:name=".activity.JChattingActivity"
+            android:theme="@style/JKeybordTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <activity

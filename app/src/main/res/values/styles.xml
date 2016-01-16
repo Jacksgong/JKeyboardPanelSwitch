@@ -6,6 +6,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="JKeybordTheme" parent="AppTheme">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
     <style name="TranslucentFullSceenTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/translucent</item>
         <item name="android:windowIsTranslucent">true</item>
