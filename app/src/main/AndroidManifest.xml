@@ -19,10 +19,12 @@
 
         <activity
             android:name=".activity.ChattingActivity"
+            android:label="@string/activity_chatting_title"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".activity.JChattingActivity"
+            android:label="@string/activity_jchatting_title"
             android:windowSoftInputMode="adjustResize" />
 
         <activity

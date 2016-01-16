@@ -61,7 +61,6 @@ public class ChattingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_chatting);
-        setTitle(R.string.activity_chatting_title);
 
         assignViews();
 
