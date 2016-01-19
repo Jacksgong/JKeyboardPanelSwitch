@@ -109,9 +109,11 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
                 break;
             }
 
-            if (offset == -mStatusBarHeight) {
+            if (Math.abs(offset) == mStatusBarHeight) {
                 Log.w(TAG, String.format("offset just equal statusBar height %d", offset));
                 // 极有可能是 相对本页面的二级页面的主题是全屏&是透明，但是本页面不是全屏，因此会有status bar的布局变化差异，进行调过
+                // 极有可能是 该布局采用了透明的背景(windowIsTranslucent=true)，而背后的布局`full screen`为false，
+                // 因此有可能第一次绘制时没有attach上status bar，而第二次status bar attach上去，导致了这个变化。
                 break;
             }
 
