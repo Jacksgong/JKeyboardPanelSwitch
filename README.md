@@ -30,7 +30,7 @@
 在`build.gradle`中:
 
 ```
-compile 'cn.dreamtobe.kpswitch:library:1.2.1'
+compile 'cn.dreamtobe.kpswitch:library:1.3.0'
 ```
 
 对应的Activity，在Manifest中配置`android:windowSoftInputMode=adjustResize`:
