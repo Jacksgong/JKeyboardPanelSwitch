@@ -1,7 +1,8 @@
-# Android键盘面板冲突 布局闪动处理方案 [![Build Status][build_status_svg]][build_status_link]
+# Android键盘面板冲突 布局闪动处理方案
 
 [![Download][bintray_svg]][bintray_link]
 ![][license_2_svg]
+[![Build Status][build_status_svg]][build_status_link]
 
 ---
 
