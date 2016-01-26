@@ -1,4 +1,4 @@
-# Android键盘面板冲突 布局闪动处理方案
+# Android键盘面板冲突 布局闪动处理方案 [![Build Status][build_status_svg]][build_status_link]
 
 [![Download][bintray_svg]][bintray_link]
 ![][license_2_svg]
@@ -181,3 +181,5 @@ limitations under the License.
 [unresolve_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_mv.gif
 [resolve_dynamic_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_dynamic_mv.gif
 [unresolve_dynamic_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_dynamic_mv.gif
+[build_status_svg]: https://travis-ci.org/Jacksgong/JKeyboardPanelSwitch.svg?branch=master
+[build_status_link]: https://travis-ci.org/Jacksgong/JKeyboardPanelSwitch
