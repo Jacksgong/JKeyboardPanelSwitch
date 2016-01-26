@@ -4,7 +4,6 @@ android:
   components:
     - build-tools-23.0.1
     - android-23
-    - platform-tools
-    - extra-android-support
+    - extra
 
 sudo: false
