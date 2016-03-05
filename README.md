@@ -1,7 +1,6 @@
 # Android键盘面板冲突 布局闪动处理方案
 
 [![Download][bintray_svg]][bintray_link]
-![][license_2_svg]
 [![Build Status][build_status_svg]][build_status_link]
 
 ---
@@ -175,7 +174,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
-[license_2_svg]: https://img.shields.io/hexpm/l/plug.svg
 [bintray_link]: https://bintray.com/jacksgong/maven/JKeyboardPanelSwitch/_latestVersion
 [bintray_svg]: https://api.bintray.com/packages/jacksgong/maven/JKeyboardPanelSwitch/images/download.svg
 [resolve_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_mv.gif
