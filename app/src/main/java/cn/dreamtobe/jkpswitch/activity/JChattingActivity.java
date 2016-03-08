@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import cn.dreamtobe.jkpswitch.R;
 import cn.dreamtobe.jkpswitch.activity.utils.TranslucentActivity;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
+import cn.dreamtobe.kpswitch.widget.CustomRootLayout;
 import cn.dreamtobe.kpswitch.widget.PanelLayout;
 
 /**
@@ -42,10 +45,21 @@ public class JChattingActivity extends AppCompatActivity {
         }
     }
 
+    private View getRootView() {
+        return ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
+
+        ((CustomRootLayout) getRootView()).setOnKeyboardShowingListener(new CustomRootLayout.OnKeyboardShowingListener() {
+            @Override
+            public void onKeyboardShowing(boolean isShowing) {
+                Toast.makeText(JChattingActivity.this, "Keyboard is " + (isShowing ? "showing" : "hiding"), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         assignViews();
 
