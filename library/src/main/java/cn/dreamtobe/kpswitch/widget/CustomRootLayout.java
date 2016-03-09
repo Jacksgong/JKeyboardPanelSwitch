@@ -172,9 +172,24 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
 
     private boolean mIsKeyboardShowing = false;
 
+    private Runnable mKeyboardCallbackRunnable;
+
     protected void onKeyboardShowing(final boolean isShowing) {
         this.mIsKeyboardShowing = isShowing;
         getPanelLayout(this).setIsKeyboardShowing(isShowing);
+
+        // asdiufhaskdhfkjsadhfkjasdh
+        if (mKeyboardShowingListener != null) {
+            if (mKeyboardCallbackRunnable == null) {
+                mKeyboardCallbackRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        mKeyboardShowingListener.onKeyboardShowing(isShowing);
+                    }
+                };
+            }
+            post(mKeyboardCallbackRunnable);
+        }
     }
 
     private int maxBottom = 0;
@@ -235,6 +250,31 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
                 getPanelLayout(this).refreshHeight();
             }
         }
+
+    }
+
+    private OnKeyboardShowingListener mKeyboardShowingListener;
+
+    /**
+     * Set a {@link OnKeyboardShowingListener} to listen keyboard showing state.
+     *
+     * @param keyboardShowingListener
+     */
+    public void setOnKeyboardShowingListener(OnKeyboardShowingListener keyboardShowingListener) {
+        mKeyboardShowingListener = keyboardShowingListener;
+    }
+
+    /**
+     * The interface is used to listen the keyboard showing state.
+     */
+    public interface OnKeyboardShowingListener {
+
+        /**
+         * Keyboard showing state callback method.
+         *
+         * @param isShowing Indicate whether keyboard is showing or not.
+         */
+        void onKeyboardShowing(boolean isShowing);
 
     }
 
