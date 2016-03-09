@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import cn.dreamtobe.jkpswitch.R;
 import cn.dreamtobe.jkpswitch.activity.utils.TranslucentActivity;
@@ -25,11 +24,14 @@ import cn.dreamtobe.kpswitch.widget.PanelLayout;
  */
 public class JChattingActivity extends AppCompatActivity {
 
+    private static final String TAG = "JChattingActivity";
+    private CustomRootLayout mRootView;
     private RecyclerView mContentRyv;
     private EditText mSendEdt;
     private PanelLayout mPanelRoot;
 
     private void assignViews() {
+        mRootView = (CustomRootLayout) findViewById(R.id.rootView);
         mContentRyv = (RecyclerView) findViewById(R.id.content_ryv);
         mSendEdt = (EditText) findViewById(R.id.send_edt);
         mPanelRoot = (PanelLayout) findViewById(R.id.panel_root);
@@ -45,23 +47,20 @@ public class JChattingActivity extends AppCompatActivity {
         }
     }
 
-    private View getRootView() {
-        return ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
 
-        ((CustomRootLayout) getRootView()).setOnKeyboardShowingListener(new CustomRootLayout.OnKeyboardShowingListener() {
+        assignViews();
+
+        // Add keyboard showing state callback, do like this when you want to listen in the keyboard's show/hide change.
+        mRootView.setOnKeyboardShowingListener(new CustomRootLayout.OnKeyboardShowingListener() {
             @Override
             public void onKeyboardShowing(boolean isShowing) {
-                Toast.makeText(JChattingActivity.this, "Keyboard is " + (isShowing ? "showing" : "hiding"), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, String.format("Keyboard is %s", isShowing ? "showing" : "hiding"));
             }
         });
-
-        assignViews();
 
         mContentRyv.setLayoutManager(new LinearLayoutManager(this));
 
