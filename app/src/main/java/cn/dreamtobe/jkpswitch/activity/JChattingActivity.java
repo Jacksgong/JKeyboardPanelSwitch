@@ -89,6 +89,7 @@ public class JChattingActivity extends AppCompatActivity {
                 return true;
             }
         }
+        //
         return super.dispatchKeyEvent(event);
     }
 
