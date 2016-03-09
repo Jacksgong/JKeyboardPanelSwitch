@@ -178,6 +178,7 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         this.mIsKeyboardShowing = isShowing;
         getPanelLayout(this).setIsKeyboardShowing(isShowing);
 
+        // asdiufhaskdhfkjsadhfkjasdh
         if (mKeyboardShowingListener != null) {
             if (mKeyboardCallbackRunnable == null) {
                 mKeyboardCallbackRunnable = new Runnable() {
