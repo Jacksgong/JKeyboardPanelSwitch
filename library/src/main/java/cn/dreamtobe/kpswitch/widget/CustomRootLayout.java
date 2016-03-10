@@ -25,6 +25,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
+import java.lang.ref.WeakReference;
+
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
 
 
@@ -172,23 +174,53 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
 
     private boolean mIsKeyboardShowing = false;
 
-    private Runnable mKeyboardCallbackRunnable;
-
     protected void onKeyboardShowing(final boolean isShowing) {
         this.mIsKeyboardShowing = isShowing;
         getPanelLayout(this).setIsKeyboardShowing(isShowing);
 
         if (mKeyboardShowingListener != null) {
-            if (mKeyboardCallbackRunnable == null) {
-                mKeyboardCallbackRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        mKeyboardShowingListener.onKeyboardShowing(isShowing);
-                    }
-                };
-            }
-            post(mKeyboardCallbackRunnable);
+            KeyboardCallbackRunnable callbackRunnable = new KeyboardCallbackRunnable(this);
+            callbackRunnable.setShowing(isShowing);
+            post(callbackRunnable);
         }
+    }
+
+    /**
+     * Use this Runnable to invoke KeyboardShowingListener's callback.
+     */
+    private static class KeyboardCallbackRunnable implements Runnable {
+
+        private WeakReference<CustomRootLayout> rootLayoutWeakReference;
+
+        private boolean isShowing;
+
+        public void setShowing(boolean showing) {
+            isShowing = showing;
+        }
+
+        public KeyboardCallbackRunnable(CustomRootLayout customRootLayout) {
+            rootLayoutWeakReference = new WeakReference<CustomRootLayout>(customRootLayout);
+        }
+
+        @Override
+        public void run() {
+            CustomRootLayout rootLayout;
+            if (null != (rootLayout = rootLayoutWeakReference.get())) {
+                OnKeyboardShowingListener listener = rootLayout.mKeyboardShowingListener;
+                if (listener != null) {
+                    listener.onKeyboardShowing(isShowing);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        // Remove pending runnable to avoid memory leak while the view is dying
+        getHandler().removeCallbacksAndMessages(null);
+        // Release listener to avoid unnecessary callback
+        mKeyboardShowingListener = null;
     }
 
     private int maxBottom = 0;
