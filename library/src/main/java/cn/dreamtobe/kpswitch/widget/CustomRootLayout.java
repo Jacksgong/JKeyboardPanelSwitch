@@ -175,8 +175,13 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
     protected void onKeyboardShowing(final boolean isShowing) {
         this.mIsKeyboardShowing = isShowing;
         getPanelLayout(this).setIsKeyboardShowing(isShowing);
-        if (mKeyboardShowingListener != null)
-            mKeyboardShowingListener.onKeyboardShowing(isShowing);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (mKeyboardShowingListener != null)
+                    mKeyboardShowingListener.onKeyboardShowing(isShowing);
+            }
+        });
     }
 
     private int maxBottom = 0;
