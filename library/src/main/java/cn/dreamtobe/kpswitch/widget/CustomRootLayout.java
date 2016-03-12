@@ -173,6 +173,10 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
     private boolean mIsKeyboardShowing = false;
 
     protected void onKeyboardShowing(final boolean isShowing) {
+        if (this.mIsKeyboardShowing == isShowing) {
+            return;
+        }
+
         this.mIsKeyboardShowing = isShowing;
         getPanelLayout(this).setIsKeyboardShowing(isShowing);
 
