@@ -175,6 +175,10 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
     protected void onKeyboardShowing(final boolean isShowing) {
         this.mIsKeyboardShowing = isShowing;
         getPanelLayout(this).setIsKeyboardShowing(isShowing);
+
+        if (mKeyboardShowingListener != null) {
+            mKeyboardShowingListener.onKeyboardShowing(isShowing);
+        }
     }
 
     private int maxBottom = 0;
@@ -238,5 +242,35 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
 
     }
 
-}
+    private OnKeyboardShowingListener mKeyboardShowingListener;
 
+    /**
+     * Set a {@link OnKeyboardShowingListener} to listen keyboard showing state.
+     *
+     * @param keyboardShowingListener
+     */
+    public void setOnKeyboardShowingListener(OnKeyboardShowingListener keyboardShowingListener) {
+        mKeyboardShowingListener = keyboardShowingListener;
+    }
+
+    /**
+     * The interface is used to listen the keyboard showing state.
+     */
+    public interface OnKeyboardShowingListener {
+
+        /**
+         * Keyboard showing state callback method.
+         * <p>
+         *     This method is invoked in {@link View#layout(int, int, int, int)} which is one of the
+         *     View's draw lifecycle callback methods, and it should be focused on caculating view's
+         *     left, top, right, bottom. So avoiding those time-consuming operation(I/O, complex caculation,
+         *     alloc objects, etc.) here from blocking main ui thread is recommended.
+         * </p>
+         *
+         * @param isShowing Indicate whether keyboard is showing or not.
+         */
+        void onKeyboardShowing(boolean isShowing);
+
+    }
+
+}
