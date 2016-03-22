@@ -151,7 +151,7 @@ public boolean dispatchKeyEvent(KeyEvent event){
 
 ##### 4. 为什么要在`onGlobalLayout`中处理真正的键盘变化并且进行键盘高度变化存储?
 
-由于`onMeasure`与`onLayout`可能被多次调用，而`onGlobalLayout`是布局变化后只会被一次调用，并且我们需要处理所有键盘高度的变化(如搜狗输入法的动态调整键盘高度)因此在`onGlobalLayout`中计算键盘高度变化以及有效高度进行存储更为恰当。
+由于`LinearLayout`(目前CustomRootLayout继承自`LinearLayout`)在存在`weight`参数的时候，需要measure多次来确定子view适当的大小，因此`onMeasure`可能被多次调用，而`onGlobalLayout`是布局变化后只会被一次调用，并且我们需要处理所有键盘高度的变化(如搜狗输入法的动态调整键盘高度)因此在`onGlobalLayout`中计算键盘高度变化以及有效高度进行存储更为恰当。
 
 #### 能不能只在一个View里面做所有的处理?
 
