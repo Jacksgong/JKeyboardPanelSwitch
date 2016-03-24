@@ -31,8 +31,20 @@ import cn.dreamtobe.kpswitch.util.KeyboardUtil;
  */
 public class PanelLayout extends LinearLayout {
 
+    /**
+     * The real status of Visible or not
+     *
+     * @see #setIsHide(boolean)
+     * @see #setVisibility(int)
+     * <p/>
+     * if true, the status is non-Visible or will
+     * non-Visible(may delay and handle in {@link #onMeasure(int, int)})
+     * <p/>
+     * The value of {@link #getVisibility()} maybe be assigned dully for cover the keyboard->panel.
+     * In this case, the {@code mIsHide} will mark the right status.
+     * Handle by {@link #setVisibility(int)} & {@link #onMeasure(int, int)}
+     */
     private boolean mIsHide = false;
-    private boolean mIsShow = true;
 
     public PanelLayout(Context context) {
         super(context);
@@ -55,6 +67,9 @@ public class PanelLayout extends LinearLayout {
         refreshHeight();
     }
 
+    /**
+     * for handle the panel's height, will be equal to the keyboard height which had saved last time.
+     */
     public void refreshHeight() {
         if (isInEditMode()) {
             return;
@@ -69,7 +84,8 @@ public class PanelLayout extends LinearLayout {
             public void run() {
                 ViewGroup.LayoutParams layoutParams = getLayoutParams();
                 if (layoutParams == null) {
-                    layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KeyboardUtil.getValidPanelHeight(getContext()));
+                    layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            KeyboardUtil.getValidPanelHeight(getContext()));
                 } else {
                     layoutParams.height = KeyboardUtil.getValidPanelHeight(getContext());
                 }
@@ -86,7 +102,7 @@ public class PanelLayout extends LinearLayout {
     @Override
     public void setVisibility(int visibility) {
         if (visibility == VISIBLE) {
-            this.mIsHide = false;
+            setIsHide(false);
         }
 
         if (visibility == getVisibility()) {
@@ -94,12 +110,16 @@ public class PanelLayout extends LinearLayout {
         }
 
 
+        /**
+         * Will be handled on {@link CustomRootLayout#onMeasure(int, int)} -> {@link #handleShow()}
+         * Delay show, until the {@link CustomRootLayout} discover the size is changed by keyboard-show.
+         * And will show, on the next frame of the above change discovery.
+         */
         if (mIsKeyboardShowing && visibility == VISIBLE) {
             return;
         }
 
         super.setVisibility(visibility);
-
     }
 
     @Override
@@ -122,15 +142,29 @@ public class PanelLayout extends LinearLayout {
     }
 
 
-    public void setIsShow(final boolean isShow) {
-        this.mIsShow = isShow;
-        if (mIsShow) {
-            super.setVisibility(View.VISIBLE);
-        }
+    private void setIsHide(final boolean isHide) {
+        this.mIsHide = isHide;
     }
 
-    public void setIsHide(final boolean isHide) {
-        this.mIsHide = isHide;
+    /**
+     * @return The real status of Visible or not
+     */
+    public boolean isVisible() {
+        return !mIsHide;
+    }
+
+    /**
+     * Case: keyboard/non -> panel
+     */
+    void handleShow() {
+        super.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * panel -> keyboard/non
+     */
+    void handleHide() {
+        setIsHide(true);
     }
 
 }
