@@ -103,7 +103,7 @@ public class CustomRootLayout extends LinearLayout {
             final PanelLayout bottom = getPanelLayout(this);
 
             if (bottom == null) {
-                Log.d(TAG, "bottom == null break;");
+                Log.w(TAG, "bottom == null break;");
                 break;
             }
 
@@ -163,7 +163,12 @@ public class CustomRootLayout extends LinearLayout {
         }
 
         this.mIsKeyboardShowing = isShowing;
-        getPanelLayout(this).setIsKeyboardShowing(isShowing);
+        final PanelLayout panelLayout = getPanelLayout(this);
+        if (panelLayout != null) {
+            panelLayout.setIsKeyboardShowing(isShowing);
+        } else {
+           Log.w(TAG, "can't sync the keyboard status to panel layout, panel layout can't find.");
+        }
 
         if (mKeyboardShowingListener != null) {
             mKeyboardShowingListener.onKeyboardShowing(isShowing);
@@ -200,9 +205,7 @@ public class CustomRootLayout extends LinearLayout {
     private OnKeyboardShowingListener mKeyboardShowingListener;
 
     /**
-     * Set a {@link OnKeyboardShowingListener} to listen keyboard showing state.
-     *
-     * @param keyboardShowingListener
+     * @param keyboardShowingListener to listen keyboard showing state.
      */
     public void setOnKeyboardShowingListener(OnKeyboardShowingListener keyboardShowingListener) {
         mKeyboardShowingListener = keyboardShowingListener;
@@ -217,8 +220,8 @@ public class CustomRootLayout extends LinearLayout {
          * Keyboard showing state callback method.
          * <p>
          *     This method is invoked in {@link View#layout(int, int, int, int)} which is one of the
-         *     View's draw lifecycle callback methods, and it should be focused on caculating view's
-         *     left, top, right, bottom. So avoiding those time-consuming operation(I/O, complex caculation,
+         *     View's draw lifecycle callback methods, and it should be focused on calculating view's
+         *     left, top, right, bottom. So avoiding those time-consuming operation(I/O, complex calculation,
          *     alloc objects, etc.) here from blocking main ui thread is recommended.
          * </p>
          *

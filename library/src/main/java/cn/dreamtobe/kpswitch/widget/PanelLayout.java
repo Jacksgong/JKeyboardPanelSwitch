@@ -50,22 +50,15 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
 
     public PanelLayout(Context context) {
         super(context);
-        init();
     }
 
     public PanelLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public PanelLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-
-    private void init() {
     }
 
     @Override

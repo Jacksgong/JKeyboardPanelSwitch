@@ -21,22 +21,24 @@ import android.content.SharedPreferences;
 
 /**
  * Created by Jacksgong on 9/1/15.
+ * <p/>
+ * For save the keyboard height.
  */
-public class KeyBoardSharedPreferences {
+class KeyBoardSharedPreferences {
 
     private final static String FILE_NAME = "keyboard.common";
 
-    private final static String KEY_KEYBORD_HEIGHT = "sp.key.keyboard.height";
+    private final static String KEY_KEYBOARD_HEIGHT = "sp.key.keyboard.height";
 
-    volatile static SharedPreferences SP;
+    private volatile static SharedPreferences SP;
 
     public static boolean save(final Context context, final int keyboardHeight) {
         return with(context).edit()
-                .putInt(KEY_KEYBORD_HEIGHT, keyboardHeight)
+                .putInt(KEY_KEYBOARD_HEIGHT, keyboardHeight)
                 .commit();
     }
 
-    public static SharedPreferences with(final Context context) {
+    private static SharedPreferences with(final Context context) {
         if (SP == null) {
             synchronized (KeyBoardSharedPreferences.class) {
                 if (SP == null) {
@@ -49,7 +51,7 @@ public class KeyBoardSharedPreferences {
     }
 
     public static int get(final Context context, final int defaultHeight) {
-        return with(context).getInt(KEY_KEYBORD_HEIGHT, defaultHeight);
+        return with(context).getInt(KEY_KEYBOARD_HEIGHT, defaultHeight);
     }
 
 }

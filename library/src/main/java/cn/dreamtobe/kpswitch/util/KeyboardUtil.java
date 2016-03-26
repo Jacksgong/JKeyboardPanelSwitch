@@ -31,6 +31,12 @@ import cn.dreamtobe.kpswitch.R;
 
 /**
  * Created by Jacksgong on 15/7/6.
+ * <p/>
+ * For save the keyboard height, and provide the valid-panel-height {@link #getValidPanelHeight(Context)}.
+ * <p/>
+ * Adapt the panel height with the keyboard height just relate {@link #attach(Activity, IPanelHeightTarget)}.
+ *
+ * @see KeyBoardSharedPreferences
  */
 public class KeyboardUtil {
 
@@ -52,7 +58,7 @@ public class KeyboardUtil {
 
     private static int LAST_SAVE_KEYBOARD_HEIGHT = 0;
 
-    public static boolean saveKeyboardHeight(final Context context, int keyboardHeight) {
+    private static boolean saveKeyboardHeight(final Context context, int keyboardHeight) {
         if (LAST_SAVE_KEYBOARD_HEIGHT == keyboardHeight) {
             return false;
         }
@@ -67,6 +73,14 @@ public class KeyboardUtil {
         return KeyBoardSharedPreferences.save(context, keyboardHeight);
     }
 
+    /**
+     * @param context the keyboard height is stored by shared-preferences, so need context.
+     * @return the stored keyboard height.
+     * @see #getValidPanelHeight(Context)
+     * @see #attach(Activity, IPanelHeightTarget)
+     * <p/>
+     * Handle and refresh the keyboard height by {@link #attach(Activity, IPanelHeightTarget)}.
+     */
     public static int getKeyboardHeight(final Context context) {
         if (LAST_SAVE_KEYBOARD_HEIGHT == 0) {
             LAST_SAVE_KEYBOARD_HEIGHT = KeyBoardSharedPreferences.get(context, getMinPanelHeight(context.getResources()));
@@ -75,6 +89,17 @@ public class KeyboardUtil {
         return LAST_SAVE_KEYBOARD_HEIGHT;
     }
 
+    /**
+     * @param context the keyboard height is stored by shared-preferences, so need context.
+     * @return the valid panel height refer the keyboard height
+     * @see #getMaxPanelHeight(Resources)
+     * @see #getMinPanelHeight(Resources)
+     * @see #getKeyboardHeight(Context)
+     * @see #attach(Activity, IPanelHeightTarget)
+     * <p/>
+     * The keyboard height may be too short or too height. we intercept the keyboard height in
+     * [{@link #getMinPanelHeight(Resources)}, {@link #getMaxPanelHeight(Resources)}].
+     */
     public static int getValidPanelHeight(final Context context) {
         final int maxPanelHeight = getMaxPanelHeight(context.getResources());
         final int minPanelHeight = getMinPanelHeight(context.getResources());
@@ -84,8 +109,6 @@ public class KeyboardUtil {
         validPanelHeight = Math.max(minPanelHeight, validPanelHeight);
         validPanelHeight = Math.min(maxPanelHeight, validPanelHeight);
         return validPanelHeight;
-
-
     }
 
 
@@ -112,9 +135,11 @@ public class KeyboardUtil {
     /**
      * Recommend invoked by {@link Activity#onCreate(Bundle)}
      * For align the height of the keyboard to {@code target} as much as possible.
+     * For save the refresh the keyboard height to shared-preferences.
      *
      * @param activity contain the view
-     * @param target whose height will be align to the keyboard height.
+     * @param target   whose height will be align to the keyboard height.
+     * @see #saveKeyboardHeight(Context, int)
      */
     public static void attach(final Activity activity, IPanelHeightTarget target) {
         final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
@@ -126,8 +151,8 @@ public class KeyboardUtil {
         private final static String TAG = "KeyboardSizeListener";
 
         private int previousHeight = 0;
-        private ViewGroup contentView;
-        IPanelHeightTarget panelHeightTarget;
+        private final ViewGroup contentView;
+        private final IPanelHeightTarget panelHeightTarget;
 
         KeyboardSizeListener(ViewGroup contentView, IPanelHeightTarget panelHeightTarget) {
             this.contentView = contentView;
@@ -156,7 +181,6 @@ public class KeyboardUtil {
             if (nowHeight == previousHeight) {
                 return;
             }
-
 
 
             final int keyboardHeight = Math.abs(nowHeight - previousHeight);
