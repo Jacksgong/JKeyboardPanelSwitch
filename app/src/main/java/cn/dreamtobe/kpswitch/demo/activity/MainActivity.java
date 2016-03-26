@@ -1,4 +1,4 @@
-package cn.dreamtobe.jkpswitch.activity.utils;
+package cn.dreamtobe.kpswitch.demo.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,9 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import cn.dreamtobe.jkpswitch.R;
-import cn.dreamtobe.jkpswitch.activity.ChattingUnresolvedActivity;
-import cn.dreamtobe.jkpswitch.activity.ChattingResolvedActivity;
+import cn.dreamtobe.kpswitch.demo.R;
 
 /**
  * Created by Jacksgong on 15/7/1.

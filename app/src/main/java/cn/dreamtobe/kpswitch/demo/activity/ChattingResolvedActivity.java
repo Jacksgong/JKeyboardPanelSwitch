@@ -1,4 +1,4 @@
-package cn.dreamtobe.jkpswitch.activity;
+package cn.dreamtobe.kpswitch.demo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import cn.dreamtobe.jkpswitch.R;
-import cn.dreamtobe.jkpswitch.activity.utils.TranslucentActivity;
+import cn.dreamtobe.kpswitch.demo.R;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
 import cn.dreamtobe.kpswitch.widget.CustomRootLayout;
 import cn.dreamtobe.kpswitch.widget.PanelLayout;

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.dreamtobe.jkpswitch">
+    package="cn.dreamtobe.kpswitch.demo">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
 
 
         <activity
-            android:name=".activity.utils.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".activity.utils.TranslucentActivity"
+            android:name=".activity.TranslucentActivity"
             android:theme="@style/TranslucentFullScreenTheme" />
 
 

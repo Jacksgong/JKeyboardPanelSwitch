@@ -1,4 +1,4 @@
-package cn.dreamtobe.jkpswitch.activity;
+package cn.dreamtobe.kpswitch.demo.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import cn.dreamtobe.jkpswitch.R;
+import cn.dreamtobe.kpswitch.demo.R;
+
 
 /**
  * Created by Jacksgong on 15/7/1.
