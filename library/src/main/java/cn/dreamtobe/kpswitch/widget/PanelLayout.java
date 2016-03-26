@@ -19,19 +19,19 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import java.lang.ref.WeakReference;
-
+import cn.dreamtobe.kpswitch.IPanelHeightTarget;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
 
 
 /**
  * @see CustomRootLayout
  */
-public class PanelLayout extends LinearLayout {
+public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
 
     /**
      * The real status of Visible or not
@@ -47,7 +47,6 @@ public class PanelLayout extends LinearLayout {
      * Handle by {@link #setVisibility(int)} & {@link #onMeasure(int, int)}
      */
     private boolean mIsHide = false;
-    private RefreshHeightRunnable mRefreshHeightRunnable;
 
     public PanelLayout(Context context) {
         super(context);
@@ -67,50 +66,29 @@ public class PanelLayout extends LinearLayout {
 
 
     private void init() {
-        mRefreshHeightRunnable = new RefreshHeightRunnable(new WeakReference<>(this));
-        refreshHeight();
     }
 
-    /**
-     * for handle the panel's height, will be equal to the keyboard height which had saved last time.
-     */
-    public void refreshHeight() {
+    @Override
+    public void refreshHeight(int panelHeight) {
         if (isInEditMode()) {
             return;
         }
+        Log.d("PanelLayout", String.format("refresh Height %d %d", getHeight(), panelHeight));
 
-        if (getHeight() == KeyboardUtil.getValidPanelHeight(getContext())) {
+        if (getHeight() == panelHeight) {
             return;
         }
 
-        post(mRefreshHeightRunnable);
-    }
-
-    private static class RefreshHeightRunnable implements Runnable {
-        private WeakReference<PanelLayout> panelLayoutWeakReference;
-
-        private RefreshHeightRunnable(final WeakReference<PanelLayout> panelLayoutWeakReference) {
-            this.panelLayoutWeakReference = panelLayoutWeakReference;
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        if (layoutParams == null) {
+            layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    KeyboardUtil.getValidPanelHeight(getContext()));
+            setLayoutParams(layoutParams);
+        } else {
+            layoutParams.height = KeyboardUtil.getValidPanelHeight(getContext());
+            requestLayout();
         }
 
-        @Override
-        public void run() {
-            if (this.panelLayoutWeakReference == null ||
-                    this.panelLayoutWeakReference.get() == null) {
-                return;
-            }
-
-            final PanelLayout panelLayout = this.panelLayoutWeakReference.get();
-            ViewGroup.LayoutParams layoutParams = panelLayout.getLayoutParams();
-            if (layoutParams == null) {
-                layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        KeyboardUtil.getValidPanelHeight(panelLayout.getContext()));
-            } else {
-                layoutParams.height = KeyboardUtil.getValidPanelHeight(panelLayout.getContext());
-            }
-
-            panelLayout.setLayoutParams(layoutParams);
-        }
     }
 
 

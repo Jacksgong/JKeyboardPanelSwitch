@@ -20,7 +20,7 @@ import cn.dreamtobe.kpswitch.widget.PanelLayout;
 /**
  * Created by Jacksgong on 15/7/1.
  * <p/>
- * Desc: 适配了 Panel<->Keybord 切换冲突
+ * Desc: 适配了 Panel<->Keyboard 切换冲突
  */
 public class JChattingActivity extends AppCompatActivity {
 
@@ -53,6 +53,7 @@ public class JChattingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chatting);
 
         assignViews();
+        KeyboardUtil.attach(this, mPanelRoot);
 
         // Add keyboard showing state callback, do like this when you want to listen in the keyboard's show/hide change.
         mRootView.setOnKeyboardShowingListener(new CustomRootLayout.OnKeyboardShowingListener() {

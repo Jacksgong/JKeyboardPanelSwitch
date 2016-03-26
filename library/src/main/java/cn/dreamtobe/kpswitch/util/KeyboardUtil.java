@@ -15,12 +15,18 @@
  */
 package cn.dreamtobe.kpswitch.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Rect;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
+import cn.dreamtobe.kpswitch.IPanelHeightTarget;
 import cn.dreamtobe.kpswitch.R;
 
 /**
@@ -102,5 +108,86 @@ public class KeyboardUtil {
         return MIN_PANEL_HEIGHT;
     }
 
+
+    /**
+     * Recommend invoked by {@link Activity#onCreate(Bundle)}
+     * For align the height of the keyboard to {@code target} as much as possible.
+     *
+     * @param activity contain the view
+     * @param target whose height will be align to the keyboard height.
+     */
+    public static void attach(final Activity activity, IPanelHeightTarget target) {
+        final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        contentView.getViewTreeObserver().
+                addOnGlobalLayoutListener(new KeyboardSizeListener(contentView, target));
+    }
+
+    private static class KeyboardSizeListener implements ViewTreeObserver.OnGlobalLayoutListener {
+        private final static String TAG = "KeyboardSizeListener";
+
+        private int previousHeight = 0;
+        private ViewGroup contentView;
+        IPanelHeightTarget panelHeightTarget;
+
+        KeyboardSizeListener(ViewGroup contentView, IPanelHeightTarget panelHeightTarget) {
+            this.contentView = contentView;
+            this.panelHeightTarget = panelHeightTarget;
+        }
+
+        @Override
+        public void onGlobalLayout() {
+            final View userRootView = this.contentView.getChildAt(0);
+
+            // Step 1. calculate the current display frame's height.
+            Rect r = new Rect();
+            userRootView.getWindowVisibleDisplayFrame(r);
+            final int nowHeight = (r.bottom - r.top);
+
+            // first result.
+            if (previousHeight == 0) {
+                previousHeight = nowHeight;
+
+                // init the panel height for target.
+                panelHeightTarget.refreshHeight(KeyboardUtil.getValidPanelHeight(getContext()));
+                return;
+            }
+
+            // no change.
+            if (nowHeight == previousHeight) {
+                return;
+            }
+
+
+
+            final int keyboardHeight = Math.abs(nowHeight - previousHeight);
+
+            // influence from the layout of the Status-bar.
+            if (keyboardHeight == StatusBarHeightUtil.getStatusBarHeight(getContext())) {
+                Log.w(TAG, String.format("On global layout change get keyboard height just equal" +
+                        " statusBar height %d", keyboardHeight));
+                return;
+            }
+
+            // Step 2. save the keyboardHeight
+            boolean changed = KeyboardUtil.saveKeyboardHeight(getContext(), keyboardHeight);
+            if (changed) {
+                final int validPanelHeight = KeyboardUtil.getValidPanelHeight(getContext());
+                if (this.panelHeightTarget.getHeight() != validPanelHeight) {
+                    // Step3. refresh the panel's height with valid-panel-height which refer to
+                    // the last keyboard height
+                    this.panelHeightTarget.refreshHeight(validPanelHeight);
+                }
+            }
+
+
+            previousHeight = nowHeight;
+            Log.d(TAG, String.format("height: %d rootHeight: %d", nowHeight,
+                    userRootView.getRootView().getHeight()));
+        }
+
+        private Context getContext() {
+            return contentView.getContext();
+        }
+    }
 
 }

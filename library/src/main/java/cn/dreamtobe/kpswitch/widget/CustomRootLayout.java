@@ -22,10 +22,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
-import cn.dreamtobe.kpswitch.util.KeyboardUtil;
+import cn.dreamtobe.kpswitch.util.StatusBarHeightUtil;
 
 
 /**
@@ -33,7 +32,7 @@ import cn.dreamtobe.kpswitch.util.KeyboardUtil;
  *
  * @see PanelLayout
  */
-public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.OnGlobalLayoutListener {
+public class CustomRootLayout extends LinearLayout {
 
     private final static String TAG = "JFrame.CustomRootLayout";
 
@@ -59,28 +58,11 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         init();
     }
 
-    private final static String STATUS_BAR_DEF_PACKAGE = "android";
-    private final static String STATUS_BAR_DEF_TYPE = "dimen";
-    private final static String STATUS_BAR_NAME = "status_bar_height";
 
+    private int mStatusBarHeight;
     private void init() {
-        getViewTreeObserver().addOnGlobalLayoutListener(this);
-
-        if (!mAlreadyGetStatusBarHeight) {
-            int resourceId = getResources().getIdentifier(STATUS_BAR_NAME, STATUS_BAR_DEF_TYPE, STATUS_BAR_DEF_PACKAGE);
-            if (resourceId > 0) {
-                mStatusBarHeight = getResources().getDimensionPixelSize(resourceId);
-                mAlreadyGetStatusBarHeight = true;
-                Log.d(TAG, String.format("Get status bar height %d", mStatusBarHeight));
-            }
-        }
-
+        this.mStatusBarHeight = StatusBarHeightUtil.getStatusBarHeight(getContext());
     }
-
-    private int mStatusBarHeight = 50;
-
-    private boolean mAlreadyGetStatusBarHeight = false;
-
 
     private int mOldHeight = -1;
 
@@ -195,7 +177,8 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
         super.onLayout(changed, l, t, r, b);
 
         if (Math.abs(maxBottom - b) == mStatusBarHeight) {
-            Log.w(TAG, String.format("customRootLayout on layout get max bottom value offset just equal statusBar height %d", mStatusBarHeight));
+            Log.w(TAG, String.format("customRootLayout on layout get max bottom value offset just" +
+                    " equal statusBar height %d", mStatusBarHeight));
             return;
         }
 
@@ -210,41 +193,6 @@ public class CustomRootLayout extends LinearLayout implements ViewTreeObserver.O
 
         if (maxBottom < b) {
             maxBottom = b;
-        }
-
-    }
-
-    private int mLastHeight = 0;
-
-    @Override
-    public void onGlobalLayout() {
-        final int height = getHeight();
-
-        if (mLastHeight == 0) {
-            mLastHeight = height;
-            return;
-        }
-
-        if (mLastHeight == height) {
-            return;
-        }
-
-        final int keyboardHeight = Math.abs(mLastHeight - height);
-        if (keyboardHeight == mStatusBarHeight) {
-            Log.w(TAG, String.format("On global layout change get keyboard height just equal statusBar height %d", keyboardHeight));
-            return;
-        }
-
-        mLastHeight = height;
-
-        final boolean change = KeyboardUtil.saveKeyboardHeight(getContext(), keyboardHeight);
-        if (change) {
-            final int panelHeight = getPanelLayout(this).getHeight();
-            final int validPanelHeight = KeyboardUtil.getValidPanelHeight(getContext());
-            if (panelHeight != validPanelHeight) {
-                Log.d(TAG, "refresh panel height");
-                getPanelLayout(this).refreshHeight();
-            }
         }
 
     }
