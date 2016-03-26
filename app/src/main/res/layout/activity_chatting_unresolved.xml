@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/view_message_list" />
+
+    <include layout="@layout/layout_send_message_bar" />
+
+    <LinearLayout
+        android:id="@+id/panel_root"
+        style="@style/Panel"
+        android:visibility="gone">
+
+        <include layout="@layout/merge_panel_content" />
+    </LinearLayout>
+
+</LinearLayout>

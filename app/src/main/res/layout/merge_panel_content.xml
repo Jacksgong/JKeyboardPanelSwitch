@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Panel">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#d5d3d5" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/send_img_tv"
+            style="@style/PanelItem"
+            android:drawableTop="@drawable/chatting_pic_icon"
+            android:text="@string/picture" />
+
+        <TextView
+            style="@style/PanelItem"
+            android:drawableTop="@drawable/chatting_site_icon"
+            android:text="@string/site" />
+    </LinearLayout>
+</merge>

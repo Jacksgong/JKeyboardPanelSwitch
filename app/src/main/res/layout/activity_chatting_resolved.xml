@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.dreamtobe.kpswitch.widget.CustomRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_message_list" />
+
+    <include layout="@layout/layout_send_message_bar" />
+
+
+    <cn.dreamtobe.kpswitch.widget.PanelLayout
+        android:id="@+id/panel_root"
+        style="@style/Panel"
+        android:visibility="gone">
+
+        <include layout="@layout/merge_panel_content" />
+    </cn.dreamtobe.kpswitch.widget.PanelLayout>
+
+</cn.dreamtobe.kpswitch.widget.CustomRootLayout>

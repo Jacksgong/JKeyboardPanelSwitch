@@ -6,14 +6,35 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/translucent</item>
     </style>
 
 
-    <style name="TranslucentFullSceenTheme" parent="AppTheme">
+    <style name="TranslucentFullScreenTheme" parent="FullScreenTheme">
         <item name="android:windowBackground">@color/translucent</item>
         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="FullScreenTheme" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Panel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/panel_height</item>
+        <item name="android:background">#fffefefe</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="PanelItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">3dp</item>
+        <item name="android:textColor">#b3b3b3</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">10dp</item>
     </style>
 
 </resources>

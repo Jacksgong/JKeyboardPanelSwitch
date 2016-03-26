@@ -18,18 +18,18 @@
         </activity>
 
         <activity
-            android:name=".activity.ChattingActivity"
-            android:label="@string/activity_chatting_title"
+            android:name=".activity.ChattingUnresolvedActivity"
+            android:label="@string/activity_chatting_unresolved_title"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".activity.JChattingActivity"
-            android:label="@string/activity_jchatting_title"
+            android:name=".activity.ChattingResolvedActivity"
+            android:label="@string/activity_chatting_resolved_title"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".activity.utils.TranslucentActivity"
-            android:theme="@style/TranslucentFullSceenTheme" />
+            android:theme="@style/TranslucentFullScreenTheme" />
 
 
     </application>

@@ -9,8 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import cn.dreamtobe.jkpswitch.R;
-import cn.dreamtobe.jkpswitch.activity.ChattingActivity;
-import cn.dreamtobe.jkpswitch.activity.JChattingActivity;
+import cn.dreamtobe.jkpswitch.activity.ChattingUnresolvedActivity;
+import cn.dreamtobe.jkpswitch.activity.ChattingResolvedActivity;
 
 /**
  * Created by Jacksgong on 15/7/1.
@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickResolved(final View view) {
-        startActivity(new Intent(this, JChattingActivity.class));
+        startActivity(new Intent(this, ChattingResolvedActivity.class));
     }
 
     public void onClickUnResolved(final View view) {
         // 使用差别只是未使用CustomContentRootLayout与PanelRotLayout 并且在切换的时候未使用PanelRootLayout#setIsHide
-        startActivity(new Intent(this, ChattingActivity.class));
+        startActivity(new Intent(this, ChattingUnresolvedActivity.class));
     }
 
     @Override

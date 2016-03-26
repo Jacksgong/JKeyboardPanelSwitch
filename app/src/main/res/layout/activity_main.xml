@@ -10,7 +10,7 @@
         android:layout_marginTop="20dp"
         android:onClick="onClickResolved"
         android:padding="5dp"
-        android:text="解决切换冲突" />
+        android:text="@string/activity_chatting_resolved_title" />
 
     <Button
         android:layout_width="match_parent"
@@ -18,5 +18,5 @@
         android:layout_marginTop="20dp"
         android:padding="5dp"
         android:onClick="onClickUnResolved"
-        android:text="未解决切换冲突" />
+        android:text="@string/activity_chatting_unresolved_title" />
 </LinearLayout>
