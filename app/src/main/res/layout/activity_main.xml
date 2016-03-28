@@ -16,7 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:onClick="onClickFullScreenResolved"
         android:padding="5dp"
+        android:text="@string/activity_chatting_fullscreen_resolved_title" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:onClick="onClickUnResolved"
+        android:padding="5dp"
         android:text="@string/activity_chatting_unresolved_title" />
 </LinearLayout>

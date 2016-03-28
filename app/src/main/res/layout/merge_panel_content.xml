@@ -8,6 +8,7 @@
         android:background="#d5d3d5" />
 
     <LinearLayout
+        android:id="@+id/panel_content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

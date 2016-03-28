@@ -28,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, ChattingResolvedActivity.class));
     }
 
+    public void onClickFullScreenResolved(final View view) {
+        startActivity(new Intent(this, ChattingResolvedFullScreenActivity.class));
+    }
+
+
     public void onClickUnResolved(final View view) {
         // 使用差别只是未使用CustomContentRootLayout与PanelRotLayout 并且在切换的时候未使用PanelRootLayout#setIsHide
         startActivity(new Intent(this, ChattingUnresolvedActivity.class));
