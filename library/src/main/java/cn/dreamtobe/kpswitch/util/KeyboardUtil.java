@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import cn.dreamtobe.kpswitch.IPanelHeightTarget;
@@ -58,7 +59,7 @@ public class KeyboardUtil {
 
     private static int LAST_SAVE_KEYBOARD_HEIGHT = 0;
 
-    private static boolean saveKeyboardHeight(final Context context, int keyboardHeight) {
+    static boolean saveKeyboardHeight(final Context context, int keyboardHeight) {
         if (LAST_SAVE_KEYBOARD_HEIGHT == keyboardHeight) {
             return false;
         }
@@ -143,31 +144,44 @@ public class KeyboardUtil {
      */
     public static void attach(final Activity activity, IPanelHeightTarget target) {
         final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        boolean fullScreen = (activity.getWindow().getAttributes().flags &
+                WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
         contentView.getViewTreeObserver().
-                addOnGlobalLayoutListener(new KeyboardSizeListener(contentView, target));
+                addOnGlobalLayoutListener(new KeyboardStatusListener(fullScreen, contentView, target));
     }
 
-    private static class KeyboardSizeListener implements ViewTreeObserver.OnGlobalLayoutListener {
-        private final static String TAG = "KeyboardSizeListener";
+    private static class KeyboardStatusListener implements ViewTreeObserver.OnGlobalLayoutListener {
+        private final static String TAG = "KeyboardStatusListener";
 
         private int previousHeight = 0;
         private final ViewGroup contentView;
         private final IPanelHeightTarget panelHeightTarget;
+        private final boolean isFullScreen;
+        private boolean lastKeyboardShowing;
 
-        KeyboardSizeListener(ViewGroup contentView, IPanelHeightTarget panelHeightTarget) {
+        KeyboardStatusListener(boolean isFullScreen, ViewGroup contentView,
+                               IPanelHeightTarget panelHeightTarget) {
             this.contentView = contentView;
             this.panelHeightTarget = panelHeightTarget;
+            this.isFullScreen = isFullScreen;
         }
 
         @Override
         public void onGlobalLayout() {
-            final View userRootView = this.contentView.getChildAt(0);
+            final View userRootView = contentView.getChildAt(0);
 
             // Step 1. calculate the current display frame's height.
             Rect r = new Rect();
             userRootView.getWindowVisibleDisplayFrame(r);
             final int nowHeight = (r.bottom - r.top);
 
+            calculateKeyboardHeight(nowHeight);
+            calculateKeyboardShowing(nowHeight);
+
+            previousHeight = nowHeight;
+        }
+
+        private void calculateKeyboardHeight(final int nowHeight) {
             // first result.
             if (previousHeight == 0) {
                 previousHeight = nowHeight;
@@ -177,13 +191,24 @@ public class KeyboardUtil {
                 return;
             }
 
+            int keyboardHeight;
+            if (isFullScreen) {
+                // the height of content parent = contentView.height + actionBar.height
+                final View actionBarOverlayLayout = (View)contentView.getParent();
+
+                keyboardHeight = actionBarOverlayLayout.getHeight() - nowHeight;
+                Log.d(TAG, "action bar over layout " + ((View) contentView.getParent()).getHeight()
+                        + "now height: " + nowHeight);
+            } else {
+                keyboardHeight = Math.abs(nowHeight - previousHeight);
+            }
             // no change.
-            if (nowHeight == previousHeight) {
+            if (keyboardHeight <= 0) {
                 return;
             }
 
-
-            final int keyboardHeight = Math.abs(nowHeight - previousHeight);
+            Log.d(TAG, String.format("pre height: %d now height: %d keyboard: %d ",
+                    previousHeight, nowHeight, keyboardHeight));
 
             // influence from the layout of the Status-bar.
             if (keyboardHeight == StatusBarHeightUtil.getStatusBarHeight(getContext())) {
@@ -192,7 +217,7 @@ public class KeyboardUtil {
                 return;
             }
 
-            // Step 2. save the keyboardHeight
+            // save the keyboardHeight
             boolean changed = KeyboardUtil.saveKeyboardHeight(getContext(), keyboardHeight);
             if (changed) {
                 final int validPanelHeight = KeyboardUtil.getValidPanelHeight(getContext());
@@ -202,13 +227,27 @@ public class KeyboardUtil {
                     this.panelHeightTarget.refreshHeight(validPanelHeight);
                 }
             }
-
-
-            previousHeight = nowHeight;
-            Log.d(TAG, String.format("height: %d rootHeight: %d", nowHeight,
-                    userRootView.getRootView().getHeight()));
         }
 
+        private void calculateKeyboardShowing(final int nowHeight) {
+
+            boolean isKeyboardShowing;
+            if (isFullScreen) {
+                // the height of content parent = contentView.height + actionBar.height
+                final View actionBarOverlayLayout = (View)contentView.getParent();
+                isKeyboardShowing = actionBarOverlayLayout.getHeight() != nowHeight;
+            } else {
+                isKeyboardShowing = nowHeight <= previousHeight;
+
+            }
+
+            if (lastKeyboardShowing != isKeyboardShowing) {
+                Log.d(TAG, String.format("keyboard status change: %B", isKeyboardShowing));
+                this.panelHeightTarget.onKeyboardShowing(isKeyboardShowing);
+            }
+            lastKeyboardShowing = isKeyboardShowing;
+
+        }
         private Context getContext() {
             return contentView.getContext();
         }

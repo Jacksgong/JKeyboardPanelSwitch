@@ -19,6 +19,8 @@ package cn.dreamtobe.kpswitch;
  * Created by Jacksgong on 3/26/16.
  * <p/>
  * For align the height of the keyboard to panel height as much as possible.
+ *
+ * @see cn.dreamtobe.kpswitch.util.KeyboardUtil.KeyboardStatusListener
  */
 public interface IPanelHeightTarget {
 
@@ -27,5 +29,15 @@ public interface IPanelHeightTarget {
      */
     void refreshHeight(final int panelHeight);
 
+    /**
+     * @return get the height of target-view.
+     */
     int getHeight();
+
+    /**
+     * Be invoked by onGlobalLayoutListener call-back.
+     *
+     * @param showing whether the keyboard is showing or not.
+     */
+    void onKeyboardShowing(boolean showing);
 }

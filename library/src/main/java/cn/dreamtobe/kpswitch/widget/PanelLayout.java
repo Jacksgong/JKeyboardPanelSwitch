@@ -19,13 +19,11 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import cn.dreamtobe.kpswitch.IPanelHeightTarget;
-import cn.dreamtobe.kpswitch.util.KeyboardUtil;
+import cn.dreamtobe.kpswitch.util.ViewUtil;
 
 
 /**
@@ -63,25 +61,12 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
 
     @Override
     public void refreshHeight(int panelHeight) {
-        if (isInEditMode()) {
-            return;
-        }
-        Log.d("PanelLayout", String.format("refresh Height %d %d", getHeight(), panelHeight));
+        ViewUtil.refreshHeight(this, panelHeight);
+    }
 
-        if (getHeight() == panelHeight) {
-            return;
-        }
-
-        ViewGroup.LayoutParams layoutParams = getLayoutParams();
-        if (layoutParams == null) {
-            layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    KeyboardUtil.getValidPanelHeight(getContext()));
-            setLayoutParams(layoutParams);
-        } else {
-            layoutParams.height = KeyboardUtil.getValidPanelHeight(getContext());
-            requestLayout();
-        }
-
+    @Override
+    public void onKeyboardShowing(boolean showing) {
+        setIsKeyboardShowing(showing);
     }
 
 
