@@ -64,6 +64,12 @@ public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sendEdt.clearFocus();
+    }
+
     private FullScreenPanelLayout panelRoot;
     private LinearLayout sendMsgLayout;
     private ImageView voiceTextSwitchIv;
