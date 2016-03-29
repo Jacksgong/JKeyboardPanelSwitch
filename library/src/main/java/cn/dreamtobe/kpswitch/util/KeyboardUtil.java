@@ -157,6 +157,7 @@ public class KeyboardUtil {
         private final ViewGroup contentView;
         private final IPanelHeightTarget panelHeightTarget;
         private final boolean isFullScreen;
+        private final int statusBarHeight;
         private boolean lastKeyboardShowing;
 
         KeyboardStatusListener(boolean isFullScreen, ViewGroup contentView,
@@ -164,6 +165,7 @@ public class KeyboardUtil {
             this.contentView = contentView;
             this.panelHeightTarget = panelHeightTarget;
             this.isFullScreen = isFullScreen;
+            this.statusBarHeight = StatusBarHeightUtil.getStatusBarHeight(contentView.getContext());
         }
 
         @Override
@@ -211,7 +213,7 @@ public class KeyboardUtil {
                     previousHeight, nowHeight, keyboardHeight));
 
             // influence from the layout of the Status-bar.
-            if (keyboardHeight == StatusBarHeightUtil.getStatusBarHeight(getContext())) {
+            if (keyboardHeight == this.statusBarHeight) {
                 Log.w(TAG, String.format("On global layout change get keyboard height just equal" +
                         " statusBar height %d", keyboardHeight));
                 return;
@@ -235,9 +237,16 @@ public class KeyboardUtil {
             if (isFullScreen) {
                 // the height of content parent = contentView.height + actionBar.height
                 final View actionBarOverlayLayout = (View)contentView.getParent();
-                isKeyboardShowing = actionBarOverlayLayout.getHeight() != nowHeight;
+                final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight();
+                if (actionBarOverlayLayoutHeight - nowHeight == this.statusBarHeight) {
+                    // handle the case of status bar layout, not keyboard active.
+                    isKeyboardShowing = lastKeyboardShowing;
+                } else {
+                    isKeyboardShowing = actionBarOverlayLayoutHeight > nowHeight;
+                }
+
             } else {
-                isKeyboardShowing = nowHeight <= previousHeight;
+                isKeyboardShowing = nowHeight < previousHeight;
 
             }
 
