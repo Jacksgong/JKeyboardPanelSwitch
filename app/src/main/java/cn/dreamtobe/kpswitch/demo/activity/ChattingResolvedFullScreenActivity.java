@@ -67,7 +67,9 @@ public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        sendEdt.clearFocus();
+        if (!panelRoot.isKeyboardShowing()) {
+            sendEdt.clearFocus();
+        }
     }
 
     private FullScreenPanelLayout panelRoot;

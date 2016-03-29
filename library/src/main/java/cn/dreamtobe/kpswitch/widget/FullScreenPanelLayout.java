@@ -37,11 +37,17 @@ public class FullScreenPanelLayout extends LinearLayout implements IPanelHeightT
         ViewUtil.refreshHeight(this, panelHeight);
     }
 
+    private boolean isKeyboardShowing;
+
     @Override
     public void onKeyboardShowing(boolean showing) {
+        this.isKeyboardShowing = showing;
         if (!showing && getVisibility() == View.INVISIBLE) {
             setVisibility(View.GONE);
         }
+    }
 
+    public boolean isKeyboardShowing() {
+        return isKeyboardShowing;
     }
 }
