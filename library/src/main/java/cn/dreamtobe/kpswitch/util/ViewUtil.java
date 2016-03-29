@@ -14,11 +14,13 @@ import android.view.ViewGroup;
  */
 public class ViewUtil {
 
+    private final static String TAG = "ViewUtil";
+
     public static boolean refreshHeight(final View view, final int aimHeight) {
         if (view.isInEditMode()) {
             return false;
         }
-        Log.d("FullScreenPanelLayout",
+        Log.d(TAG,
                 String.format("refresh Height %d %d", view.getHeight(), aimHeight));
 
         if (view.getHeight() == aimHeight) {

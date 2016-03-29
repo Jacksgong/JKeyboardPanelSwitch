@@ -153,7 +153,7 @@ public class KeyboardUtil {
     private static class KeyboardStatusListener implements ViewTreeObserver.OnGlobalLayoutListener {
         private final static String TAG = "KeyboardStatusListener";
 
-        private int previousHeight = 0;
+        private int previousDisplayHeight = 0;
         private final ViewGroup contentView;
         private final IPanelHeightTarget panelHeightTarget;
         private final boolean isFullScreen;
@@ -175,18 +175,18 @@ public class KeyboardUtil {
             // Step 1. calculate the current display frame's height.
             Rect r = new Rect();
             userRootView.getWindowVisibleDisplayFrame(r);
-            final int nowHeight = (r.bottom - r.top);
+            final int displayHeight = (r.bottom - r.top);
 
-            calculateKeyboardHeight(nowHeight);
-            calculateKeyboardShowing(nowHeight);
+            calculateKeyboardHeight(displayHeight);
+            calculateKeyboardShowing(displayHeight);
 
-            previousHeight = nowHeight;
+            previousDisplayHeight = displayHeight;
         }
 
-        private void calculateKeyboardHeight(final int nowHeight) {
+        private void calculateKeyboardHeight(final int displayHeight) {
             // first result.
-            if (previousHeight == 0) {
-                previousHeight = nowHeight;
+            if (previousDisplayHeight == 0) {
+                previousDisplayHeight = displayHeight;
 
                 // init the panel height for target.
                 panelHeightTarget.refreshHeight(KeyboardUtil.getValidPanelHeight(getContext()));
@@ -198,19 +198,21 @@ public class KeyboardUtil {
                 // the height of content parent = contentView.height + actionBar.height
                 final View actionBarOverlayLayout = (View)contentView.getParent();
 
-                keyboardHeight = actionBarOverlayLayout.getHeight() - nowHeight;
-                Log.d(TAG, "action bar over layout " + ((View) contentView.getParent()).getHeight()
-                        + "now height: " + nowHeight);
+                keyboardHeight = actionBarOverlayLayout.getHeight() - displayHeight;
+
+                Log.d(TAG, String.format("action bar over layout %d display height: %d",
+                        ((View) contentView.getParent()).getHeight(), displayHeight));
+
             } else {
-                keyboardHeight = Math.abs(nowHeight - previousHeight);
+                keyboardHeight = Math.abs(displayHeight - previousDisplayHeight);
             }
             // no change.
             if (keyboardHeight <= 0) {
                 return;
             }
 
-            Log.d(TAG, String.format("pre height: %d now height: %d keyboard: %d ",
-                    previousHeight, nowHeight, keyboardHeight));
+            Log.d(TAG, String.format("pre display height: %d display height: %d keyboard: %d ",
+                    previousDisplayHeight, displayHeight, keyboardHeight));
 
             // influence from the layout of the Status-bar.
             if (keyboardHeight == this.statusBarHeight) {
@@ -231,22 +233,22 @@ public class KeyboardUtil {
             }
         }
 
-        private void calculateKeyboardShowing(final int nowHeight) {
+        private void calculateKeyboardShowing(final int displayHeight) {
 
             boolean isKeyboardShowing;
             if (isFullScreen) {
                 // the height of content parent = contentView.height + actionBar.height
                 final View actionBarOverlayLayout = (View)contentView.getParent();
                 final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight();
-                if (actionBarOverlayLayoutHeight - nowHeight == this.statusBarHeight) {
+                if (actionBarOverlayLayoutHeight - displayHeight == this.statusBarHeight) {
                     // handle the case of status bar layout, not keyboard active.
                     isKeyboardShowing = lastKeyboardShowing;
                 } else {
-                    isKeyboardShowing = actionBarOverlayLayoutHeight > nowHeight;
+                    isKeyboardShowing = actionBarOverlayLayoutHeight > displayHeight;
                 }
 
             } else {
-                isKeyboardShowing = nowHeight < previousHeight;
+                isKeyboardShowing = displayHeight < previousDisplayHeight;
 
             }
 
