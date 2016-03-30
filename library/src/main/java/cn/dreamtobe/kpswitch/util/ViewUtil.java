@@ -15,9 +15,11 @@
  */
 package cn.dreamtobe.kpswitch.util;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 /**
  * Created by Jacksgong on 3/28/16.
@@ -59,6 +61,11 @@ public class ViewUtil {
         }
 
         return true;
+    }
+
+    public static boolean isFullScreen(final Activity activity) {
+        return (activity.getWindow().getAttributes().flags &
+                WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
     }
 
 }

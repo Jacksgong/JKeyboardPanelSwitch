@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import cn.dreamtobe.kpswitch.IPanelHeightTarget;
@@ -147,8 +146,7 @@ public class KeyboardUtil {
     public static void attach(final Activity activity, IPanelHeightTarget target,
                               /** Nullable **/OnKeyboardShowingListener listener) {
         final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
-        boolean fullScreen = (activity.getWindow().getAttributes().flags &
-                WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
+        boolean fullScreen = ViewUtil.isFullScreen(activity);
         contentView.getViewTreeObserver().
                 addOnGlobalLayoutListener(new KeyboardStatusListener(fullScreen, contentView,
                         target, listener));
