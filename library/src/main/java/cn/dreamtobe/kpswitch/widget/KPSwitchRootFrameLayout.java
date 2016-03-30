@@ -43,19 +43,23 @@ public class KPSwitchRootFrameLayout extends FrameLayout {
 
     public KPSwitchRootFrameLayout(Context context) {
         super(context);
+        init();
     }
 
     public KPSwitchRootFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public KPSwitchRootFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public KPSwitchRootFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init();
     }
 
     private void init() {
