@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import cn.dreamtobe.kpswitch.demo.R;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
-import cn.dreamtobe.kpswitch.widget.CustomRootLayout;
 import cn.dreamtobe.kpswitch.widget.PanelLayout;
 
 /**
@@ -24,15 +23,13 @@ import cn.dreamtobe.kpswitch.widget.PanelLayout;
  */
 public class ChattingResolvedActivity extends AppCompatActivity {
 
-    private static final String TAG = "JChattingActivity";
-    private CustomRootLayout mRootView;
+    private static final String TAG = "ResolvedActivity";
     private RecyclerView mContentRyv;
     private EditText mSendEdt;
     private PanelLayout mPanelRoot;
     private TextView sendImgTv;
 
     private void assignViews() {
-        mRootView = (CustomRootLayout) findViewById(R.id.rootView);
         mContentRyv = (RecyclerView) findViewById(R.id.content_ryv);
         mSendEdt = (EditText) findViewById(R.id.send_edt);
         mPanelRoot = (PanelLayout) findViewById(R.id.panel_root);
@@ -55,21 +52,21 @@ public class ChattingResolvedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chatting_resolved);
 
         assignViews();
-        KeyboardUtil.attach(this, mPanelRoot);
+        KeyboardUtil.attach(this, mPanelRoot,
+                // Add keyboard showing state callback, do like this when you want to listen in the
+                // keyboard's show/hide change.
+                new KeyboardUtil.OnKeyboardShowingListener() {
+                    @Override
+                    public void onKeyboardShowing(boolean isShowing) {
+                        Log.d(TAG, String.format("Keyboard is %s", isShowing ? "showing" : "hiding"));
+                    }
+                });
 
         sendImgTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // mock start the translucent full screen activity.
                 startActivity(new Intent(ChattingResolvedActivity.this, TranslucentActivity.class));
-            }
-        });
-
-        // Add keyboard showing state callback, do like this when you want to listen in the keyboard's show/hide change.
-        mRootView.setOnKeyboardShowingListener(new CustomRootLayout.OnKeyboardShowingListener() {
-            @Override
-            public void onKeyboardShowing(boolean isShowing) {
-                Log.d(TAG, String.format("Keyboard is %s", isShowing ? "showing" : "hiding"));
             }
         });
 
@@ -87,7 +84,6 @@ public class ChattingResolvedActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     @Override

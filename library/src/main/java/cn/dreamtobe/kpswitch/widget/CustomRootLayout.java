@@ -112,7 +112,7 @@ public class CustomRootLayout extends LinearLayout {
             if (offset > 0) {
                 //键盘弹起 (offset > 0，高度变小)
                 bottom.handleHide();
-            } else if (mIsKeyboardShowing) {
+            } else if (bottom.isKeyboardShowing()) {
                 // 1. 总得来首，在监听到键盘已经显示的前提下，键盘收回才是有效有意义的。
                 // 2. 修复在Android L下使用V7.Theme.AppCompat主题，进入Activity，默认弹起面板bug，
                 // 第2点的bug出现原因:在Android L下使用V7.Theme.AppCompat主题，并且不使用系统的ActionBar/ToolBar，V7.Theme.AppCompat主题,还是会先默认绘制一帧默认ActionBar，然后再将他去掉（略无语）
@@ -154,81 +154,4 @@ public class CustomRootLayout extends LinearLayout {
         return null;
 
     }
-
-    private boolean mIsKeyboardShowing = false;
-
-    protected void onKeyboardShowing(final boolean isShowing) {
-        if (this.mIsKeyboardShowing == isShowing) {
-            return;
-        }
-
-        this.mIsKeyboardShowing = isShowing;
-        final PanelLayout panelLayout = getPanelLayout(this);
-        if (panelLayout != null) {
-            panelLayout.setIsKeyboardShowing(isShowing);
-        } else {
-           Log.w(TAG, "can't sync the keyboard status to panel layout, panel layout can't find.");
-        }
-
-        if (mKeyboardShowingListener != null) {
-            mKeyboardShowingListener.onKeyboardShowing(isShowing);
-        }
-    }
-
-    private int maxBottom = 0;
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-
-        if (Math.abs(maxBottom - b) == mStatusBarHeight) {
-            Log.w(TAG, String.format("customRootLayout on layout get max bottom value offset just" +
-                    " equal statusBar height %d", mStatusBarHeight));
-            return;
-        }
-
-        if (b >= maxBottom && maxBottom != 0) {
-            // 在底部，键盘隐藏状态
-            Log.d(TAG, "keyboard hiding");
-            onKeyboardShowing(false);
-        } else if (maxBottom != 0) {
-            Log.d(TAG, "keyboard showing");
-            onKeyboardShowing(true);
-        }
-
-        if (maxBottom < b) {
-            maxBottom = b;
-        }
-
-    }
-
-    private OnKeyboardShowingListener mKeyboardShowingListener;
-
-    /**
-     * @param keyboardShowingListener to listen keyboard showing state.
-     */
-    public void setOnKeyboardShowingListener(OnKeyboardShowingListener keyboardShowingListener) {
-        mKeyboardShowingListener = keyboardShowingListener;
-    }
-
-    /**
-     * The interface is used to listen the keyboard showing state.
-     */
-    public interface OnKeyboardShowingListener {
-
-        /**
-         * Keyboard showing state callback method.
-         * <p>
-         *     This method is invoked in {@link View#layout(int, int, int, int)} which is one of the
-         *     View's draw lifecycle callback methods, and it should be focused on calculating view's
-         *     left, top, right, bottom. So avoiding those time-consuming operation(I/O, complex calculation,
-         *     alloc objects, etc.) here from blocking main ui thread is recommended.
-         * </p>
-         *
-         * @param isShowing Indicate whether keyboard is showing or not.
-         */
-        void onKeyboardShowing(boolean isShowing);
-
-    }
-
 }

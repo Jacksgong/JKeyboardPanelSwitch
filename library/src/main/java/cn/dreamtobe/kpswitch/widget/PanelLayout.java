@@ -66,9 +66,12 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
 
     @Override
     public void onKeyboardShowing(boolean showing) {
-        setIsKeyboardShowing(showing);
+        this.mIsKeyboardShowing = showing;
     }
 
+    public boolean isKeyboardShowing() {
+        return this.mIsKeyboardShowing;
+    }
 
     /**
      * @param visibility {@link View#VISIBLE}: 这里有两种情况，1. 键盘没有弹起(需要适配)、2. 键盘没有弹起（不用适配）
@@ -110,11 +113,6 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
      * 这里只是一个状态，是在{@link #onMeasure}之前{@link CustomRootLayout#onLayout(boolean, int, int, int, int)}中获知
      */
     private boolean mIsKeyboardShowing = false;
-
-    public void setIsKeyboardShowing(final boolean isKeyboardShowing) {
-        this.mIsKeyboardShowing = isKeyboardShowing;
-    }
-
 
     private void setIsHide(final boolean isHide) {
         this.mIsHide = isHide;

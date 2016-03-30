@@ -140,14 +140,25 @@ public class KeyboardUtil {
      *
      * @param activity contain the view
      * @param target   whose height will be align to the keyboard height.
+     * @param listener the listener to listen in: keyboard is showing or not.
+     *
      * @see #saveKeyboardHeight(Context, int)
      */
-    public static void attach(final Activity activity, IPanelHeightTarget target) {
+    public static void attach(final Activity activity, IPanelHeightTarget target,
+                              /** Nullable **/OnKeyboardShowingListener listener) {
         final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
         boolean fullScreen = (activity.getWindow().getAttributes().flags &
                 WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
         contentView.getViewTreeObserver().
-                addOnGlobalLayoutListener(new KeyboardStatusListener(fullScreen, contentView, target));
+                addOnGlobalLayoutListener(new KeyboardStatusListener(fullScreen, contentView,
+                        target, listener));
+    }
+
+    /**
+     * @see #attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)
+     */
+    public static void attach(final Activity activity, IPanelHeightTarget target) {
+        attach(activity, target, null);
     }
 
     private static class KeyboardStatusListener implements ViewTreeObserver.OnGlobalLayoutListener {
@@ -159,13 +170,15 @@ public class KeyboardUtil {
         private final boolean isFullScreen;
         private final int statusBarHeight;
         private boolean lastKeyboardShowing;
+        private final OnKeyboardShowingListener keyboardShowingListener;
 
         KeyboardStatusListener(boolean isFullScreen, ViewGroup contentView,
-                               IPanelHeightTarget panelHeightTarget) {
+                               IPanelHeightTarget panelHeightTarget, OnKeyboardShowingListener listener) {
             this.contentView = contentView;
             this.panelHeightTarget = panelHeightTarget;
             this.isFullScreen = isFullScreen;
             this.statusBarHeight = StatusBarHeightUtil.getStatusBarHeight(contentView.getContext());
+            this.keyboardShowingListener = listener;
         }
 
         @Override
@@ -281,13 +294,39 @@ public class KeyboardUtil {
                         "keyboard status change: %B",
                         displayHeight, actionBarOverlayLayoutHeight, isKeyboardShowing));
                 this.panelHeightTarget.onKeyboardShowing(isKeyboardShowing);
+                if (keyboardShowingListener != null) {
+                    keyboardShowingListener.onKeyboardShowing(isKeyboardShowing);
+                }
             }
+
             lastKeyboardShowing = isKeyboardShowing;
 
         }
         private Context getContext() {
             return contentView.getContext();
         }
+    }
+
+    /**
+     * The interface is used to listen the keyboard showing state.
+     *
+     * @see #attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)
+     * @see KeyboardStatusListener#calculateKeyboardShowing(int)
+     */
+    public interface OnKeyboardShowingListener {
+
+        /**
+         * Keyboard showing state callback method.
+         * <p>
+         *     This method is invoked in {@link ViewTreeObserver.OnGlobalLayoutListener#onGlobalLayout()} which is one of the
+         *     ViewTree lifecycle callback methods. So deprecating those time-consuming operation(I/O, complex calculation,
+         *     alloc objects, etc.) here from blocking main ui thread is recommended.
+         * </p>
+         *
+         * @param isShowing Indicate whether keyboard is showing or not.
+         */
+        void onKeyboardShowing(boolean isShowing);
+
     }
 
 }
