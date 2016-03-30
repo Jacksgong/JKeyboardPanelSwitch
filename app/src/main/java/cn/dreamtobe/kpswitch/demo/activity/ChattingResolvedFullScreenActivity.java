@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import cn.dreamtobe.kpswitch.demo.R;
 import cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
-import cn.dreamtobe.kpswitch.widget.FullScreenPanelLayout;
+import cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelLinearLayout;
 
 /**
  * Created by Jacksgong on 3/26/16.
@@ -46,7 +46,7 @@ public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
         panelRoot.recordKeyboardStatus(getWindow());
     }
 
-    private FullScreenPanelLayout panelRoot;
+    private KPSwitchFSPanelLinearLayout panelRoot;
     private EditText sendEdt;
     private ImageView plusIv;
     private RecyclerView contentRyv;
@@ -54,7 +54,7 @@ public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
 
     private void assignViews() {
         contentRyv = (RecyclerView) findViewById(R.id.content_ryv);
-        panelRoot = (FullScreenPanelLayout) findViewById(R.id.panel_root);
+        panelRoot = (KPSwitchFSPanelLinearLayout) findViewById(R.id.panel_root);
         sendEdt = (EditText) findViewById(R.id.send_edt);
         plusIv = (ImageView) findViewById(R.id.plus_iv);
     }

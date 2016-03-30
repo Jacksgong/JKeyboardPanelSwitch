@@ -9,12 +9,12 @@
 
     <include layout="@layout/layout_send_message_bar" />
 
-    <cn.dreamtobe.kpswitch.widget.FullScreenPanelLayout
+    <cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelLinearLayout
         android:id="@+id/panel_root"
         style="@style/Panel"
         android:visibility="gone">
 
         <include layout="@layout/merge_panel_content" />
-    </cn.dreamtobe.kpswitch.widget.FullScreenPanelLayout>
+    </cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelLinearLayout>
 
 </LinearLayout>

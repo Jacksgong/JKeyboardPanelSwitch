@@ -19,6 +19,10 @@ import android.app.Activity;
 import android.view.MotionEvent;
 import android.view.View;
 
+import cn.dreamtobe.kpswitch.handler.KPSwitchFSPanelLayoutHandler;
+import cn.dreamtobe.kpswitch.handler.KPSwitchPanelLayoutHandler;
+import cn.dreamtobe.kpswitch.handler.KPSwitchRootLayoutHandler;
+
 /**
  * Created by Jacksgong on 3/30/16.
  * <p/>
@@ -26,14 +30,14 @@ import android.view.View;
  * non-layout-conflict.
  * <p/>
  * This util just support the application layer encapsulation, more detail for how to resolve
- * the layout-conflict please Ref  {@link cn.dreamtobe.kpswitch.handler.KPSwitchRootLayoutHandler}
- * {@link cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout} {@link cn.dreamtobe.kpswitch.widget.FullScreenPanelLayout}
+ * the layout-conflict please Ref  {@link KPSwitchRootLayoutHandler}、
+ * {@link KPSwitchPanelLayoutHandler}、{@link KPSwitchFSPanelLayoutHandler}
  * <p/>
  * Any problems: https://github.com/Jacksgong/JKeyboardPanelSwitch
  *
- * @see cn.dreamtobe.kpswitch.handler.KPSwitchRootLayoutHandler
- * @see cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout
- * @see cn.dreamtobe.kpswitch.widget.FullScreenPanelLayout
+ * @see KPSwitchRootLayoutHandler
+ * @see KPSwitchPanelLayoutHandler
+ * @see KPSwitchFSPanelLayoutHandler
  */
 public class KPSwitchConflictUtil {
 
@@ -89,8 +93,7 @@ public class KPSwitchConflictUtil {
      * non-layout-conflict.
      *
      * @param panelLayout the layout of panel.
-     * @see cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout
-     * @see cn.dreamtobe.kpswitch.widget.FullScreenPanelLayout
+     * @see KPSwitchPanelLayoutHandler
      */
     public static void showPanel(final View panelLayout) {
         final Activity activity = (Activity) panelLayout.getContext();

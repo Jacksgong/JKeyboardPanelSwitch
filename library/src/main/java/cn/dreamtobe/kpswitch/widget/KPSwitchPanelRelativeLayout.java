@@ -25,7 +25,6 @@ import android.widget.RelativeLayout;
 import cn.dreamtobe.kpswitch.IPanelConflictLayout;
 import cn.dreamtobe.kpswitch.IPanelHeightTarget;
 import cn.dreamtobe.kpswitch.handler.KPSwitchPanelLayoutHandler;
-import cn.dreamtobe.kpswitch.handler.KPSwitchRootLayoutHandler;
 import cn.dreamtobe.kpswitch.util.ViewUtil;
 
 /**
@@ -33,11 +32,12 @@ import cn.dreamtobe.kpswitch.util.ViewUtil;
  * <p/>
  * The panel container relative layout.
  * Resolve the layout-conflict from switching the keyboard and the Panel.
+ * <p/>
+ * For full-screen theme window, please use {@link KPSwitchFSPanelRelativeLayout} instead.
  *
  * @see KPSwitchPanelFrameLayout
  * @see KPSwitchPanelRelativeLayout
  * @see KPSwitchPanelLayoutHandler
- * @see KPSwitchRootLayoutHandler
  */
 public class KPSwitchPanelRelativeLayout extends RelativeLayout implements IPanelHeightTarget,
         IPanelConflictLayout {
