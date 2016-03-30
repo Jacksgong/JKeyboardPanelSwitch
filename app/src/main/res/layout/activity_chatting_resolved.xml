@@ -10,12 +10,12 @@
     <include layout="@layout/layout_send_message_bar" />
 
 
-    <cn.dreamtobe.kpswitch.widget.PanelLayout
+    <cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout
         android:id="@+id/panel_root"
         style="@style/Panel"
         android:visibility="gone">
 
         <include layout="@layout/merge_panel_content" />
-    </cn.dreamtobe.kpswitch.widget.PanelLayout>
+    </cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout>
 
 </cn.dreamtobe.kpswitch.widget.KPSwitchRootLinearLayout>

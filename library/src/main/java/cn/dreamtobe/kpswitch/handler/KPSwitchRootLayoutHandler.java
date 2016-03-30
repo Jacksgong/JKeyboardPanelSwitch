@@ -19,8 +19,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.dreamtobe.kpswitch.IPanelConflictLayout;
 import cn.dreamtobe.kpswitch.util.StatusBarHeightUtil;
-import cn.dreamtobe.kpswitch.widget.PanelLayout;
 
 /**
  * Created by Jacksgong on 3/30/16.
@@ -71,10 +71,10 @@ public class KPSwitchRootLayoutHandler {
         }
 
         mOldHeight = height;
-        final PanelLayout panel = getPanelLayout(mTargetRootView);
+        final IPanelConflictLayout panel = getPanelLayout(mTargetRootView);
 
         if (panel == null) {
-            Log.w(TAG, "bottom == null break;");
+            Log.w(TAG, "can't find the valid panel conflict layout, give up!");
             return;
         }
 
@@ -95,21 +95,21 @@ public class KPSwitchRootLayoutHandler {
         }
     }
 
-    private PanelLayout mPanelLayout;
+    private IPanelConflictLayout mPanelLayout;
 
-    private PanelLayout getPanelLayout(final View view) {
+    private IPanelConflictLayout getPanelLayout(final View view) {
         if (mPanelLayout != null) {
             return mPanelLayout;
         }
 
-        if (view instanceof PanelLayout) {
-            mPanelLayout = (PanelLayout) view;
+        if (view instanceof IPanelConflictLayout) {
+            mPanelLayout = (IPanelConflictLayout) view;
             return mPanelLayout;
         }
 
         if (view instanceof ViewGroup) {
             for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                PanelLayout v = getPanelLayout(((ViewGroup) view).getChildAt(i));
+                IPanelConflictLayout v = getPanelLayout(((ViewGroup) view).getChildAt(i));
                 if (v != null) {
                     mPanelLayout = v;
                     return mPanelLayout;

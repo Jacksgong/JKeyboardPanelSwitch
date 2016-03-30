@@ -16,7 +16,7 @@ import android.widget.TextView;
 import cn.dreamtobe.kpswitch.demo.R;
 import cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
-import cn.dreamtobe.kpswitch.widget.PanelLayout;
+import cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout;
 
 /**
  * Created by Jacksgong on 15/7/1.
@@ -28,14 +28,14 @@ public class ChattingResolvedActivity extends AppCompatActivity {
     private static final String TAG = "ResolvedActivity";
     private RecyclerView mContentRyv;
     private EditText mSendEdt;
-    private PanelLayout mPanelRoot;
+    private KPSwitchPanelLinearLayout mPanelRoot;
     private TextView mSendImgTv;
     private ImageView mPlusIv;
 
     private void assignViews() {
         mContentRyv = (RecyclerView) findViewById(R.id.content_ryv);
         mSendEdt = (EditText) findViewById(R.id.send_edt);
-        mPanelRoot = (PanelLayout) findViewById(R.id.panel_root);
+        mPanelRoot = (KPSwitchPanelLinearLayout) findViewById(R.id.panel_root);
         mSendImgTv = (TextView) findViewById(R.id.send_img_tv);
         mPlusIv = (ImageView) findViewById(R.id.plus_iv);
     }

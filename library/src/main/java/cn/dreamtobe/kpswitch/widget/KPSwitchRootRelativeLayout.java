@@ -35,7 +35,7 @@ import cn.dreamtobe.kpswitch.handler.KPSwitchRootLayoutHandler;
  *
  * @see KPSwitchRootLinearLayout
  * @see KPSwitchRootFrameLayout
- * @see PanelLayout
+ * @see KPSwitchPanelLinearLayout
  */
 public class KPSwitchRootRelativeLayout extends RelativeLayout {
 

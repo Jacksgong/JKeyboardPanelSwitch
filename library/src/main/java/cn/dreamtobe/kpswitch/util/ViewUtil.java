@@ -26,7 +26,7 @@ import android.view.WindowManager;
  * <p/>
  * For wrap some utils for view.
  *
- * @see cn.dreamtobe.kpswitch.widget.PanelLayout
+ * @see cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout
  * @see cn.dreamtobe.kpswitch.widget.FullScreenPanelLayout
  */
 public class ViewUtil {
