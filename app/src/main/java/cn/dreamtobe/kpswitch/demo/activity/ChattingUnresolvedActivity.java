@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import cn.dreamtobe.kpswitch.demo.R;
@@ -25,11 +26,13 @@ public class ChattingUnresolvedActivity extends AppCompatActivity {
     private RecyclerView mContentRyv;
     private EditText mSendEdt;
     private LinearLayout mPanelRoot;
+    private ImageView mPlusIv;
 
     private void assignViews() {
         mContentRyv = (RecyclerView) findViewById(R.id.content_ryv);
         mSendEdt = (EditText) findViewById(R.id.send_edt);
         mPanelRoot = (LinearLayout) findViewById(R.id.panel_root);
+        mPlusIv = (ImageView) findViewById(R.id.plus_iv);
     }
 
 
@@ -48,6 +51,13 @@ public class ChattingUnresolvedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chatting_unresolved);
 
         assignViews();
+
+        mPlusIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickPlusIv(v);
+            }
+        });
 
         mContentRyv.setLayoutManager(new LinearLayoutManager(this));
 
