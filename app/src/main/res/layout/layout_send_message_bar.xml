@@ -65,7 +65,6 @@
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:clickable="true"
-            android:onClick="onClickPlusIv"
             android:src="@drawable/chatting_plus_btn_icon"
             android:visibility="visible" />
 

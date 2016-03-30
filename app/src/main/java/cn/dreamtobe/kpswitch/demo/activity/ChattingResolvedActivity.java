@@ -10,9 +10,11 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.dreamtobe.kpswitch.demo.R;
+import cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
 import cn.dreamtobe.kpswitch.widget.PanelLayout;
 
@@ -27,23 +29,15 @@ public class ChattingResolvedActivity extends AppCompatActivity {
     private RecyclerView mContentRyv;
     private EditText mSendEdt;
     private PanelLayout mPanelRoot;
-    private TextView sendImgTv;
+    private TextView mSendImgTv;
+    private ImageView mPlusIv;
 
     private void assignViews() {
         mContentRyv = (RecyclerView) findViewById(R.id.content_ryv);
         mSendEdt = (EditText) findViewById(R.id.send_edt);
         mPanelRoot = (PanelLayout) findViewById(R.id.panel_root);
-        sendImgTv = (TextView) findViewById(R.id.send_img_tv);
-    }
-
-
-    public void onClickPlusIv(final View view) {
-        if (mPanelRoot.getVisibility() == View.VISIBLE) {
-            KeyboardUtil.showKeyboard(mSendEdt);
-        } else {
-            KeyboardUtil.hideKeyboard(mSendEdt);
-            mPanelRoot.setVisibility(View.VISIBLE);
-        }
+        mSendImgTv = (TextView) findViewById(R.id.send_img_tv);
+        mPlusIv = (ImageView) findViewById(R.id.plus_iv);
     }
 
     @Override
@@ -62,7 +56,9 @@ public class ChattingResolvedActivity extends AppCompatActivity {
                     }
                 });
 
-        sendImgTv.setOnClickListener(new View.OnClickListener() {
+        KPSwitchConflictUtil.attach(mPanelRoot, mPlusIv, mSendEdt);
+
+        mSendImgTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // mock start the translucent full screen activity.
@@ -76,8 +72,7 @@ public class ChattingResolvedActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    KeyboardUtil.hideKeyboard(mSendEdt);
-                    mPanelRoot.setVisibility(View.GONE);
+                    KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelRoot);
                 }
 
                 return false;
@@ -91,7 +86,7 @@ public class ChattingResolvedActivity extends AppCompatActivity {
         if (event.getAction() == KeyEvent.ACTION_UP &&
                 event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             if (mPanelRoot.getVisibility() == View.VISIBLE) {
-                mPanelRoot.setVisibility(View.GONE);
+                KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelRoot);
                 return true;
             }
         }

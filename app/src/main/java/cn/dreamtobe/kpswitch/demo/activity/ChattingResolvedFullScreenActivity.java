@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import cn.dreamtobe.kpswitch.demo.R;
+import cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
 import cn.dreamtobe.kpswitch.widget.FullScreenPanelLayout;
 
@@ -25,36 +26,13 @@ public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
         assignViews();
 
         KeyboardUtil.attach(this, panelRoot);
-
-        plusIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (panelRoot.getVisibility() == View.VISIBLE) {
-                    KeyboardUtil.showKeyboard(sendEdt);
-                    panelRoot.setVisibility(View.INVISIBLE);
-                } else {
-                    KeyboardUtil.hideKeyboard(sendEdt);
-                    panelRoot.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        sendEdt.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    panelRoot.setVisibility(View.INVISIBLE);
-                }
-                return false;
-            }
-        });
+        KPSwitchConflictUtil.attach(panelRoot, plusIv, sendEdt);
 
         contentRyv.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    KeyboardUtil.hideKeyboard(sendEdt);
-                    panelRoot.setVisibility(View.GONE);
+                    KPSwitchConflictUtil.hidePanelAndKeyboard(panelRoot);
                 }
                 return false;
             }
@@ -86,7 +64,7 @@ public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
         if (event.getAction() == KeyEvent.ACTION_UP &&
                 event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             if (panelRoot.getVisibility() != View.GONE) {
-                panelRoot.setVisibility(View.GONE);
+                KPSwitchConflictUtil.hidePanelAndKeyboard(panelRoot);
                 return true;
             }
         }
