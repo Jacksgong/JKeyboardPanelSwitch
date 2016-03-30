@@ -33,9 +33,9 @@ public class KPSwitchRootLayoutHandler {
     private final static String TAG = "KPSRootLayoutHandler";
 
     private int mOldHeight = -1;
-    private View mTargetRootView;
+    private final View mTargetRootView;
 
-    private int mStatusBarHeight;
+    private final int mStatusBarHeight;
 
     public KPSwitchRootLayoutHandler(final View rootView) {
         this.mTargetRootView = rootView;
@@ -97,7 +97,7 @@ public class KPSwitchRootLayoutHandler {
 
     private PanelLayout mPanelLayout;
 
-    public PanelLayout getPanelLayout(final View view) {
+    private PanelLayout getPanelLayout(final View view) {
         if (mPanelLayout != null) {
             return mPanelLayout;
         }

@@ -102,13 +102,13 @@ public class FullScreenPanelLayout extends LinearLayout implements IPanelHeightT
     }
 
     private View recordedFocusView;
-    public void saveFocusView(final View focusView) {
+    private void saveFocusView(final View focusView) {
         recordedFocusView = focusView;
         focusView.clearFocus();
         setVisibility(View.GONE);
     }
 
-    public void restoreFocusView() {
+    private void restoreFocusView() {
         setVisibility(View.INVISIBLE);
         KeyboardUtil.showKeyboard(recordedFocusView);
 

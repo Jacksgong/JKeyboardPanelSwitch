@@ -58,7 +58,7 @@ public class KeyboardUtil {
 
     private static int LAST_SAVE_KEYBOARD_HEIGHT = 0;
 
-    static boolean saveKeyboardHeight(final Context context, int keyboardHeight) {
+    private static boolean saveKeyboardHeight(final Context context, int keyboardHeight) {
         if (LAST_SAVE_KEYBOARD_HEIGHT == keyboardHeight) {
             return false;
         }
