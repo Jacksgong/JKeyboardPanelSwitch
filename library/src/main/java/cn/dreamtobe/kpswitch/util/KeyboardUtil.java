@@ -233,13 +233,16 @@ public class KeyboardUtil {
             }
         }
 
+        private int maxOverlayLayoutHeight;
         private void calculateKeyboardShowing(final int displayHeight) {
 
             boolean isKeyboardShowing;
+
+            // the height of content parent = contentView.height + actionBar.height
+            final View actionBarOverlayLayout = (View)contentView.getParent();
+            final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight();
+
             if (isFullScreen) {
-                // the height of content parent = contentView.height + actionBar.height
-                final View actionBarOverlayLayout = (View)contentView.getParent();
-                final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight();
                 if (actionBarOverlayLayoutHeight - displayHeight == this.statusBarHeight) {
                     // handle the case of status bar layout, not keyboard active.
                     isKeyboardShowing = lastKeyboardShowing;
@@ -248,12 +251,35 @@ public class KeyboardUtil {
                 }
 
             } else {
-                isKeyboardShowing = displayHeight < previousDisplayHeight;
 
+                final int phoneDisplayHeight = contentView.getResources().getDisplayMetrics().heightPixels;
+                if (phoneDisplayHeight == actionBarOverlayLayoutHeight) {
+                    // no space to settle down the status bar, switch to fullscreen,
+                    // only in the case of paused and opened the fullscreen page.
+                    Log.w(TAG, String.format("skip the keyboard status calculate, the current" +
+                                    " activity is paused. and phone-display-height %d," +
+                                    " root-height+actionbar-height %d", phoneDisplayHeight,
+                            actionBarOverlayLayoutHeight));
+                    return;
+
+                }
+
+                if (maxOverlayLayoutHeight == 0) {
+                    // non-used.
+                    isKeyboardShowing = lastKeyboardShowing;
+                }else if (displayHeight >= maxOverlayLayoutHeight) {
+                    isKeyboardShowing = false;
+                } else {
+                    isKeyboardShowing = true;
+                }
+
+                maxOverlayLayoutHeight = Math.max(maxOverlayLayoutHeight, actionBarOverlayLayoutHeight);
             }
 
             if (lastKeyboardShowing != isKeyboardShowing) {
-                Log.d(TAG, String.format("keyboard status change: %B", isKeyboardShowing));
+                Log.d(TAG, String.format("displayHeight %d actionBarOverlayLayoutHeight %d " +
+                        "keyboard status change: %B",
+                        displayHeight, actionBarOverlayLayoutHeight, isKeyboardShowing));
                 this.panelHeightTarget.onKeyboardShowing(isKeyboardShowing);
             }
             lastKeyboardShowing = isKeyboardShowing;
