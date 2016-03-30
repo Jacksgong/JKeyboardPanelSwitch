@@ -23,11 +23,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import cn.dreamtobe.kpswitch.IPanelHeightTarget;
+import cn.dreamtobe.kpswitch.handler.KPSwitchRootLayoutHandler;
 import cn.dreamtobe.kpswitch.util.ViewUtil;
 
 
 /**
- * @see CustomRootLayout
+ * Resolve the layout-conflict from switching the keyboard and the Panel.
+ *
+ * @see KPSwitchRootLayoutHandler
  */
 public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
 
@@ -109,9 +112,6 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    /**
-     * 这里只是一个状态，是在{@link #onMeasure}之前{@link CustomRootLayout#onLayout(boolean, int, int, int, int)}中获知
-     */
     private boolean mIsKeyboardShowing = false;
 
     private void setIsHide(final boolean isHide) {
@@ -128,14 +128,14 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
     /**
      * Case: keyboard/non -> panel
      */
-    void handleShow() {
+    public void handleShow() {
         super.setVisibility(View.VISIBLE);
     }
 
     /**
      * panel -> keyboard/non
      */
-    void handleHide() {
+    public void handleHide() {
         setIsHide(true);
     }
 
