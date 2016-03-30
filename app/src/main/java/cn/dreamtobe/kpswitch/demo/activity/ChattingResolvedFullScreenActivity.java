@@ -8,8 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import cn.dreamtobe.kpswitch.demo.R;
 import cn.dreamtobe.kpswitch.util.KeyboardUtil;
@@ -71,24 +69,16 @@ public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
     }
 
     private FullScreenPanelLayout panelRoot;
-    private LinearLayout sendMsgLayout;
-    private ImageView voiceTextSwitchIv;
     private EditText sendEdt;
-    private TextView sendVoiceBtn;
     private ImageView plusIv;
-    private TextView sendBtn;
     private RecyclerView contentRyv;
 
 
     private void assignViews() {
         contentRyv = (RecyclerView) findViewById(R.id.content_ryv);
         panelRoot = (FullScreenPanelLayout) findViewById(R.id.panel_root);
-        sendMsgLayout = (LinearLayout) findViewById(R.id.sendMsgLayout);
-        voiceTextSwitchIv = (ImageView) findViewById(R.id.voice_text_switch_iv);
         sendEdt = (EditText) findViewById(R.id.send_edt);
-        sendVoiceBtn = (TextView) findViewById(R.id.send_voice_btn);
         plusIv = (ImageView) findViewById(R.id.plus_iv);
-        sendBtn = (TextView) findViewById(R.id.send_btn);
     }
 
     @Override
