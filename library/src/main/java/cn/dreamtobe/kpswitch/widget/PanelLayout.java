@@ -37,7 +37,7 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
     /**
      * The real status of Visible or not
      *
-     * @see #setIsHide(boolean)
+     * @see #handleHide()
      * @see #setVisibility(int)
      * <p/>
      * if true, the status is non-Visible or will
@@ -82,7 +82,7 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
     @Override
     public void setVisibility(int visibility) {
         if (visibility == VISIBLE) {
-            setIsHide(false);
+            this.mIsHide = false;
         }
 
         if (visibility == getVisibility()) {
@@ -106,6 +106,9 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mIsHide) {
             setVisibility(View.GONE);
+            /**
+             * The current frame will be visible nil.
+             */
             widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
             heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
         }
@@ -113,10 +116,6 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
     }
 
     private boolean mIsKeyboardShowing = false;
-
-    private void setIsHide(final boolean isHide) {
-        this.mIsHide = isHide;
-    }
 
     /**
      * @return The real status of Visible or not
@@ -136,7 +135,7 @@ public class PanelLayout extends LinearLayout implements IPanelHeightTarget {
      * panel -> keyboard/non
      */
     public void handleHide() {
-        setIsHide(true);
+        this.mIsHide = true;
     }
 
 }
