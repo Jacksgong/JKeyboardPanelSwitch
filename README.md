@@ -5,14 +5,12 @@
 
 ---
 
-> 起源，之前在微信工作的时候，为了给用户带来更好的基础体验，做了很多尝试，踩了很多输入法的坑，特别是动态调整键盘高度，二级页面是透明背景，魅族早期的smartbar等, 后来逐一完善了，考虑到拥抱开源，看业界还是有很多应用存在类似问题。就有了这个repo
+> 起源，之前在微信工作的时候，为了给用户带来更好的基础体验，做了很多尝试，踩了很多输入法的坑，特别是动态调整键盘高度，二级页面是透明背景，魅族早期的Smart bar等, 后来逐一完善了，考虑到拥抱开源，看业界还是有很多应用存在类似问题。就有了这个repo
 
 ---
 
-> 之前有写过一篇核心思想: [Switching between the panel and the keyboard in Wechat](http://blog.dreamtobe.cn/2015/02/07/Switching-between-the-panel-and-the-keyboard/)
+> 之前有写过一篇核心思想: [Switching between the panel and the keyboard in Wechat](http://blog.dreamtobe.cn/2015/02/07/Switching-between-the-panel-and-the-keyboard/)。
 
-
-> 这里主要是根据核心思想的实践，实践原理是通过`CustomRootLayout`布局变化，来获知是否是键盘引起的真正的布局变化，进而处理到接下来`PanelLayout`的`onMersure`中。
 
 我们可以看到微信中的 从键盘与微信的切换是无缝的，而且是无闪动的，这种基础体验是符合预期的。
 
@@ -21,8 +19,8 @@
 <!--more-->
 ## 最终效果对比:
 
-![][resolve_mv_gif]![][unresolve_mv_gif]
-![][resolve_dynamic_mv_gif]![][unresolve_dynamic_mv_gif]
+![][non-fullscreen_resolved_gif]![][fullscreen_resolved_gif]
+![][adjust_resolved_gif]![][adjust_unresolved_gif]
 
 
 ## 如何使用
@@ -30,10 +28,18 @@
 在`build.gradle`中:
 
 ```
-compile 'cn.dreamtobe.kpswitch:library:1.3.0'
+compile 'cn.dreamtobe.kpswitch:library:1.4.1'
 ```
 
-对应的Activity，在Manifest中配置`android:windowSoftInputMode=adjustResize`:
+### I. 非全屏主题情况
+
+> `(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == 0`
+
+#### 1. `AndroidManifest`
+
+> 可直接参照: [AndroidManifest.xml][AndroidManifest_xml_link]
+
+> 对应的Activity，在**`AndroidManifest`中配置**`android:windowSoftInputMode=adjustResize`
 
 ```
 <manifest
@@ -50,11 +56,19 @@ compile 'cn.dreamtobe.kpswitch:library:1.3.0'
 </manifest>
 ```
 
-在面板页面的layout中:
+#### 2. 需要处理页面的layout xml
+
+> 可直接参照: [activity_chatting_resolved.xml][activity_chatting_resolved_xml_link]
+
+1. 需要用到 **最上层布局** ([KPSwitchRootFrameLayout][KPSwitchRootFrameLayout_link]/[KPSwitchRootLinearLayout][KPSwitchRootLinearLayout_link]/[KPSwitchRootRelativeLayout][KPSwitchRootRelativeLayout_link])
+2. 需要用到 **面板布局**([KPSwitchPanelFrameLayout][KPSwitchPanelFrameLayout_link]/[KPSwitchPanelLinearLayout][KPSwitchPanelLinearLayout_link]/[KPSwitchPanelRelativeLayout][KPSwitchPanelRelativeLayout_link])。
+
+简单案例:
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
-<cn.dreamtobe.kpswitch.widget.CustomRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 可选用 KPSwitchRootLinearLayout、KPSwitchRootRelativeLayout、KPSwitchRootFrameLayout -->
+<cn.dreamtobe.kpswitch.widget.KPSwitchRootLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -62,53 +76,172 @@ compile 'cn.dreamtobe.kpswitch:library:1.3.0'
     <!-- 布局内容 -->
     ...
 
-    <cn.dreamtobe.kpswitch.widget.PanelLayout
+    <!-- 可选用 KPSwitchPanelLinearLayout、KPSwitchPanelRelativeLayout、KPSwitchPanelFrameLayout -->
+    <cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout
         android:id="@+id/panel_root"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/panel_height"
         android:visibility="gone">
         <!-- 面板内容 -->
         ...
-    </cn.dreamtobe.kpswitch.widget.PanelLayout>
+    </cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout>
 
-</cn.dreamtobe.kpswitch.widget.CustomRootLayout>
+</cn.dreamtobe.kpswitch.widget.KPSwitchRootLinearLayout>
 ```
 
-在Activity中:
+### 3. 需要处理页面的Activity:
+
+> 可直接参照: [ChattingResolvedActivity.java][ChattingResolvedActivity_link]
+
+1. 处理一些事件([KPSwitchConflictUtil][KPSwitchConflictUtil_link])
+2. 键盘状态(高度与显示与否)监听([KeyboardUtil#attach()][KeyboardUtil_attach_link])
+
+简单案例:
 
 ```
-
 ...
 
-private PanelLayout mPanelLayout;
-// 任何的可以用于收键盘输入的View，可有可无，用于显示keyboard的时候传入
+// 面板View
+private KPSwitchPanelLinearLayout mPanelLayout;
+// 键盘焦点View，用于输入内容
 private EditText mSendEdt;
+// 用于切换键盘与面板的按钮View
+private ImageView mPlusIv;
 
 @Override
 public void onCreate(Bundle saveInstanceState){
     ...
 
-    mPanelLayout = (PanelLayout)findViewById(R.id.panel_root)
+    mPanelLayout = (KPSwitchPanelLinearLayout)findViewById(R.id.panel_root);
+    mSendEdt = (EditText) findViewById(R.id.send_edt);
+    mPlusIv = (ImageView) findViewById(R.id.plus_iv);
+
+    /**
+     * 这个Util主要是监控键盘的状态: 显示与否 以及 键盘的高度
+     * 这里也有提供给外界监听 键盘显示/隐藏 的监听器，具体参看
+     * 这个接口 {@Link KeyboardUtil#attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)}
+     */
+    KeyboardUtil.attach(this, mPanelLayout);
+
+    /**
+     * 这个Util主要是协助处理一些面板与键盘相关的事件。
+     * 这个方法主要是对一些相关事件进行注册，如切换面板与键盘等，具体参看源码，比较简单。
+     * 里面还提供了一些已经处理了冲突的工具方法: 显示面板；显示键盘；键盘面板切换；隐藏键盘与面板；
+     *
+     * @param panelRoot 面板的布局。
+     * @param switchPanelKeyboardBtn 用于触发切换面板与键盘的按钮。
+     * @param focusView 键盘弹起时会给这个View focus，收回时这个View会失去focus，通常是发送的EditText。
+     */
+    KPSwitchConflictUtil.attach(mPanelLayout, mPlusIv, mSendEdt);
+
 }
 
 ...
 
-// Keyboard与面板相互切换
-public void switchPanel(){
-    if (mPanelLayout.getVisibility() == View.VISIBLE){
-        KeyboardUtil.showKeyboard(mSendEdt);
-    } else {
-        KeyboardUtil.hideKeyboard(mSendEdt);
-        showPanel()
+...
+
+// 如果需要处理返回收起面板的话
+@Override
+public boolean dispatchKeyEvent(KeyEvent event){
+    if (event.getAction() == KeyEvent.ACTION_UP &&
+            event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+        if (mPanelLayout.getVisibility() == View.VISIBLE) {
+            KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelLayout);
+            return true;
+        }
     }
+    return super.dispatchKeyEvent(event);
+}
+```
+
+### II. 全屏主题情况
+
+> `(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0`
+
+#### 1. `AndroidManifest`
+
+> 可直接参照: [AndroidManifest.xml][AndroidManifest_xml_link]
+
+> 对应的Activity，在 **`AndroidManifest`中配置** `android:windowSoftInputMode=adjustUnspecified`，或者不配置，默认就是这个模式。
+
+#### 2. 需要处理页面的layout xml
+
+> 可直接参照: [activity_chatting_fullscreen_resolved.xml][activity_chatting_fullscreen_resolved_xml_link]
+
+> 这边只需要用到一个 **面板布局** ([KPSwitchFSPanelFrameLayout][KPSwitchFSPanelFrameLayout_link]/[KPSwitchFSPanelLinearLayout][KPSwitchFSPanelLinearLayout_link]/[KPSwitchFSPanelRelativeLayout][KPSwitchFSPanelRelativeLayout_link])
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+...
+    ...
+
+    <!-- 可选用 KPSwitchFSPanelFrameLayout、KPSwitchFSPanelLinearLayout、KPSwitchFSPanelRelativeLayout -->
+    <cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelFrameLayout
+        android:id="@+id/panel_root"
+        style="@style/Panel"
+        android:visibility="gone">
+
+        ...
+    </cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelFrameLayout>
+
+...
+```
+
+
+### 3. 需要处理页面的Activity:
+
+> 可直接参照: [ChattingResolvedFullScreenActivity.java][ChattingResolvedFullScreenActivity_link]
+
+1. 主要是处理一些事件([KPSwitchConflictUtil][KPSwitchConflictUtil_link])
+2. 键盘状态(高度与显示与否)监听([KeyboardUtil#attach()][KeyboardUtil_attach_link])
+3. 在`onPause`时，记录键盘状态用于从后台回到当前布局，恢复键盘状态不至于冲突([IFSPanelConflictLayout#recordKeyboardStatus()][IFSPanelConflictLayout_recordKeyboardStatus_link])
+
+如下使用案例:
+
+```
+...
+
+// 面板View
+private KPSwitchFSPanelLinearLayout mPanelLayout;
+// 键盘焦点View，用于输入内容
+private EditText mSendEdt;
+// 用于切换键盘与面板的按钮View
+private ImageView mPlusIv;
+
+@Override
+public void onCreate(Bundle saveInstanceState){
+    ...
+
+
+    mPanelLayout = (KPSwitchFSPanelLinearLayout)findViewById(R.id.panel_root);
+    mSendEdt = (EditText) findViewById(R.id.send_edt);
+    mPlusIv = (ImageView) findViewById(R.id.plus_iv);
+
+    /**
+     * 这个Util主要是监控键盘的状态: 显示与否 以及 键盘的高度
+     * 这里也有提供给外界监听 键盘显示/隐藏 的监听器，具体参看
+     * 这个接口 {@Link KeyboardUtil#attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)}
+     */
+    KeyboardUtil.attach(this, mPanelLayout);
+
+    /**
+     * 这个Util主要是协助处理一些面板与键盘相关的事件。
+     * 这个方法主要是对一些相关事件进行注册，如切换面板与键盘等，具体参看源码，比较简单。
+     * 里面还提供了一些已经处理了冲突的工具方法: 显示面板；显示键盘；键盘面板切换；隐藏键盘与面板；
+     *
+     * @param panelRoot 面板的布局。
+     * @param switchPanelKeyboardBtn 用于触发切换面板与键盘的按钮。
+     * @param focusView 键盘弹起时会给这个View focus，收回时这个View会失去focus，通常是发送的EditText。
+     */
+    KPSwitchConflictUtil.attach(mPanelLayout, mPlusIv, mSendEdt);
+
 }
 
-public void hidePanel(){
-    mPanelLayout.setVisibility(View.GONE);
-}
-
-public void showPanel(){
-    mPanelLayout.setVisibility(View.VISIBLE);
+@Override
+protected void onPause() {
+  super.onPause();
+  // 用于记录当前的键盘状态，在从后台回到当前页面的时候，键盘状态能够正确的恢复并且不会导致布局冲突。
+  mPanelLayout.recordKeyboardStatus(getWindow());
 }
 
 ...
@@ -119,7 +252,7 @@ public boolean dispatchKeyEvent(KeyEvent event){
     if (event.getAction() == KeyEvent.ACTION_UP &&
             event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
         if (mPanelLayout.getVisibility() == View.VISIBLE) {
-            hidePanel();
+            KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelLayout);
             return true;
         }
     }
@@ -127,35 +260,17 @@ public boolean dispatchKeyEvent(KeyEvent event){
 }
 ```
 
-> 如果发现你的键盘切换底色为黑色那是因为你的主题使用的是黑色背景，将对应的主题背景颜色改为白色即可，还有任何问题欢迎提[issue](https://github.com/Jacksgong/JKeyboardPanelSwitch/issues/new)
+---
 
-> 还有不明白或者要测试的，建议参考项目demo中的`JChattingActivity`
+> 如果发现你的键盘切换底色为黑色那是因为你的主题使用的是黑色背景，将对应的主题背景颜色改为白色即可。
 
 ---
 
-## 基本原理答疑
+## 基本原理
 
-#### 为什么`onMeasure`、`onLayout`、`onGlobalLayout` 分别在这三个里面做不同的处理?
+- 键盘高度计算，以及键盘是否显示的计算，参看: [KeyboardUtil.KeyboardStatusListener#calculateKeyboardHeight][KeyboardUtil_calculateKeyboardHeight_link]、[KeyboardUtil.KeyboardStatusListener#calculateKeyboardShowing][KeyboardUtil_calculateKeyboardShowing_link]。
+- 处理闪动问题，参看: [KPSwitchRootLayoutHandler][KPSwitchRootLayoutHandler_link]，以及如果是非全屏主题用到的面板布局: [KPSwitchPanelLayoutHandler][KPSwitchPanelLayoutHandler_link]；如果是全屏主题用到的面板布局: [KPSwitchFSPanelLayoutHandler][KPSwitchFSPanelLayoutHandler_link]。
 
-##### 1. 为什么需要在`CustomRootLayout`的`onMeasure`中判断，而不是其他地方判断是否是真正键盘引起变化的?
-
- 必须要在`PanelLayout`的`onMeasure`之前获知键盘变化，因此比较恰当的地方就是`PanelLayout`的父布局的`onMeasure`，ps: 其实真正感知键盘变化我们可以非常确定(肯定会受到键盘变化影响的)的也只有对我们可见的最外层的布局。综合之，并且就就封装而言就只能是`CustomRootLayout`的`onMeasure`。
-
-##### 2. 为什么需要在`PanelLayout`的`onMeasure`中做防止面板闪现而不是其他地方?
-
-如果在onLayout或者其他点中处理，都没有`onMeasure`中处理简单精准，`PanelLayout`的`onMeasure`结果的影响不仅仅是`PanelLayout`自己将要进行的大小与layout，还有其他View的布局layout与大小。
-
-##### 3. 为什么要在`CustomRootLayout`的`onLayout`来判断是否键盘弹起，而不是其他地方?
-
-`CustomRootLayout`的`onLayout`中判断，是准确 与 获知变化时间比较早 的权衡结果。
-
-##### 4. 为什么要在`onGlobalLayout`中处理真正的键盘变化并且进行键盘高度变化存储?
-
-由于`LinearLayout`(目前CustomRootLayout继承自`LinearLayout`)在存在`weight`参数的时候，需要measure多次来确定子view适当的大小，因此`onMeasure`可能被多次调用，而`onGlobalLayout`是布局变化后只会被一次调用，并且我们需要处理所有键盘高度的变化(如搜狗输入法的动态调整键盘高度)因此在`onGlobalLayout`中计算键盘高度变化以及有效高度进行存储更为恰当。
-
-#### 能不能只在一个View里面做所有的处理?
-
-我们需要较早的布局变化中获知是否是键盘变化，至少要在面板大小变化进而导致布局变化之前获知，并且需要十分确定该布局受到键盘影响肯定会随之变化(对我们而言只能是可见的顶层布局) ，并且需要处理掉面板闪动的那一帧，结合前面问题的解答。这里无法避免就引入了两个布局, 对于我们可见的顶级布局(`CustomRootLayout`)与面板布局(`PanelLayout`)。
 
 ## License
 
@@ -176,9 +291,31 @@ limitations under the License.
 ```
 [bintray_link]: https://bintray.com/jacksgong/maven/JKeyboardPanelSwitch/_latestVersion
 [bintray_svg]: https://api.bintray.com/packages/jacksgong/maven/JKeyboardPanelSwitch/images/download.svg
-[resolve_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_mv.gif
-[unresolve_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_mv.gif
-[resolve_dynamic_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/resolve_dynamic_mv.gif
-[unresolve_dynamic_mv_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/img/unresolve_dynamic_mv.gif
+[fullscreen_resolved_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/fullscreen_resolved.gif
+[non-fullscreen_resolved_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/non-fullscreen_resolved.gif
+[adjust_resolved_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/adjust_resolved.gif
+[adjust_unresolved_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/adjust_unresolved.gif
 [build_status_svg]: https://travis-ci.org/Jacksgong/JKeyboardPanelSwitch.svg?branch=master
 [build_status_link]: https://travis-ci.org/Jacksgong/JKeyboardPanelSwitch
+[KPSwitchRootFrameLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchRootFrameLayout.java
+[KPSwitchRootLinearLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchRootLinearLayout.java
+[KPSwitchRootRelativeLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchRootRelativeLayout.java
+[KPSwitchPanelFrameLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchPanelFrameLayout.java
+[KPSwitchPanelLinearLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchPanelLinearLayout.java
+[KPSwitchPanelRelativeLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchPanelRelativeLayout.java
+[KPSwitchFSPanelFrameLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchFSPanelFrameLayout.java
+[KPSwitchFSPanelLinearLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchFSPanelLinearLayout.java
+[KPSwitchFSPanelRelativeLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchFSPanelRelativeLayout.java
+[ChattingResolvedActivity_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/java/cn/dreamtobe/kpswitch/demo/activity/ChattingResolvedActivity.java
+[ChattingResolvedFullScreenActivity_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/java/cn/dreamtobe/kpswitch/demo/activity/ChattingResolvedFullScreenActivity.java
+[IFSPanelConflictLayout_recordKeyboardStatus_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/IFSPanelConflictLayout.java#L22
+[KPSwitchConflictUtil_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KPSwitchConflictUtil.java
+[KeyboardUtil_attach_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L146
+[KeyboardUtil_calculateKeyboardHeight_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L197
+[KeyboardUtil_calculateKeyboardShowing_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L248
+[KPSwitchRootLayoutHandler_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/handler/KPSwitchRootLayoutHandler.java
+[KPSwitchPanelLayoutHandler_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/handler/KPSwitchPanelLayoutHandler.java
+[KPSwitchFSPanelLayoutHandler_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/handler/KPSwitchFSPanelLayoutHandler.java
+[activity_chatting_resolved_xml_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/res/layout/activity_chatting_resolved.xml
+[activity_chatting_fullscreen_resolved_xml_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/res/layout/activity_chatting_fullscreen_resolved.xml
+[AndroidManifest_xml_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/AndroidManifest.xml
