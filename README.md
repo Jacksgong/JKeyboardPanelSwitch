@@ -20,7 +20,7 @@
 在`build.gradle`中引入:
 
 ```
-compile 'cn.dreamtobe.kpswitch:library:1.4.1'
+compile 'cn.dreamtobe.kpswitch:library:1.4.2'
 ```
 
 ## 使用引导
