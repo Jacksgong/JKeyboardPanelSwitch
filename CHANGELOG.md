@@ -1,6 +1,11 @@
 # Change Log
 ---
 
+### Version 1.4.3 (2016-04-13)
+
+- `KPSwitchConflictUtil#attach`中又键盘切换到面板 以及 `KPSwitchConflictUtil#showPanel` 不再 `clearFocus`, 为了考虑到有可能是表情面板依然需要保留焦点的情况。
+- 在 `KPSwitchConflictUtil#attach` 中新增 `SwitchClickListener` 参数，用于监听 传入的触发面板键盘切换按钮 的点击事件。
+
 ### Version 1.4.2 (2016-04-06)
 
 - 修复Jar包中带上了已经弃用的Class，导致Proguard报Warn的问题。

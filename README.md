@@ -31,7 +31,7 @@
 在`build.gradle`中引入:
 
 ```
-compile 'cn.dreamtobe.kpswitch:library:1.4.2'
+compile 'cn.dreamtobe.kpswitch:library:1.4.3'
 ```
 
 
