@@ -26,7 +26,17 @@ public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
         assignViews();
 
         KeyboardUtil.attach(this, panelRoot);
-        KPSwitchConflictUtil.attach(panelRoot, plusIv, sendEdt);
+        KPSwitchConflictUtil.attach(panelRoot, plusIv, sendEdt,
+                new KPSwitchConflictUtil.SwitchClickListener() {
+                    @Override
+                    public void onClickSwitch(boolean switchToPanel) {
+                        if (switchToPanel) {
+                            sendEdt.clearFocus();
+                        } else {
+                            sendEdt.requestFocus();
+                        }
+                    }
+                });
 
         contentRyv.setOnTouchListener(new View.OnTouchListener() {
             @Override

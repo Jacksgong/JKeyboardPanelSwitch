@@ -56,7 +56,17 @@ public class ChattingResolvedActivity extends AppCompatActivity {
                     }
                 });
 
-        KPSwitchConflictUtil.attach(mPanelRoot, mPlusIv, mSendEdt);
+        KPSwitchConflictUtil.attach(mPanelRoot, mPlusIv, mSendEdt,
+                new KPSwitchConflictUtil.SwitchClickListener() {
+                    @Override
+                    public void onClickSwitch(boolean switchToPanel) {
+                        if (switchToPanel) {
+                            mSendEdt.clearFocus();
+                        } else {
+                            mSendEdt.requestFocus();
+                        }
+                    }
+                });
 
         mSendImgTv.setOnClickListener(new View.OnClickListener() {
             @Override
