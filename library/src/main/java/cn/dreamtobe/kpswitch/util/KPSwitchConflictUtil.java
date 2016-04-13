@@ -42,6 +42,15 @@ import cn.dreamtobe.kpswitch.handler.KPSwitchRootLayoutHandler;
 public class KPSwitchConflictUtil {
 
     /**
+     * @see #attach(View, View, View, SwitchClickListener)
+     */
+    public static void attach(final View panelLayout,
+                              /** Nullable **/final View switchPanelKeyboardBtn,
+                              /** Nullable **/final View focusView) {
+        attach(panelLayout, switchPanelKeyboardBtn, focusView, null);
+    }
+
+    /**
      * Attach the action of {@code switchPanelKeyboardBtn} and the {@code focusView} to
      * non-layout-conflict.
      * <p/>
@@ -55,17 +64,23 @@ public class KPSwitchConflictUtil {
      * @param switchPanelKeyboardBtn the view will be used to trigger switching between the panel and
      *                               the keyboard.
      * @param focusView              the view will be focused or lose the focus.
+     * @param switchClickListener    the click listener is used to listening the click event for
+     *                               {@code switchPanelKeyboardBtn}.
      */
     public static void attach(final View panelLayout,
                               /** Nullable **/final View switchPanelKeyboardBtn,
-                              /** Nullable **/final View focusView) {
+                              /** Nullable **/final View focusView,
+                              /** Nullable **/final SwitchClickListener switchClickListener) {
         final Activity activity = (Activity) panelLayout.getContext();
 
         if (switchPanelKeyboardBtn != null) {
             switchPanelKeyboardBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switchPanelAndKeyboard(panelLayout, focusView);
+                    final boolean switchToPanel = switchPanelAndKeyboard(panelLayout, focusView);
+                    if (switchClickListener != null) {
+                        switchClickListener.onClickSwitch(switchToPanel);
+                    }
                 }
             });
         }
@@ -131,13 +146,17 @@ public class KPSwitchConflictUtil {
      *
      * @param panelLayout the layout of panel.
      * @param focusView   the view will be focused or lose the focus.
+     * @return If true, switch to showing {@code panelLayout}; If false, switch to showing Keyboard.
      */
-    public static void switchPanelAndKeyboard(final View panelLayout, final View focusView) {
-        if (panelLayout.getVisibility() == View.VISIBLE) {
+    public static boolean switchPanelAndKeyboard(final View panelLayout, final View focusView) {
+        boolean switchToPanel = panelLayout.getVisibility() != View.VISIBLE;
+        if (!switchToPanel) {
             showKeyboard(panelLayout, focusView);
         } else {
             showPanel(panelLayout);
         }
+
+        return switchToPanel;
     }
 
     /**
@@ -154,4 +173,18 @@ public class KPSwitchConflictUtil {
 
         panelLayout.setVisibility(View.GONE);
     }
+
+    /**
+     * This listener is used to listening the click event for a view which is received the click event
+     * to switch between Panel and Keyboard.
+     *
+     * @see #attach(View, View, View, SwitchClickListener)
+     */
+    public interface SwitchClickListener {
+        /**
+         * @param switchToPanel If true, switch to showing Panel; If false, switch to showing Keyboard.
+         */
+        void onClickSwitch(boolean switchToPanel);
+    }
+
 }
