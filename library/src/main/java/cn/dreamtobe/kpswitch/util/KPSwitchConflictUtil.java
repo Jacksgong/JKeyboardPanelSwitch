@@ -167,8 +167,10 @@ public class KPSwitchConflictUtil {
     public static void hidePanelAndKeyboard(final View panelLayout) {
         final Activity activity = (Activity) panelLayout.getContext();
 
-        if (activity.getCurrentFocus() != null) {
+        final View focusView = activity.getCurrentFocus();
+        if (focusView != null) {
             KeyboardUtil.hideKeyboard(activity.getCurrentFocus());
+            focusView.clearFocus();
         }
 
         panelLayout.setVisibility(View.GONE);

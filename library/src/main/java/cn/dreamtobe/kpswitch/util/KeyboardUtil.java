@@ -51,7 +51,6 @@ public class KeyboardUtil {
     public static void hideKeyboard(final View view) {
         InputMethodManager imm =
                 (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        view.clearFocus();
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
