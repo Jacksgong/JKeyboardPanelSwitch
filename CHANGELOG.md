@@ -1,6 +1,10 @@
 # Change Log
 ---
 
+### Version 1.4.4 (2016-04-19)
+
+- 修复在一些特殊情况下如(一些继承自`FragmentActivity`的情况)有可能出现判定正在打开全屏布局的方案有误导致没有处理闪动的bug。Closes #21 。
+
 ### Version 1.4.3 (2016-04-13)
 
 - `KPSwitchConflictUtil#attach`中又键盘切换到面板 以及 `KPSwitchConflictUtil#showPanel` 不再 `clearFocus`, 为了考虑到有可能是表情面板依然需要保留焦点的情况。
