@@ -263,7 +263,8 @@ public class KeyboardUtil {
             } else {
 
                 final int phoneDisplayHeight = contentView.getResources().getDisplayMetrics().heightPixels;
-                if (phoneDisplayHeight == actionBarOverlayLayoutHeight) {
+                if (phoneDisplayHeight == actionBarOverlayLayoutHeight &&
+                        actionBarOverlayLayout.getPaddingTop() == 0) {
                     // no space to settle down the status bar, switch to fullscreen,
                     // only in the case of paused and opened the fullscreen page.
                     Log.w(TAG, String.format("skip the keyboard status calculate, the current" +
