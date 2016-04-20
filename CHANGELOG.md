@@ -1,6 +1,10 @@
 # Change Log
 ---
 
+### Version 1.4.5 (2016-04-21)
+
+- 修复页面是继承自`Activity`或`FragmentActivity`的情况下，由于计算键盘是否显示出现错误，导致存在闪动的bug。Closes #24 。
+
 ### Version 1.4.4 (2016-04-19)
 
 - 修复在一些特殊情况下如(一些继承自`FragmentActivity`的情况)有可能出现判定正在打开全屏布局的方案有误导致没有处理闪动的bug。Closes #21 。

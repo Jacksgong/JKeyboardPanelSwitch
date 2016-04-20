@@ -252,7 +252,7 @@ public class KeyboardUtil {
             final View actionBarOverlayLayout = (View)contentView.getParent();
             // in the case of FragmentLayout, this is not real ActionBarOverlayLayout, it is
             // LinearLayout, and is a child of DecorView, and in this case, its top-padding would be
-            // equal to the height of status bar, and its height would equal to ScreenHeight -
+            // equal to the height of status bar, and its height would equal to DecorViewHeight -
             // NavigationBarHeight.
             final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight() -
                     actionBarOverlayLayout.getPaddingTop();
