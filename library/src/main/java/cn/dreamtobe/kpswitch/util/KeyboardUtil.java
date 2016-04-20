@@ -250,7 +250,12 @@ public class KeyboardUtil {
 
             // the height of content parent = contentView.height + actionBar.height
             final View actionBarOverlayLayout = (View)contentView.getParent();
-            final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight();
+            // in the case of FragmentLayout, this is not real ActionBarOverlayLayout, it is
+            // LinearLayout, and is a child of DecorView, and in this case, its top-padding would be
+            // equal to the height of status bar, and its height would equal to ScreenHeight -
+            // NavigationBarHeight.
+            final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight() -
+                    actionBarOverlayLayout.getPaddingTop();
 
             if (isFullScreen) {
                 if (actionBarOverlayLayoutHeight - displayHeight == this.statusBarHeight) {
@@ -263,8 +268,7 @@ public class KeyboardUtil {
             } else {
 
                 final int phoneDisplayHeight = contentView.getResources().getDisplayMetrics().heightPixels;
-                if (phoneDisplayHeight == actionBarOverlayLayoutHeight &&
-                        actionBarOverlayLayout.getPaddingTop() == 0) {
+                if (phoneDisplayHeight == actionBarOverlayLayoutHeight) {
                     // no space to settle down the status bar, switch to fullscreen,
                     // only in the case of paused and opened the fullscreen page.
                     Log.w(TAG, String.format("skip the keyboard status calculate, the current" +
