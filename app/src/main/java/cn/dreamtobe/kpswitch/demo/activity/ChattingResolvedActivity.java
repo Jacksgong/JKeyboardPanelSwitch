@@ -56,7 +56,9 @@ public class ChattingResolvedActivity extends AppCompatActivity {
                 getBooleanExtra(MainActivity.KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE, false);
 
         if (isTranslucentStatusFitSystemWindowTrue) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
             setTitle(R.string.activity_chatting_translucent_status_true_resolved_title);
         } else {
             setTitle(R.string.activity_chatting_resolved_title);

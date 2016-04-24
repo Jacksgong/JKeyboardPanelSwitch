@@ -1,5 +1,6 @@
 package cn.dreamtobe.kpswitch.demo.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -37,7 +38,9 @@ public class ChattingResolvedHandleByPlaceholderActivity extends AppCompatActivi
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setTitle(R.string.activity_chatting_fullscreen_resolved_title);
         } else {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
             setTitle(R.string.activity_chatting_translucent_status_false_resolved_title);
         }
         setContentView(R.layout.activity_chatting_fullscreen_resolved);
