@@ -15,12 +15,16 @@
  */
 package cn.dreamtobe.kpswitch.handler;
 
+import android.app.Activity;
+import android.graphics.Rect;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import cn.dreamtobe.kpswitch.IPanelConflictLayout;
 import cn.dreamtobe.kpswitch.util.StatusBarHeightUtil;
+import cn.dreamtobe.kpswitch.util.ViewUtil;
 
 /**
  * Created by Jacksgong on 3/30/16.
@@ -36,14 +40,26 @@ public class KPSwitchRootLayoutHandler {
     private final View mTargetRootView;
 
     private final int mStatusBarHeight;
+    private final boolean mIsTranslucentStatus;
 
     public KPSwitchRootLayoutHandler(final View rootView) {
         this.mTargetRootView = rootView;
         this.mStatusBarHeight = StatusBarHeightUtil.getStatusBarHeight(rootView.getContext());
+        final Activity activity = (Activity) rootView.getContext();
+        this.mIsTranslucentStatus = ViewUtil.isTranslucentStatus(activity);
     }
 
-    public void handleBeforeMeasure(final int width, final int height) {
+    public void handleBeforeMeasure(final int width, int height) {
         // 由当前布局被键盘挤压，获知，由于键盘的活动，导致布局将要发生变化。
+
+        if (mIsTranslucentStatus && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (mTargetRootView.getFitsSystemWindows()) {
+                // In this case, the height is always the same one, so, we have to calculate below.
+                final Rect rect = new Rect();
+                mTargetRootView.getWindowVisibleDisplayFrame(rect);
+                height = rect.bottom - rect.top;
+            }
+        }
 
         Log.d(TAG, "onMeasure, width: " + width + " height: " + height);
         if (height < 0) {

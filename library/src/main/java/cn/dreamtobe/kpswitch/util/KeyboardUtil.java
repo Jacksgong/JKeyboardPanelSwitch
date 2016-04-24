@@ -145,10 +145,15 @@ public class KeyboardUtil {
     public static void attach(final Activity activity, IPanelHeightTarget target,
                               /** Nullable **/OnKeyboardShowingListener listener) {
         final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
-        boolean fullScreen = ViewUtil.isFullScreen(activity);
+        final boolean isFullScreen = ViewUtil.isFullScreen(activity);
+        final boolean isTranslucentStatus = ViewUtil.isTranslucentStatus(activity);
+        final boolean isFitSystemWindows = ViewUtil.isFitsSystemWindows(activity);
+
         contentView.getViewTreeObserver().
-                addOnGlobalLayoutListener(new KeyboardStatusListener(fullScreen, contentView,
-                        target, listener));
+                addOnGlobalLayoutListener(
+                        new KeyboardStatusListener(isFullScreen, isTranslucentStatus,
+                                isFitSystemWindows,
+                                contentView, target, listener));
     }
 
     /**
@@ -165,15 +170,21 @@ public class KeyboardUtil {
         private final ViewGroup contentView;
         private final IPanelHeightTarget panelHeightTarget;
         private final boolean isFullScreen;
+        private final boolean isTranslucentStatus;
+        private final boolean isFitSystemWindows;
         private final int statusBarHeight;
         private boolean lastKeyboardShowing;
         private final OnKeyboardShowingListener keyboardShowingListener;
 
-        KeyboardStatusListener(boolean isFullScreen, ViewGroup contentView,
-                               IPanelHeightTarget panelHeightTarget, OnKeyboardShowingListener listener) {
+        KeyboardStatusListener(boolean isFullScreen, boolean isTranslucentStatus,
+                               boolean isFitSystemWindows,
+                               ViewGroup contentView, IPanelHeightTarget panelHeightTarget,
+                               OnKeyboardShowingListener listener) {
             this.contentView = contentView;
             this.panelHeightTarget = panelHeightTarget;
             this.isFullScreen = isFullScreen;
+            this.isTranslucentStatus = isTranslucentStatus;
+            this.isFitSystemWindows = isFitSystemWindows;
             this.statusBarHeight = StatusBarHeightUtil.getStatusBarHeight(contentView.getContext());
             this.keyboardShowingListener = listener;
         }
@@ -181,11 +192,19 @@ public class KeyboardUtil {
         @Override
         public void onGlobalLayout() {
             final View userRootView = contentView.getChildAt(0);
+            final View contentParentView = (View) contentView.getParent();
 
             // Step 1. calculate the current display frame's height.
             Rect r = new Rect();
-            userRootView.getWindowVisibleDisplayFrame(r);
-            final int displayHeight = (r.bottom - r.top);
+
+            final int displayHeight;
+            if (isTranslucentStatus) {
+                contentParentView.getWindowVisibleDisplayFrame(r);
+                displayHeight = (r.bottom - r.top) + statusBarHeight;
+            } else {
+                userRootView.getWindowVisibleDisplayFrame(r);
+                displayHeight = (r.bottom - r.top);
+            }
 
             calculateKeyboardHeight(displayHeight);
             calculateKeyboardShowing(displayHeight);
@@ -204,7 +223,8 @@ public class KeyboardUtil {
             }
 
             int keyboardHeight;
-            if (isFullScreen) {
+            if (KPSwitchConflictUtil.isHandleByBehindPanel(isFullScreen, isTranslucentStatus,
+                    isFitSystemWindows)) {
                 // the height of content parent = contentView.height + actionBar.height
                 final View actionBarOverlayLayout = (View)contentView.getParent();
 
@@ -257,8 +277,10 @@ public class KeyboardUtil {
             final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight() -
                     actionBarOverlayLayout.getPaddingTop();
 
-            if (isFullScreen) {
-                if (actionBarOverlayLayoutHeight - displayHeight == this.statusBarHeight) {
+            if (KPSwitchConflictUtil.isHandleByBehindPanel(isFullScreen, isTranslucentStatus,
+                    isFitSystemWindows)) {
+                if (!isTranslucentStatus &&
+                        actionBarOverlayLayoutHeight - displayHeight == this.statusBarHeight) {
                     // handle the case of status bar layout, not keyboard active.
                     isKeyboardShowing = lastKeyboardShowing;
                 } else {
@@ -268,7 +290,8 @@ public class KeyboardUtil {
             } else {
 
                 final int phoneDisplayHeight = contentView.getResources().getDisplayMetrics().heightPixels;
-                if (phoneDisplayHeight == actionBarOverlayLayoutHeight) {
+                if (!isTranslucentStatus &&
+                        phoneDisplayHeight == actionBarOverlayLayoutHeight) {
                     // no space to settle down the status bar, switch to fullscreen,
                     // only in the case of paused and opened the fullscreen page.
                     Log.w(TAG, String.format("skip the keyboard status calculate, the current" +
@@ -320,9 +343,9 @@ public class KeyboardUtil {
         /**
          * Keyboard showing state callback method.
          * <p>
-         *     This method is invoked in {@link ViewTreeObserver.OnGlobalLayoutListener#onGlobalLayout()} which is one of the
-         *     ViewTree lifecycle callback methods. So deprecating those time-consuming operation(I/O, complex calculation,
-         *     alloc objects, etc.) here from blocking main ui thread is recommended.
+         * This method is invoked in {@link ViewTreeObserver.OnGlobalLayoutListener#onGlobalLayout()} which is one of the
+         * ViewTree lifecycle callback methods. So deprecating those time-consuming operation(I/O, complex calculation,
+         * alloc objects, etc.) here from blocking main ui thread is recommended.
          * </p>
          *
          * @param isShowing Indicate whether keyboard is showing or not.

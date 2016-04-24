@@ -15,7 +15,9 @@
  */
 package cn.dreamtobe.kpswitch.util;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +64,25 @@ public class ViewUtil {
     public static boolean isFullScreen(final Activity activity) {
         return (activity.getWindow().getAttributes().flags &
                 WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static boolean isTranslucentStatus(final Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return (activity.getWindow().getAttributes().flags &
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0;
+        }
+        return false;
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    static boolean isFitsSystemWindows(final Activity activity){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return ((ViewGroup)activity.findViewById(android.R.id.content)).getChildAt(0).
+                    getFitsSystemWindows();
+        }
+
+        return false;
     }
 
 }

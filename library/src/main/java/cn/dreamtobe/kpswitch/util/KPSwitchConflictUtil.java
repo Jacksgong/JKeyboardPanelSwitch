@@ -85,7 +85,7 @@ public class KPSwitchConflictUtil {
             });
         }
 
-        if (ViewUtil.isFullScreen(activity)) {
+        if (isHandleByBehindPanel(activity)) {
             focusView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -129,7 +129,7 @@ public class KPSwitchConflictUtil {
         final Activity activity = (Activity) panelLayout.getContext();
 
         KeyboardUtil.showKeyboard(focusView);
-        if (ViewUtil.isFullScreen(activity)) {
+        if (isHandleByBehindPanel(activity)) {
             panelLayout.setVisibility(View.INVISIBLE);
         }
     }
@@ -187,6 +187,16 @@ public class KPSwitchConflictUtil {
          * @param switchToPanel If true, switch to showing Panel; If false, switch to showing Keyboard.
          */
         void onClickSwitch(boolean switchToPanel);
+    }
+
+    public static boolean isHandleByBehindPanel(boolean isFullScreen, boolean isTranslucentStatus,
+                                                boolean isFitsSystem) {
+        return isFullScreen || (isTranslucentStatus && !isFitsSystem);
+    }
+
+    public static boolean isHandleByBehindPanel(final Activity activity) {
+        return isHandleByBehindPanel(ViewUtil.isFullScreen(activity),
+                ViewUtil.isTranslucentStatus(activity), ViewUtil.isFitsSystemWindows(activity));
     }
 
 }
