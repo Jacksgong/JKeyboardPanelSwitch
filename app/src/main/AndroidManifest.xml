@@ -23,14 +23,17 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".activity.ChattingResolvedFullScreenActivity"
+            android:name=".activity.ChattingResolvedHandleByPlaceholderActivity"
             android:label="@string/activity_chatting_fullscreen_resolved_title"
-            android:theme="@style/FullScreenTheme"
             android:windowSoftInputMode="adjustUnspecified" />
 
         <activity
             android:name=".activity.ChattingResolvedActivity"
             android:label="@string/activity_chatting_resolved_title"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".activity.ChattingResolvedFragmentActivity"
             android:windowSoftInputMode="adjustResize" />
 
         <activity

@@ -3,7 +3,7 @@ package cn.dreamtobe.kpswitch.demo.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,15 +23,15 @@ import cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout;
 /**
  * Created by Jacksgong on 15/7/1.
  * <p/>
- * For AppCompatActivity. (Just for test(because has different view hierarchy, but has already
- * handled internal), all calls are identical to the {@link ChattingResolvedFragmentActivity}).
+ * For FragmentActivity/Activity. (Just for test(because has different view hierarchy, but has
+ * already handled internal), all calls are identical to the {@link ChattingResolvedActivity}).
  * <p/>
  * For resolving the conflict by delay the visible or gone of panel.
  * <p/>
  * In case of Normal(not fullscreen) Theme.
  * In case of Translucent Status Theme with the {@code getFitSystemWindow()} is false in root view.
  */
-public class ChattingResolvedActivity extends AppCompatActivity {
+public class ChattingResolvedFragmentActivity extends FragmentActivity {
 
     private static final String TAG = "ResolvedActivity";
     private RecyclerView mContentRyv;
@@ -96,7 +96,7 @@ public class ChattingResolvedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // mock start the translucent full screen activity.
-                startActivity(new Intent(ChattingResolvedActivity.this, TranslucentActivity.class));
+                startActivity(new Intent(ChattingResolvedFragmentActivity.this, TranslucentActivity.class));
             }
         });
 

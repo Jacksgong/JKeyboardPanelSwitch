@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -16,14 +17,38 @@ import cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelLinearLayout;
 
 /**
  * Created by Jacksgong on 3/26/16.
+ * <p/>
+ * For resolving the conflict by showing the panel placeholder.
+ * <p/>
+ * In case of FullScreen Theme.
+ * In case of Translucent Status Theme with the {@code getFitSystemWindow()} is true in root view.
  */
-public class ChattingResolvedFullScreenActivity extends AppCompatActivity {
+public class ChattingResolvedHandleByPlaceholderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // ********* Below code Just for Demo Test, do not need to adapt in your code. ************
+        final boolean isFullScreenTheme = getIntent().
+                getBooleanExtra(MainActivity.KEY_FULL_SCREEN_THEME, false);
+
+        if (isFullScreenTheme) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            setTitle(R.string.activity_chatting_fullscreen_resolved_title);
+        } else {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            setTitle(R.string.activity_chatting_translucent_status_false_resolved_title);
+        }
         setContentView(R.layout.activity_chatting_fullscreen_resolved);
         assignViews();
+
+        if (!isFullScreenTheme) {
+            // For present the theme: Translucent Status and FitSystemWindow is True.
+            contentRyv.setBackgroundColor(getResources().
+                    getColor(R.color.abc_search_url_text_normal));
+        }
+        // ********* Above code Just for Demo Test, do not need to adapt in your code. ************
 
         KeyboardUtil.attach(this, panelRoot);
         KPSwitchConflictUtil.attach(panelRoot, plusIv, sendEdt,

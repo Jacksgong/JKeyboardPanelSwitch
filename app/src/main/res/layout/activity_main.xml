@@ -4,19 +4,69 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:checkedButton="@+id/app_compat_activity_rb"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp">
+
+        <RadioButton
+            android:id="@+id/app_compat_activity_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AppCompatActivity" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activity/FragmentActivity" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/translucent_status_true_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Translucent Status with fitSystemWindow=true" />
+
+    <Button
+        android:id="@+id/handle_by_delay_resolved_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="onClickResolved"
         android:padding="5dp"
         android:text="@string/activity_chatting_resolved_title" />
 
-    <Button
+    <RadioGroup
+        android:id="@+id/theme_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="onClickFullScreenResolved"
+        android:checkedButton="@+id/full_screen_rb"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp">
+
+        <RadioButton
+            android:id="@+id/full_screen_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full Screen Theme" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Translucent Status with fitsSystemWindows=false" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/handle_by_placeholder_resolved_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickExtraThemeResolved"
         android:padding="5dp"
         android:text="@string/activity_chatting_fullscreen_resolved_title" />
 

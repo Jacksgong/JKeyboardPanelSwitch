@@ -9,6 +9,8 @@
     <string name="activity_main_title"><![CDATA[解决 面板<->键盘切换冲突导致 布局跳动问题]]></string>
     <string name="activity_chatting_resolved_title">解决了切换冲突</string>
     <string name="activity_chatting_fullscreen_resolved_title">解决了全屏切换冲突</string>
+    <string name="activity_chatting_translucent_status_false_resolved_title">解决了状态栏透明(fitsSystemWindows=false)切换冲突</string>
+    <string name="activity_chatting_translucent_status_true_resolved_title">解决了状态栏透明(fitsSystemWindows=true)切换冲突</string>
     <string name="activity_chatting_unresolved_title">未解决切换冲突</string>
     <string name="translucent_fullscreen_tips">透明全屏布局</string>
 </resources>
