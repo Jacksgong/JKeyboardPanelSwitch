@@ -85,7 +85,7 @@ public class KPSwitchConflictUtil {
             });
         }
 
-        if (isHandleByBehindPanel(activity)) {
+        if (isHandleByPlaceholder(activity)) {
             focusView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -129,7 +129,7 @@ public class KPSwitchConflictUtil {
         final Activity activity = (Activity) panelLayout.getContext();
 
         KeyboardUtil.showKeyboard(focusView);
-        if (isHandleByBehindPanel(activity)) {
+        if (isHandleByPlaceholder(activity)) {
             panelLayout.setVisibility(View.INVISIBLE);
         }
     }
@@ -189,13 +189,21 @@ public class KPSwitchConflictUtil {
         void onClickSwitch(boolean switchToPanel);
     }
 
-    public static boolean isHandleByBehindPanel(boolean isFullScreen, boolean isTranslucentStatus,
+    /**
+     * @param isFullScreen        Whether in fullscreen theme.
+     * @param isTranslucentStatus Whether in translucent status theme.
+     * @param isFitsSystem        Whether the root view(the child of the content view) is in
+     *                            {@code getFitSystemWindow()} equal true.
+     * @return Whether handle the conflict by show panel placeholder, otherwise, handle by delay the
+     * visible or gone of panel.
+     */
+    public static boolean isHandleByPlaceholder(boolean isFullScreen, boolean isTranslucentStatus,
                                                 boolean isFitsSystem) {
         return isFullScreen || (isTranslucentStatus && !isFitsSystem);
     }
 
-    public static boolean isHandleByBehindPanel(final Activity activity) {
-        return isHandleByBehindPanel(ViewUtil.isFullScreen(activity),
+    static boolean isHandleByPlaceholder(final Activity activity) {
+        return isHandleByPlaceholder(ViewUtil.isFullScreen(activity),
                 ViewUtil.isTranslucentStatus(activity), ViewUtil.isFitsSystemWindows(activity));
     }
 

@@ -139,7 +139,6 @@ public class KeyboardUtil {
      * @param activity contain the view
      * @param target   whose height will be align to the keyboard height.
      * @param listener the listener to listen in: keyboard is showing or not.
-     *
      * @see #saveKeyboardHeight(Context, int)
      */
     public static void attach(final Activity activity, IPanelHeightTarget target,
@@ -223,10 +222,10 @@ public class KeyboardUtil {
             }
 
             int keyboardHeight;
-            if (KPSwitchConflictUtil.isHandleByBehindPanel(isFullScreen, isTranslucentStatus,
+            if (KPSwitchConflictUtil.isHandleByPlaceholder(isFullScreen, isTranslucentStatus,
                     isFitSystemWindows)) {
                 // the height of content parent = contentView.height + actionBar.height
-                final View actionBarOverlayLayout = (View)contentView.getParent();
+                final View actionBarOverlayLayout = (View) contentView.getParent();
 
                 keyboardHeight = actionBarOverlayLayout.getHeight() - displayHeight;
 
@@ -269,7 +268,7 @@ public class KeyboardUtil {
             boolean isKeyboardShowing;
 
             // the height of content parent = contentView.height + actionBar.height
-            final View actionBarOverlayLayout = (View)contentView.getParent();
+            final View actionBarOverlayLayout = (View) contentView.getParent();
             // in the case of FragmentLayout, this is not real ActionBarOverlayLayout, it is
             // LinearLayout, and is a child of DecorView, and in this case, its top-padding would be
             // equal to the height of status bar, and its height would equal to DecorViewHeight -
@@ -277,7 +276,7 @@ public class KeyboardUtil {
             final int actionBarOverlayLayoutHeight = actionBarOverlayLayout.getHeight() -
                     actionBarOverlayLayout.getPaddingTop();
 
-            if (KPSwitchConflictUtil.isHandleByBehindPanel(isFullScreen, isTranslucentStatus,
+            if (KPSwitchConflictUtil.isHandleByPlaceholder(isFullScreen, isTranslucentStatus,
                     isFitSystemWindows)) {
                 if (!isTranslucentStatus &&
                         actionBarOverlayLayoutHeight - displayHeight == this.statusBarHeight) {
@@ -305,7 +304,7 @@ public class KeyboardUtil {
                 if (maxOverlayLayoutHeight == 0) {
                     // non-used.
                     isKeyboardShowing = lastKeyboardShowing;
-                }else if (displayHeight >= maxOverlayLayoutHeight) {
+                } else if (displayHeight >= maxOverlayLayoutHeight) {
                     isKeyboardShowing = false;
                 } else {
                     isKeyboardShowing = true;
@@ -316,7 +315,7 @@ public class KeyboardUtil {
 
             if (lastKeyboardShowing != isKeyboardShowing) {
                 Log.d(TAG, String.format("displayHeight %d actionBarOverlayLayoutHeight %d " +
-                        "keyboard status change: %B",
+                                "keyboard status change: %B",
                         displayHeight, actionBarOverlayLayoutHeight, isKeyboardShowing));
                 this.panelHeightTarget.onKeyboardShowing(isKeyboardShowing);
                 if (keyboardShowingListener != null) {
@@ -327,6 +326,7 @@ public class KeyboardUtil {
             lastKeyboardShowing = isKeyboardShowing;
 
         }
+
         private Context getContext() {
             return contentView.getContext();
         }
