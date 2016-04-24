@@ -13,4 +13,9 @@
     <string name="activity_chatting_translucent_status_true_resolved_title">解决了状态栏透明(fitsSystemWindows=true)切换冲突</string>
     <string name="activity_chatting_unresolved_title">未解决切换冲突</string>
     <string name="translucent_fullscreen_tips">透明全屏布局</string>
+    <string name="app_compat_activity">AppCompatActivity</string>
+    <string name="activity_or_fragment_activity">Activity/FragmentActivity</string>
+    <string name="translucent_status_with_fitsystemwindow_true">Translucent Status with fitSystemWindow=true</string>
+    <string name="translucent_status_with_fitssystemwindows_false">Translucent Status with fitsSystemWindows=false</string>
+    <string name="full_screen_theme">Full Screen Theme</string>
 </resources>

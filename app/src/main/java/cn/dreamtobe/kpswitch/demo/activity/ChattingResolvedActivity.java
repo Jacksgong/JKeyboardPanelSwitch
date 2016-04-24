@@ -1,5 +1,6 @@
 package cn.dreamtobe.kpswitch.demo.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,27 +49,44 @@ public class ChattingResolvedActivity extends AppCompatActivity {
         mPlusIv = (ImageView) findViewById(R.id.plus_iv);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void adaptTheme(final boolean isTranslucentStatusFitSystemWindowTrue) {
+        if (isTranslucentStatusFitSystemWindowTrue) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
+        }
+    }
+
+    private void adaptTitle(final boolean isTranslucentStatusFitSystemWindowTrue) {
+        if (isTranslucentStatusFitSystemWindowTrue) {
+            setTitle(R.string.activity_chatting_translucent_status_true_resolved_title);
+        } else {
+            setTitle(R.string.activity_chatting_resolved_title);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private void adaptFitsSystemWindows(final boolean isTranslucentStatusFitSystemWindowTrue) {
+        if (isTranslucentStatusFitSystemWindowTrue &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            findViewById(R.id.rootView).setFitsSystemWindows(true);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // ********* Below code Just for Demo Test, do not need to adapt in your code. ************
         final boolean isTranslucentStatusFitSystemWindowTrue = getIntent().
                 getBooleanExtra(MainActivity.KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE, false);
-
-        if (isTranslucentStatusFitSystemWindowTrue) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            }
-            setTitle(R.string.activity_chatting_translucent_status_true_resolved_title);
-        } else {
-            setTitle(R.string.activity_chatting_resolved_title);
-        }
+        adaptTheme(isTranslucentStatusFitSystemWindowTrue);
 
         setContentView(R.layout.activity_chatting_resolved);
-        if (isTranslucentStatusFitSystemWindowTrue &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            findViewById(R.id.rootView).setFitsSystemWindows(true);
-        }
+
+        adaptFitsSystemWindows(isTranslucentStatusFitSystemWindowTrue);
+
+        adaptTitle(isTranslucentStatusFitSystemWindowTrue);
         // ********* Above code Just for Demo Test, do not need to adapt in your code. ************
 
         assignViews();

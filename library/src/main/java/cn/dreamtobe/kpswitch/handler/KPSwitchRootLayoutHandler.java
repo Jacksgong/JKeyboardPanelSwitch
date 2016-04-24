@@ -15,6 +15,7 @@
  */
 package cn.dreamtobe.kpswitch.handler;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Build;
@@ -49,6 +50,7 @@ public class KPSwitchRootLayoutHandler {
         this.mIsTranslucentStatus = ViewUtil.isTranslucentStatus(activity);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void handleBeforeMeasure(final int width, int height) {
         // 由当前布局被键盘挤压，获知，由于键盘的活动，导致布局将要发生变化。
 

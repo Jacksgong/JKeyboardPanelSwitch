@@ -1,5 +1,6 @@
 package cn.dreamtobe.kpswitch.demo.activity;
 
+import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,25 @@ import cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelLinearLayout;
  */
 public class ChattingResolvedHandleByPlaceholderActivity extends AppCompatActivity {
 
+    private void adaptTitle(final boolean isFullScreenTheme) {
+        if (isFullScreenTheme) {
+            setTitle(R.string.activity_chatting_fullscreen_resolved_title);
+        } else {
+            setTitle(R.string.activity_chatting_translucent_status_false_resolved_title);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void adaptTheme(final boolean isFullScreenTheme) {
+        if (isFullScreenTheme) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,17 +54,12 @@ public class ChattingResolvedHandleByPlaceholderActivity extends AppCompatActivi
         final boolean isFullScreenTheme = getIntent().
                 getBooleanExtra(MainActivity.KEY_FULL_SCREEN_THEME, false);
 
-        if (isFullScreenTheme) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            setTitle(R.string.activity_chatting_fullscreen_resolved_title);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            }
-            setTitle(R.string.activity_chatting_translucent_status_false_resolved_title);
-        }
+        adaptTheme(isFullScreenTheme);
+
         setContentView(R.layout.activity_chatting_fullscreen_resolved);
         assignViews();
+
+        adaptTitle(isFullScreenTheme);
 
         if (!isFullScreenTheme) {
             // For present the theme: Translucent Status and FitSystemWindow is True.

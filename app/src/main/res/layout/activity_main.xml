@@ -11,18 +11,19 @@
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="20dp">
 
         <RadioButton
             android:id="@+id/app_compat_activity_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AppCompatActivity" />
+            android:text="@string/app_compat_activity" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Activity/FragmentActivity" />
+            android:text="@string/activity_or_fragment_activity" />
     </RadioGroup>
 
     <CheckBox
@@ -30,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="Translucent Status with fitSystemWindow=true" />
+        android:text="@string/translucent_status_with_fitsystemwindow_true" />
 
     <Button
         android:id="@+id/handle_by_delay_resolved_btn"
@@ -48,18 +49,19 @@
         android:orientation="vertical"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="20dp">
 
         <RadioButton
             android:id="@+id/full_screen_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Full Screen Theme" />
+            android:text="@string/full_screen_theme" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Translucent Status with fitsSystemWindows=false" />
+            android:text="@string/translucent_status_with_fitssystemwindows_false" />
     </RadioGroup>
 
     <Button
