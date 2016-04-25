@@ -30,7 +30,7 @@ import cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout;
  * For resolving the conflict by delay the visible or gone of panel.
  * <p/>
  * In case of Normal(not fullscreen) Theme.
- * In case of Translucent Status Theme with the {@code getFitSystemWindow()} is false in root view.
+ * In case of Translucent Status Theme with the {@code getFitSystemWindow()} is true in root view.
  */
 public class ChattingResolvedActivity extends AppCompatActivity {
 

@@ -23,7 +23,7 @@ import cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelLinearLayout;
  * For resolving the conflict by showing the panel placeholder.
  * <p/>
  * In case of FullScreen Theme.
- * In case of Translucent Status Theme with the {@code getFitSystemWindow()} is true in root view.
+ * In case of Translucent Status Theme with the {@code getFitSystemWindow()} is false in root view.
  */
 public class ChattingResolvedHandleByPlaceholderActivity extends AppCompatActivity {
 
