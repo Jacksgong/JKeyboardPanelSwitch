@@ -1,6 +1,8 @@
-# 全屏主题情况下使用引导
+# 全屏主题 或者 透明状态栏主题并且在`fitsSystemWindows=false` 情况下使用引导
 
-> 所谓全屏主题，就是  `(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0`
+> 这个引导覆盖以下两个Case:
+> 1. 全屏主题 (`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0`)
+> 2. 透明状态栏主题(`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0`) 并且 根布局的 `fitsSystemWindows=false`。
 
 ![][fullscreen_resolved_gif]
 
@@ -11,8 +13,6 @@
 > 对应的Activity，在 **`AndroidManifest`中配置** `android:windowSoftInputMode=adjustUnspecified`，或者不配置，默认就是这个模式。
 
 ## II. 需要处理页面的layout xml
-
-> 可直接参照: [activity_chatting_fullscreen_resolved.xml][activity_chatting_fullscreen_resolved_xml_link]
 
 > 这边只需要用到一个 **面板布局** ([KPSwitchFSPanelFrameLayout][KPSwitchFSPanelFrameLayout_link]/[KPSwitchFSPanelLinearLayout][KPSwitchFSPanelLinearLayout_link]/[KPSwitchFSPanelRelativeLayout][KPSwitchFSPanelRelativeLayout_link])
 
@@ -36,7 +36,7 @@
 
 ## III. 需要处理页面的Activity:
 
-> 可直接参照: [ChattingResolvedFullScreenActivity.java][ChattingResolvedFullScreenActivity_link]
+> 可直接参照: [ChattingResolvedHandleByPlaceholderActivity.java][ChattingResolvedHandleByPlaceholderActivity_link]
 
 1. 主要是处理一些事件([KPSwitchConflictUtil][KPSwitchConflictUtil_link])
 2. 键盘状态(高度与显示与否)监听([KeyboardUtil#attach()][KeyboardUtil_attach_link])
@@ -112,12 +112,11 @@ public boolean dispatchKeyEvent(KeyEvent event){
 
 
 [fullscreen_resolved_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/fullscreen_resolved.gif
-[AndroidManifest_xml_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/AndroidManifest.xml
-[activity_chatting_fullscreen_resolved_xml_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/res/layout/activity_chatting_fullscreen_resolved.xml
+[AndroidManifest_xml_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/AndroidManifest.xml#L25
 [KPSwitchFSPanelFrameLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchFSPanelFrameLayout.java
 [KPSwitchFSPanelLinearLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchFSPanelLinearLayout.java
 [KPSwitchFSPanelRelativeLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchFSPanelRelativeLayout.java
-[ChattingResolvedFullScreenActivity_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/java/cn/dreamtobe/kpswitch/demo/activity/ChattingResolvedFullScreenActivity.java
+[ChattingResolvedHandleByPlaceholderActivity_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/java/cn/dreamtobe/kpswitch/demo/activity/ChattingResolvedHandleByPlaceholderActivity.java
 [KPSwitchConflictUtil_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KPSwitchConflictUtil.java
-[KeyboardUtil_attach_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L146
-[IFSPanelConflictLayout_recordKeyboardStatus_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/IFSPanelConflictLayout.java#L22
+[KeyboardUtil_attach_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L134
+[IFSPanelConflictLayout_recordKeyboardStatus_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/IFSPanelConflictLayout.java#L37

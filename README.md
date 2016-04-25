@@ -31,14 +31,17 @@
 在`build.gradle`中引入:
 
 ```
-compile 'cn.dreamtobe.kpswitch:library:1.4.5'
+compile 'cn.dreamtobe.kpswitch:library:1.4.6'
 ```
-
 
 ## 使用引导
 
-- [非全屏主题情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/NON-FULLSCREEN_TUTORIAL.md)
-- [全屏主题情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/FULLSCREEN_TUTORIAL.md)
+> 可以考虑`clone`下来跑下项目中的`demo`，已经用尽量简洁的代码尽量覆盖所有Case了。
+
+![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/demo_snapshot.jpg)
+
+- [非全屏主题 或者 透明状态栏主题并且在`fitsSystemWindows=true` 情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/NON-FULLSCREEN_TUTORIAL.md)
+- [全屏主题 或者 透明状态栏主题并且在 `fitsSystemWindows=false` 情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/FULLSCREEN_TUTORIAL.md)
 
 ## 基本原理
 
@@ -71,8 +74,8 @@ limitations under the License.
 [adjust_unresolved_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/adjust_unresolved.gif
 [build_status_svg]: https://travis-ci.org/Jacksgong/JKeyboardPanelSwitch.svg?branch=master
 [build_status_link]: https://travis-ci.org/Jacksgong/JKeyboardPanelSwitch
-[KeyboardUtil_calculateKeyboardHeight_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L196
-[KeyboardUtil_calculateKeyboardShowing_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L247
+[KeyboardUtil_calculateKeyboardHeight_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L214
+[KeyboardUtil_calculateKeyboardShowing_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L266
 [KPSwitchRootLayoutHandler_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/handler/KPSwitchRootLayoutHandler.java
 [KPSwitchPanelLayoutHandler_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/handler/KPSwitchPanelLayoutHandler.java
 [KPSwitchFSPanelLayoutHandler_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/handler/KPSwitchFSPanelLayoutHandler.java

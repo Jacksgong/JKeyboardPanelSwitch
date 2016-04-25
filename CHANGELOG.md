@@ -1,6 +1,11 @@
 # Change Log
 ---
 
+### Version 1.4.6 (2016-04-26)
+
+- 新增 支持`Translucent Status`主题，具体适配可以直接看Demo，适配接口依然非常简单。 Closes #27 。
+- 新增 开放配置 `是否需要让面板高度保持和键盘高度一致` 的接口: `setIgnoreRecommendHeight(boolean)`; 以及对应布局属性配置项 `cn.dreamtobe.kpswitch.R.styleable#KPSwitchPanelLayout_ignore_recommend_height`。Closes #25 。
+
 ### Version 1.4.5 (2016-04-21)
 
 - 修复页面是继承自`Activity`或`FragmentActivity`的情况下，由于计算键盘是否显示出现错误，导致存在闪动的bug。Closes #24 。

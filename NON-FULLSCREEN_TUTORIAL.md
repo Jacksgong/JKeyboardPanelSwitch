@@ -1,6 +1,8 @@
-# 非全屏主题情况下使用引导
+# 非全屏主题 或者 透明状态栏主题并且在`fitsSystemWindows=true` 情况下使用引导
 
-> 所谓非全屏主题，就是 `(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == 0`
+> 这个引导覆盖以下两个Case:
+> 1. 非全屏主题 (`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == 0`) 。
+> 2. 透明状态栏主题(`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0`) 并且 根布局的 `fitsSystemWindows=true`。
 
 ![][non-fullscreen_resolved_gif]
 
@@ -138,4 +140,4 @@ public boolean dispatchKeyEvent(KeyEvent event){
 [KPSwitchRootLinearLayout_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/widget/KPSwitchRootLinearLayout.java
 [ChattingResolvedActivity_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/java/cn/dreamtobe/kpswitch/demo/activity/ChattingResolvedActivity.java
 [KPSwitchConflictUtil_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KPSwitchConflictUtil.java
-[KeyboardUtil_attach_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L146
+[KeyboardUtil_attach_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/library/src/main/java/cn/dreamtobe/kpswitch/util/KeyboardUtil.java#L134
