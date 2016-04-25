@@ -1,6 +1,7 @@
 # 非全屏主题 或者 透明状态栏主题并且在`fitsSystemWindows=true` 情况下使用引导
 
 > 这个引导覆盖以下两个Case:
+
 > 1. 非全屏主题 (`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == 0`) 。
 > 2. 透明状态栏主题(`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0`) 并且 根布局的 `fitsSystemWindows=true`。
 
