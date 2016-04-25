@@ -86,10 +86,14 @@ public class ChattingResolvedFragmentActivity extends FragmentActivity {
         adaptFitsSystemWindows(isTranslucentStatusFitSystemWindowTrue);
 
         adaptTitle(isTranslucentStatusFitSystemWindowTrue);
-        // ********* Above code Just for Demo Test, do not need to adapt in your code. ************
-
 
         assignViews();
+
+        if (getIntent().getBooleanExtra(MainActivity.KEY_IGNORE_RECOMMEND_PANEL_HEIGHT, false)) {
+            mPanelRoot.setIgnoreRecommendHeight(true);
+        }
+        // ********* Above code Just for Demo Test, do not need to adapt in your code. ************
+
         KeyboardUtil.attach(this, mPanelRoot,
                 // Add keyboard showing state callback, do like this when you want to listen in the
                 // keyboard's show/hide change.

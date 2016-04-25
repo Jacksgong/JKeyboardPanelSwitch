@@ -33,6 +33,13 @@
         android:layout_marginLeft="10dp"
         android:text="@string/translucent_status_with_fitsystemwindow_true" />
 
+    <CheckBox
+        android:id="@+id/ignore_recommend_panel_height_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/ignore_recommend_panel_height_cb_text" />
+
     <Button
         android:id="@+id/handle_by_delay_resolved_btn"
         android:layout_width="match_parent"
@@ -79,4 +86,5 @@
         android:onClick="onClickUnResolved"
         android:padding="5dp"
         android:text="@string/activity_chatting_unresolved_title" />
+
 </LinearLayout>

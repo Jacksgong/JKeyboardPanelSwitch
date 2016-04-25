@@ -18,4 +18,5 @@
     <string name="translucent_status_with_fitsystemwindow_true">Translucent Status with fitSystemWindows=true</string>
     <string name="translucent_status_with_fitssystemwindows_false">Translucent Status with fitsSystemWindows=false</string>
     <string name="full_screen_theme">Full Screen Theme</string>
+    <string name="ignore_recommend_panel_height_cb_text">Ignore guaranteeing the panel height equal to the keyboard height</string>
 </resources>

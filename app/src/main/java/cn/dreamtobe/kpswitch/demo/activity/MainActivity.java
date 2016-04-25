@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     public final static String KEY_FULL_SCREEN_THEME = "key.theme.fullscreen";
     public final static String KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE =
             "key.theme.translucent.status.fitSystemWindow.true";
+    public final static String KEY_IGNORE_RECOMMEND_PANEL_HEIGHT =
+            "key.ignore.recommend.panel.height";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickResolved(final View view) {
         Intent i = new Intent();
         i.putExtra(KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE, translucentStatusTrueCb.isChecked());
+        i.putExtra(KEY_IGNORE_RECOMMEND_PANEL_HEIGHT, ignoreRecommendPanelHeightCb.isChecked());
 
         final ComponentName componentName;
         if (appCompatActivityRb.isChecked()) {
@@ -124,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup themeRg;
     private RadioButton fullScreenRb;
     private Button handleByPlaceholderResolvedBtn;
+    private CheckBox ignoreRecommendPanelHeightCb;
 
     private void assignViews() {
         appCompatActivityRb = (RadioButton) findViewById(R.id.app_compat_activity_rb);
@@ -132,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         themeRg = (RadioGroup) findViewById(R.id.theme_rg);
         fullScreenRb = (RadioButton) findViewById(R.id.full_screen_rb);
         handleByPlaceholderResolvedBtn = (Button) findViewById(R.id.handle_by_placeholder_resolved_btn);
+        ignoreRecommendPanelHeightCb = (CheckBox) findViewById(R.id.ignore_recommend_panel_height_cb);
     }
-
 
 }
