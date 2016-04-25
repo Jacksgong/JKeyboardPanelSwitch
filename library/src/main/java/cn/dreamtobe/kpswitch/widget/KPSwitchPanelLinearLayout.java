@@ -25,7 +25,6 @@ import android.widget.LinearLayout;
 import cn.dreamtobe.kpswitch.IPanelConflictLayout;
 import cn.dreamtobe.kpswitch.IPanelHeightTarget;
 import cn.dreamtobe.kpswitch.handler.KPSwitchPanelLayoutHandler;
-import cn.dreamtobe.kpswitch.util.ViewUtil;
 
 
 /**
@@ -48,27 +47,27 @@ public class KPSwitchPanelLinearLayout extends LinearLayout implements IPanelHei
 
     public KPSwitchPanelLinearLayout(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public KPSwitchPanelLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public KPSwitchPanelLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
-    private void init() {
-        panelLayoutHandler = new KPSwitchPanelLayoutHandler(this);
+    private void init(final AttributeSet attrs) {
+        panelLayoutHandler = new KPSwitchPanelLayoutHandler(this, attrs);
     }
 
     @Override
     public void refreshHeight(int panelHeight) {
-        ViewUtil.refreshHeight(this, panelHeight);
+        panelLayoutHandler.resetToRecommendPanelHeight(panelHeight);
     }
 
     @Override
@@ -112,6 +111,11 @@ public class KPSwitchPanelLinearLayout extends LinearLayout implements IPanelHei
     @Override
     public void handleHide() {
         panelLayoutHandler.handleHide();
+    }
+
+    @Override
+    public void setIgnoreRecommendHeight(boolean isIgnoreRecommendHeight) {
+        panelLayoutHandler.setIgnoreRecommendHeight(isIgnoreRecommendHeight);
     }
 
 }

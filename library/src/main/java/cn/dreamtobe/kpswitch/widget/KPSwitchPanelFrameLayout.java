@@ -25,7 +25,6 @@ import android.widget.FrameLayout;
 import cn.dreamtobe.kpswitch.IPanelConflictLayout;
 import cn.dreamtobe.kpswitch.IPanelHeightTarget;
 import cn.dreamtobe.kpswitch.handler.KPSwitchPanelLayoutHandler;
-import cn.dreamtobe.kpswitch.util.ViewUtil;
 
 /**
  * Created by Jacksgong on 3/30/16.
@@ -46,27 +45,27 @@ public class KPSwitchPanelFrameLayout extends FrameLayout implements IPanelHeigh
 
     public KPSwitchPanelFrameLayout(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public KPSwitchPanelFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public KPSwitchPanelFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public KPSwitchPanelFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        init(attrs);
     }
 
-    private void init() {
-        panelLayoutHandler = new KPSwitchPanelLayoutHandler(this);
+    private void init(final AttributeSet attrs) {
+        panelLayoutHandler = new KPSwitchPanelLayoutHandler(this, attrs);
     }
 
     @Override
@@ -106,12 +105,18 @@ public class KPSwitchPanelFrameLayout extends FrameLayout implements IPanelHeigh
     }
 
     @Override
+    public void setIgnoreRecommendHeight(boolean isIgnoreRecommendHeight) {
+        panelLayoutHandler.setIgnoreRecommendHeight(isIgnoreRecommendHeight);
+    }
+
+    @Override
     public void refreshHeight(int panelHeight) {
-        ViewUtil.refreshHeight(this, panelHeight);
+        panelLayoutHandler.resetToRecommendPanelHeight(panelHeight);
     }
 
     @Override
     public void onKeyboardShowing(boolean showing) {
         panelLayoutHandler.setIsKeyboardShowing(showing);
     }
+
 }

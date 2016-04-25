@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <declare-styleable name="KPSwitchPanelLayout">
+      <attr name="ignore_recommend_height" format="boolean" />
+   </declare-styleable>
+</resources>

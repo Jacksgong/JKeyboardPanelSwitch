@@ -15,9 +15,14 @@
  */
 package cn.dreamtobe.kpswitch.handler;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.AttributeSet;
 import android.view.View;
 
 import cn.dreamtobe.kpswitch.IPanelConflictLayout;
+import cn.dreamtobe.kpswitch.R;
+import cn.dreamtobe.kpswitch.util.ViewUtil;
 
 /**
  * Created by Jacksgong on 3/30/16.
@@ -54,8 +59,33 @@ public class KPSwitchPanelLayoutHandler implements IPanelConflictLayout {
      */
     private boolean mIsHide = false;
 
-    public KPSwitchPanelLayoutHandler(final View panelLayout) {
+    /**
+     * Whether ignore the recommend panel height, what would be equal to the height of keyboard in
+     * most situations.
+     * <p/>
+     * If the value is true, the panel's height will not be follow the height of the keyboard.
+     * <p/>
+     * Default is false.
+     * @attr ref cn.dreamtobe.kpswitch.R.styleable#KPSwitchPanelLayout_ignore_recommend_height
+     */
+    private boolean mIgnoreRecommendHeight = false;
+
+    public KPSwitchPanelLayoutHandler(final View panelLayout, final AttributeSet attrs) {
         this.panelLayout = panelLayout;
+        if (attrs != null) {
+            TypedArray typedArray = null;
+            try {
+                typedArray = panelLayout.getContext().
+                        obtainStyledAttributes(attrs, R.styleable.KPSwitchPanelLayout);
+                mIgnoreRecommendHeight = typedArray.
+                        getBoolean(R.styleable.KPSwitchPanelLayout_ignore_recommend_height,
+                                false);
+            } finally {
+                if (typedArray != null) {
+                    typedArray.recycle();
+                }
+            }
+        }
     }
 
     /**
@@ -144,5 +174,29 @@ public class KPSwitchPanelLayoutHandler implements IPanelConflictLayout {
     @Override
     public void handleHide() {
         this.mIsHide = true;
+    }
+
+    /**
+     * @param recommendPanelHeight the recommend panel height, in the most situations, the value
+     *                             would be equal to the height of the keyboard.
+     * @see cn.dreamtobe.kpswitch.util.KeyboardUtil#getValidPanelHeight(Context)
+     */
+    public void resetToRecommendPanelHeight(int recommendPanelHeight) {
+        if (mIgnoreRecommendHeight) {
+            // In this way, the panel's height will be not follow the height of keyboard.
+            return;
+        }
+
+        ViewUtil.refreshHeight(panelLayout, recommendPanelHeight);
+    }
+
+    /**
+     * @param ignoreRecommendHeight Whether ignore the recommend panel height, what would be equal
+     *                              to the height of keyboard in most situations.
+     * @see #resetToRecommendPanelHeight(int)
+     * @attr ref cn.dreamtobe.kpswitch.R.styleable#KPSwitchPanelLayout_ignore_recommend_height
+     */
+    public void setIgnoreRecommendHeight(boolean ignoreRecommendHeight) {
+        this.mIgnoreRecommendHeight = ignoreRecommendHeight;
     }
 }
