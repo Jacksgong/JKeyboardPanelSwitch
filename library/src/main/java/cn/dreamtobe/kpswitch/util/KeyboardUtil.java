@@ -141,25 +141,37 @@ public class KeyboardUtil {
      * @param listener the listener to listen in: keyboard is showing or not.
      * @see #saveKeyboardHeight(Context, int)
      */
-    public static void attach(final Activity activity, IPanelHeightTarget target,
+    public static ViewTreeObserver.OnGlobalLayoutListener attach(final Activity activity, IPanelHeightTarget target,
                               /** Nullable **/OnKeyboardShowingListener listener) {
         final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
         final boolean isFullScreen = ViewUtil.isFullScreen(activity);
         final boolean isTranslucentStatus = ViewUtil.isTranslucentStatus(activity);
         final boolean isFitSystemWindows = ViewUtil.isFitsSystemWindows(activity);
 
-        contentView.getViewTreeObserver().
-                addOnGlobalLayoutListener(
-                        new KeyboardStatusListener(isFullScreen, isTranslucentStatus,
-                                isFitSystemWindows,
-                                contentView, target, listener));
+        ViewTreeObserver.OnGlobalLayoutListener l = new KeyboardStatusListener(
+                isFullScreen,
+                isTranslucentStatus,
+                isFitSystemWindows,
+                contentView, target, listener);
+        contentView.getViewTreeObserver().addOnGlobalLayoutListener(l);
+        return l;
     }
 
     /**
      * @see #attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)
      */
-    public static void attach(final Activity activity, IPanelHeightTarget target) {
-        attach(activity, target, null);
+    public static ViewTreeObserver.OnGlobalLayoutListener attach(final Activity activity, IPanelHeightTarget target) {
+        return attach(activity, target, null);
+    }
+
+    /**
+     * remove the OnGlobalLayoutListener from the activity root view
+     * @param activity same activity used in {@link #attach} method
+     * @param l ViewTreeObserver.OnGlobalLayoutListener returned by {@link #attach} method
+     */
+    public static void detach(Activity activity, ViewTreeObserver.OnGlobalLayoutListener l) {
+        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        contentView.getViewTreeObserver().removeGlobalOnLayoutListener(l);
     }
 
     private static class KeyboardStatusListener implements ViewTreeObserver.OnGlobalLayoutListener {
