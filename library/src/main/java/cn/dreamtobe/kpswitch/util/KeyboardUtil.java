@@ -113,6 +113,7 @@ public class KeyboardUtil {
 
     private static int MAX_PANEL_HEIGHT = 0;
     private static int MIN_PANEL_HEIGHT = 0;
+    private static int MIN_KEYBOARD_HEIGHT = 0;
 
     public static int getMaxPanelHeight(final Resources res) {
         if (MAX_PANEL_HEIGHT == 0) {
@@ -128,6 +129,13 @@ public class KeyboardUtil {
         }
 
         return MIN_PANEL_HEIGHT;
+    }
+
+    public static int getMinKeyboardHeight(Context context) {
+        if (MIN_KEYBOARD_HEIGHT == 0) {
+            MIN_KEYBOARD_HEIGHT = context.getResources().getDimensionPixelSize(R.dimen.min_keyboard_height);
+        }
+        return MIN_KEYBOARD_HEIGHT;
     }
 
 
@@ -248,7 +256,7 @@ public class KeyboardUtil {
                 keyboardHeight = Math.abs(displayHeight - previousDisplayHeight);
             }
             // no change.
-            if (keyboardHeight <= 0) {
+            if (keyboardHeight <= getMinKeyboardHeight(getContext())) {
                 return;
             }
 
@@ -316,11 +324,8 @@ public class KeyboardUtil {
                 if (maxOverlayLayoutHeight == 0) {
                     // non-used.
                     isKeyboardShowing = lastKeyboardShowing;
-                } else if (displayHeight >= maxOverlayLayoutHeight) {
-                    isKeyboardShowing = false;
-                } else {
-                    isKeyboardShowing = true;
-                }
+                } else
+                    isKeyboardShowing = displayHeight < maxOverlayLayoutHeight - getMinKeyboardHeight(getContext());
 
                 maxOverlayLayoutHeight = Math.max(maxOverlayLayoutHeight, actionBarOverlayLayoutHeight);
             }
