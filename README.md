@@ -1,5 +1,7 @@
 # Android键盘面板冲突 布局闪动处理方案
 
+[![Join the chat at https://gitter.im/Jacksgong/JKeyboardPanelSwitch](https://badges.gitter.im/Jacksgong/JKeyboardPanelSwitch.svg)](https://gitter.im/Jacksgong/JKeyboardPanelSwitch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Download][bintray_svg]][bintray_link]
 [![Build Status][build_status_svg]][build_status_link]
 
