@@ -156,13 +156,13 @@ public class KeyboardUtil {
         final boolean isTranslucentStatus = ViewUtil.isTranslucentStatus(activity);
         final boolean isFitSystemWindows = ViewUtil.isFitsSystemWindows(activity);
 
-        ViewTreeObserver.OnGlobalLayoutListener l = new KeyboardStatusListener(
+        ViewTreeObserver.OnGlobalLayoutListener globalLayoutListener = new KeyboardStatusListener(
                 isFullScreen,
                 isTranslucentStatus,
                 isFitSystemWindows,
                 contentView, target, listener);
-        contentView.getViewTreeObserver().addOnGlobalLayoutListener(l);
-        return l;
+        contentView.getViewTreeObserver().addOnGlobalLayoutListener(globalLayoutListener);
+        return globalLayoutListener;
     }
 
     /**
@@ -173,7 +173,7 @@ public class KeyboardUtil {
     }
 
     /**
-     * remove the OnGlobalLayoutListener from the activity root view
+     * Remove the OnGlobalLayoutListener from the activity root view
      * @param activity same activity used in {@link #attach} method
      * @param l ViewTreeObserver.OnGlobalLayoutListener returned by {@link #attach} method
      */
