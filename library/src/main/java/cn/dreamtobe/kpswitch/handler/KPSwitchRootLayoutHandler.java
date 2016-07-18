@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.dreamtobe.kpswitch.IPanelConflictLayout;
+import cn.dreamtobe.kpswitch.util.KeyboardUtil;
 import cn.dreamtobe.kpswitch.util.StatusBarHeightUtil;
 import cn.dreamtobe.kpswitch.util.ViewUtil;
 
@@ -96,7 +97,11 @@ public class KPSwitchRootLayoutHandler {
             return;
         }
 
-        // 检测到真正的 由于键盘收起触发了本次的布局变化
+        // 检测到布局变化非键盘引起
+        if (Math.abs(offset) < KeyboardUtil.getMinKeyboardHeight(mTargetRootView.getContext())) {
+            Log.w(TAG, "system menubar cause layout changed");
+            return;
+        }
 
         if (offset > 0) {
             //键盘弹起 (offset > 0，高度变小)

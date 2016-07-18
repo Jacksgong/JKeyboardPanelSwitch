@@ -113,6 +113,7 @@ public class KeyboardUtil {
 
     private static int MAX_PANEL_HEIGHT = 0;
     private static int MIN_PANEL_HEIGHT = 0;
+    private static int MIN_KEYBOARD_HEIGHT = 0;
 
     public static int getMaxPanelHeight(final Resources res) {
         if (MAX_PANEL_HEIGHT == 0) {
@@ -130,6 +131,13 @@ public class KeyboardUtil {
         return MIN_PANEL_HEIGHT;
     }
 
+    public static int getMinKeyboardHeight(Context context) {
+        if (MIN_KEYBOARD_HEIGHT == 0) {
+            MIN_KEYBOARD_HEIGHT = context.getResources().getDimensionPixelSize(R.dimen.min_keyboard_height);
+        }
+        return MIN_KEYBOARD_HEIGHT;
+    }
+
 
     /**
      * Recommend invoked by {@link Activity#onCreate(Bundle)}
@@ -141,25 +149,37 @@ public class KeyboardUtil {
      * @param listener the listener to listen in: keyboard is showing or not.
      * @see #saveKeyboardHeight(Context, int)
      */
-    public static void attach(final Activity activity, IPanelHeightTarget target,
+    public static ViewTreeObserver.OnGlobalLayoutListener attach(final Activity activity, IPanelHeightTarget target,
                               /** Nullable **/OnKeyboardShowingListener listener) {
         final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
         final boolean isFullScreen = ViewUtil.isFullScreen(activity);
         final boolean isTranslucentStatus = ViewUtil.isTranslucentStatus(activity);
         final boolean isFitSystemWindows = ViewUtil.isFitsSystemWindows(activity);
 
-        contentView.getViewTreeObserver().
-                addOnGlobalLayoutListener(
-                        new KeyboardStatusListener(isFullScreen, isTranslucentStatus,
-                                isFitSystemWindows,
-                                contentView, target, listener));
+        ViewTreeObserver.OnGlobalLayoutListener globalLayoutListener = new KeyboardStatusListener(
+                isFullScreen,
+                isTranslucentStatus,
+                isFitSystemWindows,
+                contentView, target, listener);
+        contentView.getViewTreeObserver().addOnGlobalLayoutListener(globalLayoutListener);
+        return globalLayoutListener;
     }
 
     /**
      * @see #attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)
      */
-    public static void attach(final Activity activity, IPanelHeightTarget target) {
-        attach(activity, target, null);
+    public static ViewTreeObserver.OnGlobalLayoutListener attach(final Activity activity, IPanelHeightTarget target) {
+        return attach(activity, target, null);
+    }
+
+    /**
+     * Remove the OnGlobalLayoutListener from the activity root view
+     * @param activity same activity used in {@link #attach} method
+     * @param l ViewTreeObserver.OnGlobalLayoutListener returned by {@link #attach} method
+     */
+    public static void detach(Activity activity, ViewTreeObserver.OnGlobalLayoutListener l) {
+        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        contentView.getViewTreeObserver().removeGlobalOnLayoutListener(l);
     }
 
     private static class KeyboardStatusListener implements ViewTreeObserver.OnGlobalLayoutListener {
@@ -236,7 +256,7 @@ public class KeyboardUtil {
                 keyboardHeight = Math.abs(displayHeight - previousDisplayHeight);
             }
             // no change.
-            if (keyboardHeight <= 0) {
+            if (keyboardHeight <= getMinKeyboardHeight(getContext())) {
                 return;
             }
 
@@ -304,10 +324,8 @@ public class KeyboardUtil {
                 if (maxOverlayLayoutHeight == 0) {
                     // non-used.
                     isKeyboardShowing = lastKeyboardShowing;
-                } else if (displayHeight >= maxOverlayLayoutHeight) {
-                    isKeyboardShowing = false;
                 } else {
-                    isKeyboardShowing = true;
+                    isKeyboardShowing = displayHeight < maxOverlayLayoutHeight - getMinKeyboardHeight(getContext());
                 }
 
                 maxOverlayLayoutHeight = Math.max(maxOverlayLayoutHeight, actionBarOverlayLayoutHeight);
