@@ -99,7 +99,7 @@ public class KPSwitchRootLayoutHandler {
 
         // 检测到布局变化非键盘引起
         if (Math.abs(offset) < KeyboardUtil.getMinKeyboardHeight(mTargetRootView.getContext())) {
-            Log.w(TAG, "system menubar cause layout changed");
+            Log.w(TAG, "system bottom-menu-bar(such as HuaWei Mate7) causes layout changed");
             return;
         }
 

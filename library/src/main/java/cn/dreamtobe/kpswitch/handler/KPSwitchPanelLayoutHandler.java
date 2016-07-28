@@ -68,6 +68,7 @@ public class KPSwitchPanelLayoutHandler implements IPanelConflictLayout {
      * Default is false.
      * @attr ref cn.dreamtobe.kpswitch.R.styleable#KPSwitchPanelLayout_ignore_recommend_height
      */
+    @SuppressWarnings("JavaDoc")
     private boolean mIgnoreRecommendHeight = false;
 
     public KPSwitchPanelLayoutHandler(final View panelLayout, final AttributeSet attrs) {
@@ -111,6 +112,7 @@ public class KPSwitchPanelLayoutHandler implements IPanelConflictLayout {
          * the size is changed by keyboard-show. And will show, on the next frame of the above
          * change discovery.
          */
+        //noinspection RedundantIfStatement
         if (isKeyboardShowing() && visibility == View.VISIBLE) {
             return true;
         }
@@ -196,6 +198,7 @@ public class KPSwitchPanelLayoutHandler implements IPanelConflictLayout {
      * @see #resetToRecommendPanelHeight(int)
      * @attr ref cn.dreamtobe.kpswitch.R.styleable#KPSwitchPanelLayout_ignore_recommend_height
      */
+    @SuppressWarnings("JavaDoc")
     public void setIgnoreRecommendHeight(boolean ignoreRecommendHeight) {
         this.mIgnoreRecommendHeight = ignoreRecommendHeight;
     }

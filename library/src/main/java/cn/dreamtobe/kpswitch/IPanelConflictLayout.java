@@ -20,6 +20,9 @@ import android.view.View;
 
 /**
  * Created by Jacksgong on 3/30/16.
+ * <p>
+ * The interface used for the panel's container layout and it used in the case of non-full-screen
+ * theme window.
  */
 public interface IPanelConflictLayout {
     boolean isKeyboardShowing();
@@ -50,5 +53,6 @@ public interface IPanelConflictLayout {
      * @see cn.dreamtobe.kpswitch.handler.KPSwitchPanelLayoutHandler#resetToRecommendPanelHeight(int)
      * @see cn.dreamtobe.kpswitch.util.KeyboardUtil#getValidPanelHeight(Context)
      */
+    @SuppressWarnings("JavaDoc")
     void setIgnoreRecommendHeight(boolean isIgnoreRecommendHeight);
 }

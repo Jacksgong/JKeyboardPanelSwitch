@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -179,7 +180,12 @@ public class KeyboardUtil {
      */
     public static void detach(Activity activity, ViewTreeObserver.OnGlobalLayoutListener l) {
         ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
-        contentView.getViewTreeObserver().removeGlobalOnLayoutListener(l);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            contentView.getViewTreeObserver().removeOnGlobalLayoutListener(l);
+        } else {
+            //noinspection deprecation
+            contentView.getViewTreeObserver().removeGlobalOnLayoutListener(l);
+        }
     }
 
     private static class KeyboardStatusListener implements ViewTreeObserver.OnGlobalLayoutListener {

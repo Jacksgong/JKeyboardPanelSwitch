@@ -68,6 +68,7 @@ public class ViewUtil {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static boolean isTranslucentStatus(final Activity activity) {
+        //noinspection SimplifiableIfStatement
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             return (activity.getWindow().getAttributes().flags &
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0;
@@ -77,6 +78,7 @@ public class ViewUtil {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     static boolean isFitsSystemWindows(final Activity activity){
+        //noinspection SimplifiableIfStatement
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             return ((ViewGroup)activity.findViewById(android.R.id.content)).getChildAt(0).
                     getFitsSystemWindows();
