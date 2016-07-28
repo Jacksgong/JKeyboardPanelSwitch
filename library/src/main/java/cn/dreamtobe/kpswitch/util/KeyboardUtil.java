@@ -15,6 +15,7 @@
  */
 package cn.dreamtobe.kpswitch.util;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -151,7 +152,7 @@ public class KeyboardUtil {
      * @see #saveKeyboardHeight(Context, int)
      */
     public static ViewTreeObserver.OnGlobalLayoutListener attach(final Activity activity, IPanelHeightTarget target,
-                              /** Nullable **/OnKeyboardShowingListener listener) {
+                                                                 /** Nullable **/OnKeyboardShowingListener listener) {
         final ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
         final boolean isFullScreen = ViewUtil.isFullScreen(activity);
         final boolean isTranslucentStatus = ViewUtil.isTranslucentStatus(activity);
@@ -175,9 +176,11 @@ public class KeyboardUtil {
 
     /**
      * Remove the OnGlobalLayoutListener from the activity root view
+     *
      * @param activity same activity used in {@link #attach} method
-     * @param l ViewTreeObserver.OnGlobalLayoutListener returned by {@link #attach} method
+     * @param l        ViewTreeObserver.OnGlobalLayoutListener returned by {@link #attach} method
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void detach(Activity activity, ViewTreeObserver.OnGlobalLayoutListener l) {
         ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
