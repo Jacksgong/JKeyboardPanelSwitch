@@ -1,6 +1,12 @@
 # Change Log
 ---
 
+### Version 1.5.0 (2016-08-03)
+
+- 修复 `Translucent Status`主题下，部分手机(如Samsung S7 edge)计算键盘高度出错。 Closes #35 。
+- 修复 某些手机(如华为Mate 7)NavigationBar的隐藏与显示，误判为键盘的隐藏与显示。 Merged #33 , Closes #34 , By @sollian 。
+- 添加 `KeyboardUtil#detach` 方便外面主动移除架构内的`ViewTreeObserver.OnGlobalLayoutListener`。 Merged #33 , By @sollian 。
+
 ### Version 1.4.6 (2016-04-26)
 
 - 新增 支持`Translucent Status`主题，具体适配可以直接看Demo，适配接口依然非常简单。 Closes #27 。
