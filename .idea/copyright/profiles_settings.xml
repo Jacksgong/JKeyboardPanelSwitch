@@ -1,3 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="" />
+  <settings default="">
+    <module2copyright>
+      <element module="Library" copyright="Apache V2" />
+    </module2copyright>
+  </settings>
 </component>
