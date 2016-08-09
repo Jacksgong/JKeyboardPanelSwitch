@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.dreamtobe.kpswitch.widget.KPSwitchRootLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_message_list"/>
+
+    <include layout="@layout/layout_send_message_bar"/>
+
+
+    <cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout
+        android:id="@+id/panel_root"
+        style="@style/Panel"
+        android:visibility="gone">
+
+        <include
+            android:id="@+id/sub_panel_1"
+            layout="@layout/sub_panel_content"/>
+
+        <include
+            android:id="@+id/sub_panel_2"
+            layout="@layout/sub_panel_content"/>
+    </cn.dreamtobe.kpswitch.widget.KPSwitchPanelLinearLayout>
+
+</cn.dreamtobe.kpswitch.widget.KPSwitchRootLinearLayout>

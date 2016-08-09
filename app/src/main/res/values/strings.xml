@@ -19,4 +19,6 @@
     <string name="translucent_status_with_fitssystemwindows_false">Translucent Status with fitsSystemWindows=false</string>
     <string name="full_screen_theme">Full Screen Theme</string>
     <string name="ignore_recommend_panel_height_cb_text">Ignore guaranteeing the panel height equal to the keyboard height</string>
+    <string name="mark_panel1_to_img">照片-面板1</string>
+    <string name="several_sub_panels_cb_text">There are several sub-panels in one page</string>
 </resources>

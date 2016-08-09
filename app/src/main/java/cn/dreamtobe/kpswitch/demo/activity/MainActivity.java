@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
             "key.theme.translucent.status.fitSystemWindow.true";
     public final static String KEY_IGNORE_RECOMMEND_PANEL_HEIGHT =
             "key.ignore.recommend.panel.height";
+    public final static String KEY_MULTI_SUB_PANEL = "key.multi.sub.panel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,31 +37,31 @@ public class MainActivity extends AppCompatActivity {
 
         assignViews();
 
-        themeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mThemeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.full_screen_rb) {
                     // full screen theme.
-                    handleByPlaceholderResolvedBtn.
+                    mHandleByPlaceholderResolvedBtn.
                             setText(R.string.activity_chatting_fullscreen_resolved_title);
                 } else {
                     // translucent status with fitSystemWindows=false theme.
-                    handleByPlaceholderResolvedBtn.
+                    mHandleByPlaceholderResolvedBtn.
                             setText(R.string.activity_chatting_translucent_status_false_resolved_title);
                 }
             }
         });
 
-        translucentStatusTrueCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mTranslucentStatusTrueCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // translucent status with fitSystemWindows=true theme.
-                    handleByDelayResolvedBtn.
+                    mHandleByDelayResolvedBtn.
                             setText(R.string.activity_chatting_translucent_status_true_resolved_title);
                 } else {
                     // normal theme.
-                    handleByDelayResolvedBtn.setText(R.string.activity_chatting_resolved_title);
+                    mHandleByDelayResolvedBtn.setText(R.string.activity_chatting_resolved_title);
                 }
             }
         });
@@ -68,12 +69,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickResolved(final View view) {
         Intent i = new Intent();
-        i.putExtra(KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE, translucentStatusTrueCb.isChecked());
-        i.putExtra(KEY_IGNORE_RECOMMEND_PANEL_HEIGHT, ignoreRecommendPanelHeightCb.isChecked());
+        i.putExtra(KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE, mTranslucentStatusTrueCb.isChecked());
+        i.putExtra(KEY_IGNORE_RECOMMEND_PANEL_HEIGHT, mIgnoreRecommendPanelHeightCb.isChecked());
+        i.putExtra(KEY_MULTI_SUB_PANEL, mMultipleSubPanelCb.isChecked());
 
         final ComponentName componentName;
-        if (appCompatActivityRb.isChecked()) {
-             componentName = new ComponentName(this, ChattingResolvedActivity.class);
+        if (mAppCompatActivityRb.isChecked()) {
+            componentName = new ComponentName(this, ChattingResolvedActivity.class);
         } else {
             componentName = new ComponentName(this, ChattingResolvedFragmentActivity.class);
         }
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
      * Resolved for Full Screen Theme or Translucent Status Theme.
      */
     public void onClickExtraThemeResolved(final View view) {
-        final boolean fullScreenTheme = fullScreenRb.isChecked();
+        final boolean fullScreenTheme = mFullScreenRb.isChecked();
 
         Intent i = new Intent(this, ChattingResolvedHandleByPlaceholderActivity.class);
         i.putExtra(KEY_FULL_SCREEN_THEME, fullScreenTheme);
@@ -121,22 +123,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private RadioButton appCompatActivityRb;
-    private CheckBox translucentStatusTrueCb;
-    private Button handleByDelayResolvedBtn;
-    private RadioGroup themeRg;
-    private RadioButton fullScreenRb;
-    private Button handleByPlaceholderResolvedBtn;
-    private CheckBox ignoreRecommendPanelHeightCb;
+    private RadioButton mAppCompatActivityRb;
+    private CheckBox mTranslucentStatusTrueCb;
+    private CheckBox mIgnoreRecommendPanelHeightCb;
+    private CheckBox mMultipleSubPanelCb;
+    private Button mHandleByDelayResolvedBtn;
+    private RadioGroup mThemeRg;
+    private RadioButton mFullScreenRb;
+    private Button mHandleByPlaceholderResolvedBtn;
 
     private void assignViews() {
-        appCompatActivityRb = (RadioButton) findViewById(R.id.app_compat_activity_rb);
-        translucentStatusTrueCb = (CheckBox) findViewById(R.id.translucent_status_true_cb);
-        handleByDelayResolvedBtn = (Button) findViewById(R.id.handle_by_delay_resolved_btn);
-        themeRg = (RadioGroup) findViewById(R.id.theme_rg);
-        fullScreenRb = (RadioButton) findViewById(R.id.full_screen_rb);
-        handleByPlaceholderResolvedBtn = (Button) findViewById(R.id.handle_by_placeholder_resolved_btn);
-        ignoreRecommendPanelHeightCb = (CheckBox) findViewById(R.id.ignore_recommend_panel_height_cb);
+        mAppCompatActivityRb = (RadioButton) findViewById(R.id.app_compat_activity_rb);
+        mTranslucentStatusTrueCb = (CheckBox) findViewById(R.id.translucent_status_true_cb);
+        mIgnoreRecommendPanelHeightCb = (CheckBox) findViewById(R.id.ignore_recommend_panel_height_cb);
+        mMultipleSubPanelCb = (CheckBox) findViewById(R.id.multiple_sub_panel_cb);
+        mHandleByDelayResolvedBtn = (Button) findViewById(R.id.handle_by_delay_resolved_btn);
+        mThemeRg = (RadioGroup) findViewById(R.id.theme_rg);
+        mFullScreenRb = (RadioButton) findViewById(R.id.full_screen_rb);
+        mHandleByPlaceholderResolvedBtn = (Button) findViewById(R.id.handle_by_placeholder_resolved_btn);
     }
+
 
 }

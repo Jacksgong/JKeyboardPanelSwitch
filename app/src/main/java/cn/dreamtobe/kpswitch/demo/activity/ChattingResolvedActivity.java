@@ -66,6 +66,31 @@ public class ChattingResolvedActivity extends AppCompatActivity {
         }
     }
 
+    private View mSubPanel1, mSubPanel2;
+    private ImageView mPlusIv1, mPlusIv2;
+
+    private void adaptMultiSubPanel(final boolean isMultiSubPanel) {
+        if (isMultiSubPanel) {
+            setContentView(R.layout.activity_multiple_sub_panel_chatting_resolved);
+        } else {
+            setContentView(R.layout.activity_chatting_resolved);
+        }
+
+        assignViews();
+
+        if (isMultiSubPanel) {
+            mSubPanel1 = mPanelRoot.findViewById(R.id.sub_panel_1);
+            mSubPanel2 = mPanelRoot.findViewById(R.id.sub_panel_2);
+
+            mPlusIv1 = (ImageView) findViewById(R.id.voice_text_switch_iv);
+            mPlusIv2 = mPlusIv;
+
+            mPlusIv1.setImageResource(R.drawable.chatting_plus_btn_icon);
+
+            mSendImgTv.setText(R.string.mark_panel1_to_img);
+        }
+    }
+
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void adaptFitsSystemWindows(final boolean isTranslucentStatusFitSystemWindowTrue) {
         if (isTranslucentStatusFitSystemWindowTrue &&
@@ -82,18 +107,21 @@ public class ChattingResolvedActivity extends AppCompatActivity {
                 getBooleanExtra(MainActivity.KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE, false);
         adaptTheme(isTranslucentStatusFitSystemWindowTrue);
 
-        setContentView(R.layout.activity_chatting_resolved);
+        final boolean isMultiSubPanel = getIntent().getBooleanExtra(MainActivity.KEY_MULTI_SUB_PANEL,
+                false);
+
+        adaptMultiSubPanel(isMultiSubPanel);
 
         adaptFitsSystemWindows(isTranslucentStatusFitSystemWindowTrue);
 
         adaptTitle(isTranslucentStatusFitSystemWindowTrue);
 
-        assignViews();
 
         if (getIntent().getBooleanExtra(MainActivity.KEY_IGNORE_RECOMMEND_PANEL_HEIGHT, false)) {
             mPanelRoot.setIgnoreRecommendHeight(true);
         }
         // ********* Above code Just for Demo Test, do not need to adapt in your code. ************
+
 
         KeyboardUtil.attach(this, mPanelRoot,
                 // Add keyboard showing state callback, do like this when you want to listen in the
@@ -105,17 +133,36 @@ public class ChattingResolvedActivity extends AppCompatActivity {
                     }
                 });
 
-        KPSwitchConflictUtil.attach(mPanelRoot, mPlusIv, mSendEdt,
-                new KPSwitchConflictUtil.SwitchClickListener() {
-                    @Override
-                    public void onClickSwitch(boolean switchToPanel) {
-                        if (switchToPanel) {
-                            mSendEdt.clearFocus();
-                        } else {
-                            mSendEdt.requestFocus();
+        if (isMultiSubPanel) {
+            // If there are several sub-panels in this activity ( e.p. function-panel, emoji-panel).
+            KPSwitchConflictUtil.attach(mPanelRoot, mSendEdt,
+                    new KPSwitchConflictUtil.SwitchClickListener() {
+                        @Override
+                        public void onClickSwitch(boolean switchToPanel) {
+                            if (switchToPanel) {
+                                mSendEdt.clearFocus();
+                            } else {
+                                mSendEdt.requestFocus();
+                            }
                         }
-                    }
-                });
+                    },
+                    new KPSwitchConflictUtil.SubPanelAndTrigger(mSubPanel1, mPlusIv1),
+                    new KPSwitchConflictUtil.SubPanelAndTrigger(mSubPanel2, mPlusIv2));
+        } else {
+            // In the normal case.
+            KPSwitchConflictUtil.attach(mPanelRoot, mPlusIv, mSendEdt,
+                    new KPSwitchConflictUtil.SwitchClickListener() {
+                        @Override
+                        public void onClickSwitch(boolean switchToPanel) {
+                            if (switchToPanel) {
+                                mSendEdt.clearFocus();
+                            } else {
+                                mSendEdt.requestFocus();
+                            }
+                        }
+                    });
+        }
+
 
         mSendImgTv.setOnClickListener(new View.OnClickListener() {
             @Override
