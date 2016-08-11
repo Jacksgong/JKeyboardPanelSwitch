@@ -1,6 +1,10 @@
 # Change Log
 ---
 
+### Version 1.6.0 (2016-08-11)
+
+- 添加 `KPSwitchConflictUtil#attach(panelLayout,focusView,switchClickListener,subPanelAndTriggers...)`/`KPSwitchConflictUtil#attach(panelLayout,focusView,subPanelAndTriggers...)` 用于attach一个PanelLayout中有多个SubPanel的情况。 Closes #39。
+
 ### Version 1.5.0 (2016-08-03)
 
 - 修复 `Translucent Status`主题下，部分手机(如Samsung S7 edge)计算键盘高度出错。 Closes #35 。

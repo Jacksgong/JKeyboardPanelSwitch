@@ -100,6 +100,8 @@ public void onCreate(Bundle saveInstanceState){
      * 这个方法主要是对一些相关事件进行注册，如切换面板与键盘等，具体参看源码，比较简单。
      * 里面还提供了一些已经处理了冲突的工具方法: 显示面板；显示键盘；键盘面板切换；隐藏键盘与面板；
      *
+     * 如果有多个面板的需求，可以参看: KPSwitchConflictUtil.attach(panelLayout, focusView, )
+     *
      * @param panelRoot 面板的布局。
      * @param switchPanelKeyboardBtn 用于触发切换面板与键盘的按钮。
      * @param focusView 键盘弹起时会给这个View focus，收回时这个View会失去focus，通常是发送的EditText。
