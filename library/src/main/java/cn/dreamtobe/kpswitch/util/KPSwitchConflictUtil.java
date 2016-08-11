@@ -105,6 +105,15 @@ public class KPSwitchConflictUtil {
     }
 
     /**
+     * The same to {@link #attach(View, View, SwitchClickListener, SubPanelAndTrigger...)}.
+     */
+    public static void attach(final View panelLayout,
+                              final View focusView,
+                              SubPanelAndTrigger... subPanelAndTriggers) {
+        attach(panelLayout, focusView, null, subPanelAndTriggers);
+    }
+
+    /**
      * If you have multiple sub-panels in the {@code panelLayout}, you can use this method to simply
      * attach them to non-layout-conflict. otherwise you can use {@link #attach(View, View, View)} or
      * {@link #attach(View, View, View, SwitchClickListener)}.
@@ -118,7 +127,7 @@ public class KPSwitchConflictUtil {
      */
     public static void attach(final View panelLayout,
                               final View focusView,
-                              final SwitchClickListener switchClickListener,
+                              /** Nullable **/ final SwitchClickListener switchClickListener,
                               SubPanelAndTrigger... subPanelAndTriggers) {
         final Activity activity = (Activity) panelLayout.getContext();
 
@@ -272,7 +281,7 @@ public class KPSwitchConflictUtil {
     private static void bindSubPanel(final SubPanelAndTrigger subPanelAndTrigger,
                                      final SubPanelAndTrigger[] subPanelAndTriggers,
                                      final View focusView, final View panelLayout,
-                                     final SwitchClickListener switchClickListener) {
+                                     /** Nullable **/final SwitchClickListener switchClickListener) {
 
         final View triggerView = subPanelAndTrigger.triggerView;
         final View boundTriggerSubPanelView = subPanelAndTrigger.subPanelView;
