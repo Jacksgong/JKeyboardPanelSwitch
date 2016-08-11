@@ -38,7 +38,7 @@ compile 'cn.dreamtobe.kpswitch:library:1.6.0'
 
 > 可以考虑`clone`下来跑下项目中的`demo`，已经用尽量简洁的代码尽量覆盖所有Case了。
 
-![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/demo_snapshot.jpg)
+![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/demo_snapshot.png)
 
 - [非全屏主题 或者 透明状态栏主题并且在`fitsSystemWindows=true` 情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/NON-FULLSCREEN_TUTORIAL.md)
 - [全屏主题 或者 透明状态栏主题并且在 `fitsSystemWindows=false` 情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/FULLSCREEN_TUTORIAL.md)
