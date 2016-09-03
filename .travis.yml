@@ -1,9 +1,20 @@
 language: android
 
+jdk:
+# build-tools 24.0.1 need jdk8 or above.
+- oraclejdk8
 android:
   components:
-    - build-tools-23.0.1
-    - android-23
+    # Ref https://github.com/travis-ci/travis-ci/issues/6260.
+    - tools
+    - tools
+    - platform-tools
+    - build-tools-24.0.2
+    - android-24
     - extra
+
+after_script:
+    - cat ./app/build/outputs/lint-results.xml
+    - cat ./library/build/outputs/lint-results.xml
 
 sudo: false
