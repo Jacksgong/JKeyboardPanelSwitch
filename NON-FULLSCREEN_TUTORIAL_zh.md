@@ -130,7 +130,7 @@ public boolean dispatchKeyEvent(KeyEvent event){
 
 ---
 
-> 更多原理相关移步[README](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README.md)；也可移步参看: [全屏主题情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/FULLSCREEN_TUTORIAL.md)。
+> 更多原理相关移步[README](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README_zh.md)；也可移步参看: [全屏主题情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/FULLSCREEN_TUTORIAL_zh.md)。
 
 [non-fullscreen_resolved_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/non-fullscreen_resolved.gif
 [AndroidManifest_xml_link]: https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/app/src/main/AndroidManifest.xml
