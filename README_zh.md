@@ -1,53 +1,54 @@
-# The handler for the keyboard and panel layout conflict in Android
+# Android键盘面板冲突 布局闪动处理方案
 
 [![Download][bintray_svg]][bintray_link]
 [![Build Status][build_status_svg]][build_status_link]
 
-> [中文文档](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README_zh.md)
+> [README DOC](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README.md)
 
 ---
 
-> This solution was built When I was working in WeChat, what is used for resolving the layout conflict when you switch between the keyboard and the emoji-panel/function-panel.
+> 起源，之前在微信工作的时候，为了给用户带来更好的基础体验，做了很多尝试，踩了很多输入法的坑，特别是动态调整键盘高度，二级页面是透明背景，魅族早期的Smart bar等, 后来逐一完善了，考虑到拥抱开源，看业界还是有很多应用存在类似问题。就有了这个repo
 
 ---
 
-> There is a post to declaration the core rules of this solution: [Switching between the panel and the keyboard in Wechat](http://blog.dreamtobe.cn/2015/02/07/Switching-between-the-panel-and-the-keyboard/)。
+> 之前有写过一篇核心思想: [Switching between the panel and the keyboard in Wechat](http://blog.dreamtobe.cn/2015/02/07/Switching-between-the-panel-and-the-keyboard/)。
 
 ![][non-fullscreen_resolved_gif]![][fullscreen_resolved_gif]
 ![][adjust_resolved_gif]![][adjust_unresolved_gif]
 
----
-
-## Welcome PR
-
-- Comments as much as possible.
-- Commit message format follow: [AngularJS's commit message convention](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines) .
-- The change of each commit as small as possible.
-- As far as possible follow the advice from Inspection by IDE(Such as 'Inspect Code' in Android Studio).
 
 ---
 
-## INSTALLATION
+## 欢迎提交 Pull requests
 
-JKeyboardPanelSwitch is installed by adding the following dependency to your `build.gradle` file:
+- 尽量多的英文注解。
+- 每个提交尽量的细而精准。
+- Commit message 遵循: [AngularJS's commit message convention](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)。
+- 尽可能的遵循IDE的代码检查建议(如 Android Studio 的 'Inspect Code')。
+
+---
+
+## 如何使用
+
+在`build.gradle`中引入:
 
 ```groovy
 compile 'cn.dreamtobe.kpswitch:library:1.6.0'
 ```
 
-## USAGE
+## 使用引导
 
-> Recommend `clone` the `demo` project and run it, I has already cover cases as much as possible in the demo project.
+> 可以考虑`clone`下来跑下项目中的`demo`，已经用尽量简洁的代码尽量覆盖所有Case了。
 
 ![](https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/demo_snapshot.png)
 
-- [The integration tutorial of The non-fullscreen theme Or The status bar is translucent with `fitsSystemWindows=true`](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/NON-FULLSCREEN_TUTORIAL.md)
-- [The integration tutorial of The fullscreen theme Or The status bar is translucent with `fitsSystemWindows=false`](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/FULLSCREEN_TUTORIAL.md)
+- [非全屏主题 或者 透明状态栏主题并且在`fitsSystemWindows=true` 情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/NON-FULLSCREEN_TUTORIAL_zh.md)
+- [全屏主题 或者 透明状态栏主题并且在 `fitsSystemWindows=false` 情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/FULLSCREEN_TUTORIAL_zh.md)
 
-## PRINCIPLE
+## 基本原理
 
-- The calculation about the height of keyboard and whether the keyboard is showing，Ref: [KeyboardUtil.KeyboardStatusListener#calculateKeyboardHeight][KeyboardUtil_calculateKeyboardHeight_link]、[KeyboardUtil.KeyboardStatusListener#calculateKeyboardShowing][KeyboardUtil_calculateKeyboardShowing_link]。
-- Handle the problem about the layout conflict，Ref: [KPSwitchRootLayoutHandler][KPSwitchRootLayoutHandler_link]，Besides the panel layout used in the case of the non-fullscreen theme: [KPSwitchPanelLayoutHandler][KPSwitchPanelLayoutHandler_link]；The panel layout used in case of the fullscreen theme: [KPSwitchFSPanelLayoutHandler][KPSwitchFSPanelLayoutHandler_link]。
+- 键盘高度计算，以及键盘是否显示的计算，参看: [KeyboardUtil.KeyboardStatusListener#calculateKeyboardHeight][KeyboardUtil_calculateKeyboardHeight_link]、[KeyboardUtil.KeyboardStatusListener#calculateKeyboardShowing][KeyboardUtil_calculateKeyboardShowing_link]。
+- 处理闪动问题，参看: [KPSwitchRootLayoutHandler][KPSwitchRootLayoutHandler_link]，以及如果是非全屏主题用到的面板布局: [KPSwitchPanelLayoutHandler][KPSwitchPanelLayoutHandler_link]；如果是全屏主题用到的面板布局: [KPSwitchFSPanelLayoutHandler][KPSwitchFSPanelLayoutHandler_link]。
 
 
 ## License

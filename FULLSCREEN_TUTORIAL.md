@@ -1,28 +1,28 @@
-# 全屏主题 或者 透明状态栏主题并且在`fitsSystemWindows=false` 情况下使用引导
+# The integration tutorial of The fullscreen theme Or The status bar is translucent with `fitsSystemWindows=false`
 
-> 这个引导覆盖以下两个Case:
+> This tutorial cover the following two cases:
 
-> 1. 全屏主题 (`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0`)
-> 2. 透明状态栏主题(`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0`) 并且 根布局的 `fitsSystemWindows=false`。
+> 1. The fullscreen theme (`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0`)
+> 2. The status bar is translucent(`(activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0`) and the root layout configuration with `fitsSystemWindows=false`.
 
 ![][fullscreen_resolved_gif]
 
 ## I. `AndroidManifest`
 
-> 可直接参照: [AndroidManifest.xml][AndroidManifest_xml_link]
+> You can directly refer to [AndroidManifest.xml][AndroidManifest_xml_link]
 
-> 对应的Activity，在 **`AndroidManifest`中配置** `android:windowSoftInputMode=adjustUnspecified`，或者不配置，默认就是这个模式。
+> The relate Activity，in the **configuration of `AndroidManifest`** `android:windowSoftInputMode=adjustUnspecified`，or without any special configuration, since the default value of `windowSoftInputMode` is `adjustUnspecified`.
 
-## II. 需要处理页面的layout xml
+## II. The layout xml
 
-> 这边只需要用到一个 **面板布局** ([KPSwitchFSPanelFrameLayout][KPSwitchFSPanelFrameLayout_link]/[KPSwitchFSPanelLinearLayout][KPSwitchFSPanelLinearLayout_link]/[KPSwitchFSPanelRelativeLayout][KPSwitchFSPanelRelativeLayout_link])
+> In the layout xml, you need a **panel layout** ([KPSwitchFSPanelFrameLayout][KPSwitchFSPanelFrameLayout_link]/[KPSwitchFSPanelLinearLayout][KPSwitchFSPanelLinearLayout_link]/[KPSwitchFSPanelRelativeLayout][KPSwitchFSPanelRelativeLayout_link])
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 ...
     ...
 
-    <!-- 可选用 KPSwitchFSPanelFrameLayout、KPSwitchFSPanelLinearLayout、KPSwitchFSPanelRelativeLayout -->
+    <!-- Alternative: KPSwitchFSPanelFrameLayout、KPSwitchFSPanelLinearLayout、KPSwitchFSPanelRelativeLayout -->
     <cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelFrameLayout
         android:id="@+id/panel_root"
         style="@style/Panel"
@@ -35,24 +35,24 @@
 ```
 
 
-## III. 需要处理页面的Activity:
+## III. Activity:
 
-> 可直接参照: [ChattingResolvedHandleByPlaceholderActivity.java][ChattingResolvedHandleByPlaceholderActivity_link]
+> You can directly refer to: [ChattingResolvedHandleByPlaceholderActivity.java][ChattingResolvedHandleByPlaceholderActivity_link]
 
-1. 主要是处理一些事件([KPSwitchConflictUtil][KPSwitchConflictUtil_link])
-2. 键盘状态(高度与显示与否)监听([KeyboardUtil#attach()][KeyboardUtil_attach_link])
-3. 在`onPause`时，记录键盘状态用于从后台回到当前布局，恢复键盘状态不至于冲突([IFSPanelConflictLayout#recordKeyboardStatus()][IFSPanelConflictLayout_recordKeyboardStatus_link])
+1. Handle some UI reactions([KPSwitchConflictUtil][KPSwitchConflictUtil_link])
+2. Listener the status of the keyboard(Height or Whether is showing)([KeyboardUtil#attach()][KeyboardUtil_attach_link])
+3. Record the status of keyboard in the `Activity#onPause` method，which used for restoring the status when the Activity from the background back to the foreground([IFSPanelConflictLayout#recordKeyboardStatus()][IFSPanelConflictLayout_recordKeyboardStatus_link])
 
-如下使用案例:
+The sample demonstrate:
 
-```
+```java
 ...
 
-// 面板View
+// The panel layout
 private KPSwitchFSPanelLinearLayout mPanelLayout;
-// 键盘焦点View，用于输入内容
+// The cursor focus view, used for inputing content
 private EditText mSendEdt;
-// 用于切换键盘与面板的按钮View
+// The view used for triggering showing between the keyboard and the panel.
 private ImageView mPlusIv;
 
 @Override
@@ -65,22 +65,25 @@ public void onCreate(Bundle saveInstanceState){
     mPlusIv = (ImageView) findViewById(R.id.plus_iv);
 
     /**
-     * 这个Util主要是监控键盘的状态: 显示与否 以及 键盘的高度
-     * 这里也有提供给外界监听 键盘显示/隐藏 的监听器，具体参看
-     * 这个接口 {@Link KeyboardUtil#attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)}
+     * This Util mainly to watch the keyboard status: showing or not And the keyboard height.
+     * There is also a method private a listener for upper to listener the keyboard status, the
+     * detail refer to {@Link KeyboardUtil#attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)}
      */
     KeyboardUtil.attach(this, mPanelLayout);
 
     /**
-     * 这个Util主要是协助处理一些面板与键盘相关的事件。
-     * 这个方法主要是对一些相关事件进行注册，如切换面板与键盘等，具体参看源码，比较简单。
-     * 里面还提供了一些已经处理了冲突的工具方法: 显示面板；显示键盘；键盘面板切换；隐藏键盘与面板；
+     * This Util mainly to assist handling the conflict between the keyboard and the panel layout.
+     * This method mainly to register some event, such as switch between the keyboard and the panel
+     * layout etc. The source code is very simple, you can check it out by yourself.
+     * There are also some toolset method: show-keyboard、show-panel-layout、switch-panel-keyboard、
+     * hide-panel-keyboard、etc.
      *
-     * 如果有多个面板的需求，可以参看: KPSwitchConflictUtil.attach(panelLayout, focusView, switchClickListener, subPanelAndTriggers...)
+     * If you have more than one panel, please refer to :
+     * KPSwitchConflictUtil.attach(panelLayout, focusView, switchClickListener, subPanelAndTriggers...)
      *
-     * @param panelRoot 面板的布局。
-     * @param switchPanelKeyboardBtn 用于触发切换面板与键盘的按钮。
-     * @param focusView 键盘弹起时会给这个View focus，收回时这个View会失去focus，通常是发送的EditText。
+     * @param panelRoot The panel layout.
+     * @param switchPanelKeyboardBtn The view used for switching between the keyboard and the panel layout.
+     * @param focusView The cursor focus view, this view is usually a EditText which used to receive inputing content.
      */
     KPSwitchConflictUtil.attach(mPanelLayout, mPlusIv, mSendEdt);
 
@@ -89,13 +92,14 @@ public void onCreate(Bundle saveInstanceState){
 @Override
 protected void onPause() {
   super.onPause();
-  // 用于记录当前的键盘状态，在从后台回到当前页面的时候，键盘状态能够正确的恢复并且不会导致布局冲突。
+  // Record the current status of the keyboard. When the Activity back to the foreground from the background,
+  // the keyboard status will be restore to the recorded status automatically.
   mPanelLayout.recordKeyboardStatus(getWindow());
 }
 
 ...
 
-// 如果需要处理返回收起面板的话
+// If you want the panel can be hidden when use press the back-button
 @Override
 public boolean dispatchKeyEvent(KeyEvent event){
     if (event.getAction() == KeyEvent.ACTION_UP &&
@@ -111,7 +115,7 @@ public boolean dispatchKeyEvent(KeyEvent event){
 
 ---
 
-> 更多原理相关移步[README](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README.md)；也可移步参看: [非全屏主题情况下使用引导](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/NON-FULLSCREEN_TUTORIAL.md)。
+> More detail about the principle, please move to [README](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README.md)；You also can move to: [The integration tutorial of The non-fullscreen theme Or The status bar is translucent with `fitsSystemWindows=true`](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/NON-FULLSCREEN_TUTORIAL.md)。
 
 
 [fullscreen_resolved_gif]: https://raw.githubusercontent.com/Jacksgong/JKeybordPanelSwitch/master/art/fullscreen_resolved.gif
