@@ -1,47 +1,49 @@
 # Change Log
 ---
 
+> [中文迭代文档](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/CHANGELOG_zh.md)
+
 ### Version 1.6.0 (2016-08-11)
 
-- 添加 `KPSwitchConflictUtil#attach(panelLayout,focusView,switchClickListener,subPanelAndTriggers...)`/`KPSwitchConflictUtil#attach(panelLayout,focusView,subPanelAndTriggers...)` 用于attach一个PanelLayout中有多个SubPanel的情况。 Closes #39。
+- Add `KPSwitchConflictUtil#attach(panelLayout,focusView,switchClickListener,subPanelAndTriggers...)`/`KPSwitchConflictUtil#attach(panelLayout,focusView,subPanelAndTriggers...)` Used for `attach` the case of one `PanelLayout` contains more than one `SubPanel`. Closes #39.
 
 ### Version 1.5.0 (2016-08-03)
 
-- 修复 `Translucent Status`主题下，部分手机(如Samsung S7 edge)计算键盘高度出错。 Closes #35 。
-- 修复 某些手机(如华为Mate 7)NavigationBar的隐藏与显示，误判为键盘的隐藏与显示。 Merged #33 , Closes #34 , By @sollian 。
-- 添加 `KeyboardUtil#detach` 方便外面主动移除架构内的`ViewTreeObserver.OnGlobalLayoutListener`。 Merged #33 , By @sollian 。
+- Fix: In the `Translucent Status` theme，some devices(Such as:Samsung S7 edge) the arithmetic used for calculating keyboard height is wrong. Closes #35 。
+- Fix: In some devices(Such as: HuaWei Mate 7)The showing or hiding from the NavigationBar is mistaken for the keyboard showing or hiding. Merged #33 , Closes #34 , By @sollian 。
+- Add `KeyboardUtil#detach` convenient to remove the `ViewTreeObserver.OnGlobalLayoutListener` inside the architecture. Merged #33 , By @sollian 。
 
 ### Version 1.4.6 (2016-04-26)
 
-- 新增 支持`Translucent Status`主题，具体适配可以直接看Demo，适配接口依然非常简单。 Closes #27 。
-- 新增 开放配置 `是否需要让面板高度保持和键盘高度一致` 的接口: `setIgnoreRecommendHeight(boolean)`; 以及对应布局属性配置项 `cn.dreamtobe.kpswitch.R.styleable#KPSwitchPanelLayout_ignore_recommend_height`。Closes #25 。
+- Support `Translucent Status` theme，the more detail please move to demo project or tutorial docs. Closes #27 。
+- Add the option configuration of `whether the height of the panel need to ensure equal to the height of the keyboard `: `setIgnoreRecommendHeight(boolean)` and the reference configuration params in the xml: `cn.dreamtobe.kpswitch.R.styleable#KPSwitchPanelLayout_ignore_recommend_height`。Closes #25.
 
 ### Version 1.4.5 (2016-04-21)
 
-- 修复页面是继承自`Activity`或`FragmentActivity`的情况下，由于计算键盘是否显示出现错误，导致存在闪动的bug。Closes #24 。
+- Fix: The wrong arithmetic about calculating the keyboard height when the Page is extends from `Activity` or `FragmentActivity`, which result in the the layout conflict. Closes #24.
 
 ### Version 1.4.4 (2016-04-19)
 
-- 修复在一些特殊情况下如(一些继承自`FragmentActivity`的情况)有可能出现判定正在打开全屏布局的方案有误导致没有处理闪动的bug。Closes #21 。
+- Fix: In some special cases(such as some inherited from `FragmentActivity`),it possible raise a bug in the wrong logic of determining whether the layout changed is triggered by the fullscreen theme page is being opened. Closes #21.
 
 ### Version 1.4.3 (2016-04-13)
 
-- `KPSwitchConflictUtil#attach`中又键盘切换到面板 以及 `KPSwitchConflictUtil#showPanel` 不再 `clearFocus`, 为了考虑到有可能是表情面板依然需要保留焦点的情况。
-- 在 `KPSwitchConflictUtil#attach` 中新增 `SwitchClickListener` 参数，用于监听 传入的触发面板键盘切换按钮 的点击事件。
+- No longer clear focus automatically when switching to the panel when you use the `KPSwitchConflictUtil#attach`, since sometimes you want to show some emoji panel, which need the focus in the EditText view.
+- Add the `SwitchClickListener` param in the `KPSwitchConflictUtil#attach` method for listening the click event of showing the keyboard and the panel.
 
 ### Version 1.4.2 (2016-04-06)
 
-- 修复Jar包中带上了已经弃用的Class，导致Proguard报Warn的问题。
+- Fix raising warning because carry some deprecated classes.
 
 ### Version 1.4.1 (2016-03-31)
 
-- 基本处理了全屏主题下的键盘切换问题。
-- 为面板布局与根布局适配了`FrameLayout`、`LinearLayout`、`RelativeLayout`并支持拓展其他类型布局。
-- 调整接口，更加解耦: 键盘高度与是否显示逻辑封装于`KeyboardUtil`，布局闪动逻辑封装于不同布局的`Handler`中。
+- Handle the conflict between the keyboard and the panel layout in the fullscreen theme.
+- Add some root layouts for panel: `FrameLayout`、`LinearLayout`、`RelativeLayout` and support to extend other layouts.
+- Adjust some interface to make they more decoupled: Wrap the logic of showing keyboard and calculating the keyboard height to `KeyboardUtil`; Wrap the logic of handling the conflict of switching the keyboard and panel to the `Handler` of each layout.
 
 ### Version 1.3.0 (2016-01-19)
 
-- 修复如果聊天所在界面为透明背景，当前所在界面不是全屏，而背后的界面也不是全屏，导致刚进入时的measure高度变化误认为是键盘升起的bug.
+- Fix: when the chat-Activity is translucent and the current interface is not fullscreen theme with the behind interface isn't fullscreen theme either, we mistake for the height change in `measure` is the keyboard did.
 
 ### Version 1.2.1 (2015-12-14)
 
@@ -49,7 +51,7 @@
 
 ### Version 1.2.0 (2015-12-13)
 
-- 修复打开页面是透明主题Activity对组件的影响
+- Fix: the `Activity` theme is translucent.
 
 ### Version 1.1 (2015-11-10)
 ---
