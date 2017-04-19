@@ -1,5 +1,7 @@
 # The handler for the keyboard and panel layout conflict in Android
 
+[![Join the chat at https://gitter.im/Jacksgong/JKeyboardPanelSwitch](https://badges.gitter.im/Jacksgong/JKeyboardPanelSwitch.svg)](https://gitter.im/Jacksgong/JKeyboardPanelSwitch?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Download][bintray_svg]][bintray_link]
 [![Build Status][build_status_svg]][build_status_link]
 
