@@ -155,7 +155,7 @@ public class KeyboardUtil {
      *
      * @param activity contain the view
      * @param target   whose height will be align to the keyboard height.
-     * @param lis the listener to listen in: keyboard is showing or not.
+     * @param lis      the listener to listen in: keyboard is showing or not.
      * @see #saveKeyboardHeight(Context, int)
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -209,7 +209,7 @@ public class KeyboardUtil {
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void detach(Activity activity, ViewTreeObserver.OnGlobalLayoutListener l) {
-        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        ViewGroup contentView = activity.findViewById(android.R.id.content);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             contentView.getViewTreeObserver().removeOnGlobalLayoutListener(l);
         } else {
@@ -258,6 +258,7 @@ public class KeyboardUtil {
             Rect r = new Rect();
 
             final int displayHeight;
+            final int notReadyDisplayHeight = -1;
             if (isTranslucentStatus) {
                 // status bar translucent.
 
@@ -292,8 +293,19 @@ public class KeyboardUtil {
                 }
 
             } else {
-                userRootView.getWindowVisibleDisplayFrame(r);
-                displayHeight = (r.bottom - r.top);
+                if (userRootView != null) {
+                    userRootView.getWindowVisibleDisplayFrame(r);
+                    displayHeight = (r.bottom - r.top);
+                } else {
+                    Log.w("KeyBordUtil",
+                            "user root view not ready so ignore global layout changed!");
+                    displayHeight = notReadyDisplayHeight;
+                }
+
+            }
+
+            if (displayHeight == notReadyDisplayHeight) {
+                return;
             }
 
             calculateKeyboardHeight(displayHeight);
