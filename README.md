@@ -31,7 +31,7 @@
 JKeyboardPanelSwitch is installed by adding the following dependency to your `build.gradle` file:
 
 ```groovy
-compile 'cn.dreamtobe.kpswitch:library:1.6.0'
+compile 'cn.dreamtobe.kpswitch:library:1.6.1'
 ```
 
 ## USAGE

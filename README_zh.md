@@ -24,7 +24,6 @@
 - 尽量多的英文注解。
 - 每个提交尽量的细而精准。
 - Commit message 遵循: [AngularJS's commit message convention](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines)。
-- 尽可能的遵循IDE的代码检查建议(如 Android Studio 的 'Inspect Code')。
 
 ---
 
@@ -33,7 +32,7 @@
 在`build.gradle`中引入:
 
 ```groovy
-compile 'cn.dreamtobe.kpswitch:library:1.6.0'
+compile 'cn.dreamtobe.kpswitch:library:1.6.1'
 ```
 
 ## 使用引导

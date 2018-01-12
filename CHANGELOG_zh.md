@@ -5,6 +5,10 @@
 
 ### Version 1.6.0 (2016-08-11)
 
+- 修复(crash): 覆盖在 `GlobalLayoutChanged`回调中用户层级父view还没有ready的情况。 refs: http://crashes.to/s/00beea75992
+
+### Version 1.6.0 (2016-08-11)
+
 - 添加 `KPSwitchConflictUtil#attach(panelLayout,focusView,switchClickListener,subPanelAndTriggers...)`/`KPSwitchConflictUtil#attach(panelLayout,focusView,subPanelAndTriggers...)` 用于attach一个PanelLayout中有多个SubPanel的情况。 Closes #39。
 
 ### Version 1.5.0 (2016-08-03)
