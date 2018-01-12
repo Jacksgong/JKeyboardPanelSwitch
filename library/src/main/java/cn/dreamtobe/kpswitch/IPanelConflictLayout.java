@@ -15,9 +15,6 @@
  */
 package cn.dreamtobe.kpswitch;
 
-import android.content.Context;
-import android.view.View;
-
 /**
  * Created by Jacksgong on 3/30/16.
  * <p>
@@ -35,14 +32,14 @@ public interface IPanelConflictLayout {
     /**
      * Keyboard->Panel
      *
-     * @see cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil#showPanel(View)
+     * @see cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil#showPanel(android.view.View)
      */
     void handleShow();
 
     /**
      * Panel->Keyboard
      *
-     * @see cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil#showKeyboard(View, View)
+     * @see cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil#showKeyboard
      */
     void handleHide();
 
@@ -50,8 +47,8 @@ public interface IPanelConflictLayout {
      * @param isIgnoreRecommendHeight Ignore guaranteeing the panel height equal to the keyboard
      *                                height.
      * @attr ref cn.dreamtobe.kpswitch.R.styleable#KPSwitchPanelLayout_ignore_recommend_height
-     * @see cn.dreamtobe.kpswitch.handler.KPSwitchPanelLayoutHandler#resetToRecommendPanelHeight(int)
-     * @see cn.dreamtobe.kpswitch.util.KeyboardUtil#getValidPanelHeight(Context)
+     * @see cn.dreamtobe.kpswitch.handler.KPSwitchPanelLayoutHandler#resetToRecommendPanelHeight
+     * @see cn.dreamtobe.kpswitch.util.KeyboardUtil#getValidPanelHeight(android.content.Context)
      */
     @SuppressWarnings("JavaDoc")
     void setIgnoreRecommendHeight(boolean isIgnoreRecommendHeight);

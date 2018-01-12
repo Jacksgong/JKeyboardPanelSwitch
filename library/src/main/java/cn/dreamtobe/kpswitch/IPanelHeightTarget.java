@@ -25,7 +25,8 @@ package cn.dreamtobe.kpswitch;
 public interface IPanelHeightTarget {
 
     /**
-     * for handle the panel's height, will be equal to the keyboard height which had saved last time.
+     * for handle the panel's height, will be equal to the keyboard height which had saved last
+     * time.
      */
     void refreshHeight(final int panelHeight);
 

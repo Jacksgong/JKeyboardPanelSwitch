@@ -59,7 +59,8 @@ public class KPSwitchRootLinearLayout extends LinearLayout {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public KPSwitchRootLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public KPSwitchRootLinearLayout(Context context, AttributeSet attrs, int defStyleAttr,
+                                    int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }

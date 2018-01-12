@@ -57,7 +57,8 @@ public class KPSwitchRootFrameLayout extends FrameLayout {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public KPSwitchRootFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public KPSwitchRootFrameLayout(Context context, AttributeSet attrs, int defStyleAttr,
+                                   int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }

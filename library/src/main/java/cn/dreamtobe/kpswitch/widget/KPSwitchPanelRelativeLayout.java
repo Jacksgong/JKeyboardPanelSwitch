@@ -59,7 +59,8 @@ public class KPSwitchPanelRelativeLayout extends RelativeLayout implements IPane
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public KPSwitchPanelRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public KPSwitchPanelRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr,
+                                       int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }

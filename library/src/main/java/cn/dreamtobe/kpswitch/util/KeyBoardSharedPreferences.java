@@ -26,11 +26,11 @@ import android.content.SharedPreferences;
  */
 class KeyBoardSharedPreferences {
 
-    private final static String FILE_NAME = "keyboard.common";
+    private static final String FILE_NAME = "keyboard.common";
 
-    private final static String KEY_KEYBOARD_HEIGHT = "sp.key.keyboard.height";
+    private static final String KEY_KEYBOARD_HEIGHT = "sp.key.keyboard.height";
 
-    private volatile static SharedPreferences SP;
+    private static volatile SharedPreferences SP;
 
     public static boolean save(final Context context, final int keyboardHeight) {
         return with(context).edit()

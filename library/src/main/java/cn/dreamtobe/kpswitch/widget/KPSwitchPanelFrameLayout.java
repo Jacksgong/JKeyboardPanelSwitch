@@ -59,7 +59,8 @@ public class KPSwitchPanelFrameLayout extends FrameLayout implements IPanelHeigh
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public KPSwitchPanelFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public KPSwitchPanelFrameLayout(Context context, AttributeSet attrs, int defStyleAttr,
+                                    int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }

@@ -57,7 +57,8 @@ public class KPSwitchRootRelativeLayout extends RelativeLayout {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public KPSwitchRootRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public KPSwitchRootRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr,
+                                      int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }

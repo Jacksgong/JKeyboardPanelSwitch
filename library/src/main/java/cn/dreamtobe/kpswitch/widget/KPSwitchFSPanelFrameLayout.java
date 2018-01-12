@@ -16,7 +16,6 @@
 package cn.dreamtobe.kpswitch.widget;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -37,7 +36,7 @@ import cn.dreamtobe.kpswitch.util.ViewUtil;
  * <p/>
  * For non-full-screen theme window, please use {@link KPSwitchPanelFrameLayout} instead.
  *
- * @see KeyboardUtil#attach(Activity, IPanelHeightTarget)
+ * @see KeyboardUtil#attach(android.app.Activity, IPanelHeightTarget)
  * @see #recordKeyboardStatus(Window)
  * @see KPSwitchFSPanelLinearLayout
  * @see KPSwitchFSPanelRelativeLayout
@@ -63,7 +62,8 @@ public class KPSwitchFSPanelFrameLayout extends FrameLayout implements IPanelHei
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public KPSwitchFSPanelFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public KPSwitchFSPanelFrameLayout(Context context, AttributeSet attrs, int defStyleAttr,
+                                      int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

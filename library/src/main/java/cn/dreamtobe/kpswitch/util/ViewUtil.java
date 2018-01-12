@@ -30,7 +30,7 @@ import android.view.WindowManager;
  */
 public class ViewUtil {
 
-    private final static String TAG = "ViewUtil";
+    private static final String TAG = "ViewUtil";
 
     public static boolean refreshHeight(final View view, final int aimHeight) {
         if (view.isInEditMode()) {
@@ -42,8 +42,8 @@ public class ViewUtil {
             return false;
         }
 
-        if (Math.abs(view.getHeight() - aimHeight) ==
-                StatusBarHeightUtil.getStatusBarHeight(view.getContext())) {
+        if (Math.abs(view.getHeight() - aimHeight)
+                == StatusBarHeightUtil.getStatusBarHeight(view.getContext())) {
             return false;
         }
 
@@ -62,25 +62,25 @@ public class ViewUtil {
     }
 
     public static boolean isFullScreen(final Activity activity) {
-        return (activity.getWindow().getAttributes().flags &
-                WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
+        return (activity.getWindow().getAttributes().flags
+                & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static boolean isTranslucentStatus(final Activity activity) {
         //noinspection SimplifiableIfStatement
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return (activity.getWindow().getAttributes().flags &
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0;
+            return (activity.getWindow().getAttributes().flags
+                    & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0;
         }
         return false;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    static boolean isFitsSystemWindows(final Activity activity){
+    static boolean isFitsSystemWindows(final Activity activity) {
         //noinspection SimplifiableIfStatement
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return ((ViewGroup)activity.findViewById(android.R.id.content)).getChildAt(0).
+            return ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0).
                     getFitsSystemWindows();
         }
 
