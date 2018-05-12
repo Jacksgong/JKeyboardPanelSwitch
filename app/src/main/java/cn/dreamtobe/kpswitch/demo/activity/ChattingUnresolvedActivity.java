@@ -100,12 +100,11 @@ public class ChattingUnresolvedActivity extends AppCompatActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP &&
-                event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if (mPanelRoot.getVisibility() == View.VISIBLE) {
-                mPanelRoot.setVisibility(View.GONE);
-                return true;
-            }
+        if (event.getAction() == KeyEvent.ACTION_UP
+                && event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && mPanelRoot.getVisibility() == View.VISIBLE) {
+            mPanelRoot.setVisibility(View.GONE);
+            return true;
         }
         return super.dispatchKeyEvent(event);
     }

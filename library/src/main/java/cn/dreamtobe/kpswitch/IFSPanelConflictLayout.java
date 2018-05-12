@@ -37,5 +37,5 @@ public interface IFSPanelConflictLayout {
      *
      * @param window The current window of the current visual activity.
      */
-    void recordKeyboardStatus(final Window window);
+    void recordKeyboardStatus(Window window);
 }

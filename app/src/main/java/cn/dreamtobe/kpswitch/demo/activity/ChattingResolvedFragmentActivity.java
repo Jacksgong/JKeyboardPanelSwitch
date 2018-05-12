@@ -48,12 +48,12 @@ public class ChattingResolvedFragmentActivity extends FragmentActivity {
         mSendImgTv = (TextView) findViewById(R.id.send_img_tv);
         mPlusIv = (ImageView) findViewById(R.id.plus_iv);
     }
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void adaptTheme(final boolean isTranslucentStatusFitSystemWindowTrue) {
-        if (isTranslucentStatusFitSystemWindowTrue) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            }
+        if (isTranslucentStatusFitSystemWindowTrue
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
 
@@ -67,8 +67,8 @@ public class ChattingResolvedFragmentActivity extends FragmentActivity {
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void adaptFitsSystemWindows(final boolean isTranslucentStatusFitSystemWindowTrue) {
-        if (isTranslucentStatusFitSystemWindowTrue &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (isTranslucentStatusFitSystemWindowTrue
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             findViewById(R.id.rootView).setFitsSystemWindows(true);
         }
     }
@@ -100,7 +100,8 @@ public class ChattingResolvedFragmentActivity extends FragmentActivity {
                 new KeyboardUtil.OnKeyboardShowingListener() {
                     @Override
                     public void onKeyboardShowing(boolean isShowing) {
-                        Log.d(TAG, String.format("Keyboard is %s", isShowing ? "showing" : "hiding"));
+                        Log.d(TAG, String.format("Keyboard is %s", isShowing
+                                ? "showing" : "hiding"));
                     }
                 });
 
@@ -120,7 +121,8 @@ public class ChattingResolvedFragmentActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 // mock start the translucent full screen activity.
-                startActivity(new Intent(ChattingResolvedFragmentActivity.this, TranslucentActivity.class));
+                startActivity(new Intent(ChattingResolvedFragmentActivity.this,
+                        TranslucentActivity.class));
             }
         });
 
@@ -141,12 +143,11 @@ public class ChattingResolvedFragmentActivity extends FragmentActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP &&
-                event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if (mPanelRoot.getVisibility() == View.VISIBLE) {
-                KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelRoot);
-                return true;
-            }
+        if (event.getAction() == KeyEvent.ACTION_UP
+                && event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && mPanelRoot.getVisibility() == View.VISIBLE) {
+            KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelRoot);
+            return true;
         }
         return super.dispatchKeyEvent(event);
     }

@@ -123,7 +123,6 @@ public class KPSwitchPanelLayoutHandler implements IPanelConflictLayout {
         return false;
     }
 
-    private final int[] processedMeasureWHSpec = new int[2];
 
     /**
      * Handle Panel -> Keyboard.
@@ -136,13 +135,14 @@ public class KPSwitchPanelLayoutHandler implements IPanelConflictLayout {
     public int[] processOnMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mIsHide) {
             panelLayout.setVisibility(View.GONE);
-            /**
+            /*
              * The current frame will be visible nil.
              */
             widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.EXACTLY);
             heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.EXACTLY);
         }
 
+        final int[] processedMeasureWHSpec = new int[2];
         processedMeasureWHSpec[0] = widthMeasureSpec;
         processedMeasureWHSpec[1] = heightMeasureSpec;
 

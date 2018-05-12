@@ -51,10 +51,9 @@ public class ChattingResolvedActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void adaptTheme(final boolean isTranslucentStatusFitSystemWindowTrue) {
-        if (isTranslucentStatusFitSystemWindowTrue) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            }
+        if (isTranslucentStatusFitSystemWindowTrue
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
 
@@ -93,8 +92,8 @@ public class ChattingResolvedActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void adaptFitsSystemWindows(final boolean isTranslucentStatusFitSystemWindowTrue) {
-        if (isTranslucentStatusFitSystemWindowTrue &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (isTranslucentStatusFitSystemWindowTrue
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             findViewById(R.id.rootView).setFitsSystemWindows(true);
         }
     }
@@ -107,8 +106,8 @@ public class ChattingResolvedActivity extends AppCompatActivity {
                 getBooleanExtra(MainActivity.KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE, false);
         adaptTheme(isTranslucentStatusFitSystemWindowTrue);
 
-        final boolean isMultiSubPanel = getIntent().getBooleanExtra(MainActivity.KEY_MULTI_SUB_PANEL,
-                false);
+        final boolean isMultiSubPanel = getIntent()
+                .getBooleanExtra(MainActivity.KEY_MULTI_SUB_PANEL, false);
 
         adaptMultiSubPanel(isMultiSubPanel);
 
@@ -129,7 +128,8 @@ public class ChattingResolvedActivity extends AppCompatActivity {
                 new KeyboardUtil.OnKeyboardShowingListener() {
                     @Override
                     public void onKeyboardShowing(boolean isShowing) {
-                        Log.d(TAG, String.format("Keyboard is %s", isShowing ? "showing" : "hiding"));
+                        Log.d(TAG, String.format("Keyboard is %s", isShowing
+                                ? "showing" : "hiding"));
                     }
                 });
 
@@ -189,12 +189,11 @@ public class ChattingResolvedActivity extends AppCompatActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP &&
-                event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if (mPanelRoot.getVisibility() == View.VISIBLE) {
-                KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelRoot);
-                return true;
-            }
+        if (event.getAction() == KeyEvent.ACTION_UP
+                && event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelRoot);
+            return true;
         }
         return super.dispatchKeyEvent(event);
     }

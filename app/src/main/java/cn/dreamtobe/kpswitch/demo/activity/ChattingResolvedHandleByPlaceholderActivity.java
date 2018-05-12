@@ -114,12 +114,11 @@ public class ChattingResolvedHandleByPlaceholderActivity extends AppCompatActivi
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP &&
-                event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if (panelRoot.getVisibility() != View.GONE) {
-                KPSwitchConflictUtil.hidePanelAndKeyboard(panelRoot);
-                return true;
-            }
+        if (event.getAction() == KeyEvent.ACTION_UP
+                && event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && panelRoot.getVisibility() != View.GONE) {
+            KPSwitchConflictUtil.hidePanelAndKeyboard(panelRoot);
+            return true;
         }
         return super.dispatchKeyEvent(event);
     }

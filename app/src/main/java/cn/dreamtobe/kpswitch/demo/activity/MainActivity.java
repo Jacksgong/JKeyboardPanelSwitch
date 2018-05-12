@@ -21,12 +21,12 @@ import cn.dreamtobe.kpswitch.demo.R;
  */
 public class MainActivity extends AppCompatActivity {
 
-    public final static String KEY_FULL_SCREEN_THEME = "key.theme.fullscreen";
-    public final static String KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE =
+    public static final String KEY_FULL_SCREEN_THEME = "key.theme.fullscreen";
+    public static final String KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE =
             "key.theme.translucent.status.fitSystemWindow.true";
-    public final static String KEY_IGNORE_RECOMMEND_PANEL_HEIGHT =
+    public static final String KEY_IGNORE_RECOMMEND_PANEL_HEIGHT =
             "key.ignore.recommend.panel.height";
-    public final static String KEY_MULTI_SUB_PANEL = "key.multi.sub.panel";
+    public static final String KEY_MULTI_SUB_PANEL = "key.multi.sub.panel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,30 +46,33 @@ public class MainActivity extends AppCompatActivity {
                             setText(R.string.activity_chatting_fullscreen_resolved_title);
                 } else {
                     // translucent status with fitSystemWindows=false theme.
-                    mHandleByPlaceholderResolvedBtn.
-                            setText(R.string.activity_chatting_translucent_status_false_resolved_title);
+                    mHandleByPlaceholderResolvedBtn.setText(R.string
+                            .activity_chatting_translucent_status_false_resolved_title);
                 }
             }
         });
 
-        mTranslucentStatusTrueCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // translucent status with fitSystemWindows=true theme.
-                    mHandleByDelayResolvedBtn.
-                            setText(R.string.activity_chatting_translucent_status_true_resolved_title);
-                } else {
-                    // normal theme.
-                    mHandleByDelayResolvedBtn.setText(R.string.activity_chatting_resolved_title);
-                }
-            }
-        });
+        mTranslucentStatusTrueCb
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            // translucent status with fitSystemWindows=true theme.
+                            mHandleByDelayResolvedBtn.setText(R.string
+                                    .activity_chatting_translucent_status_true_resolved_title);
+                        } else {
+                            // normal theme.
+                            mHandleByDelayResolvedBtn.setText(R.string
+                                    .activity_chatting_resolved_title);
+                        }
+                    }
+                });
     }
 
     public void onClickResolved(final View view) {
         Intent i = new Intent();
-        i.putExtra(KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE, mTranslucentStatusTrueCb.isChecked());
+        i.putExtra(KEY_TRANSLUCENT_STATUS_FIT_SYSTEM_WINDOW_TRUE,
+                mTranslucentStatusTrueCb.isChecked());
         i.putExtra(KEY_IGNORE_RECOMMEND_PANEL_HEIGHT, mIgnoreRecommendPanelHeightCb.isChecked());
         i.putExtra(KEY_MULTI_SUB_PANEL, mMultipleSubPanelCb.isChecked());
 
@@ -135,12 +138,14 @@ public class MainActivity extends AppCompatActivity {
     private void assignViews() {
         mAppCompatActivityRb = (RadioButton) findViewById(R.id.app_compat_activity_rb);
         mTranslucentStatusTrueCb = (CheckBox) findViewById(R.id.translucent_status_true_cb);
-        mIgnoreRecommendPanelHeightCb = (CheckBox) findViewById(R.id.ignore_recommend_panel_height_cb);
+        mIgnoreRecommendPanelHeightCb = (CheckBox) findViewById(
+                R.id.ignore_recommend_panel_height_cb);
         mMultipleSubPanelCb = (CheckBox) findViewById(R.id.multiple_sub_panel_cb);
         mHandleByDelayResolvedBtn = (Button) findViewById(R.id.handle_by_delay_resolved_btn);
         mThemeRg = (RadioGroup) findViewById(R.id.theme_rg);
         mFullScreenRb = (RadioButton) findViewById(R.id.full_screen_rb);
-        mHandleByPlaceholderResolvedBtn = (Button) findViewById(R.id.handle_by_placeholder_resolved_btn);
+        mHandleByPlaceholderResolvedBtn = (Button) findViewById(
+                R.id.handle_by_placeholder_resolved_btn);
     }
 
 

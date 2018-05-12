@@ -28,7 +28,7 @@ public interface IPanelHeightTarget {
      * for handle the panel's height, will be equal to the keyboard height which had saved last
      * time.
      */
-    void refreshHeight(final int panelHeight);
+    void refreshHeight(int panelHeight);
 
     /**
      * @return get the height of target-view.

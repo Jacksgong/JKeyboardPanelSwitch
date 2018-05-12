@@ -62,10 +62,10 @@ public class KeyboardUtil {
     }
 
 
-    private static int LAST_SAVE_KEYBOARD_HEIGHT = 0;
+    private static int lastSaveKeyboardHeight = 0;
 
     private static boolean saveKeyboardHeight(final Context context, int keyboardHeight) {
-        if (LAST_SAVE_KEYBOARD_HEIGHT == keyboardHeight) {
+        if (lastSaveKeyboardHeight == keyboardHeight) {
             return false;
         }
 
@@ -73,7 +73,7 @@ public class KeyboardUtil {
             return false;
         }
 
-        LAST_SAVE_KEYBOARD_HEIGHT = keyboardHeight;
+        lastSaveKeyboardHeight = keyboardHeight;
         Log.d("KeyBordUtil", String.format("save keyboard: %d", keyboardHeight));
 
         return KeyBoardSharedPreferences.save(context, keyboardHeight);
@@ -88,12 +88,12 @@ public class KeyboardUtil {
      * Handle and refresh the keyboard height by {@link #attach(Activity, IPanelHeightTarget)}.
      */
     public static int getKeyboardHeight(final Context context) {
-        if (LAST_SAVE_KEYBOARD_HEIGHT == 0) {
-            LAST_SAVE_KEYBOARD_HEIGHT = KeyBoardSharedPreferences
+        if (lastSaveKeyboardHeight == 0) {
+            lastSaveKeyboardHeight = KeyBoardSharedPreferences
                     .get(context, getMinPanelHeight(context.getResources()));
         }
 
-        return LAST_SAVE_KEYBOARD_HEIGHT;
+        return lastSaveKeyboardHeight;
     }
 
     /**
@@ -119,32 +119,32 @@ public class KeyboardUtil {
     }
 
 
-    private static int MAX_PANEL_HEIGHT = 0;
-    private static int MIN_PANEL_HEIGHT = 0;
-    private static int MIN_KEYBOARD_HEIGHT = 0;
+    private static int maxPanelHeight = 0;
+    private static int minPanelHeight = 0;
+    private static int minKeyboardHeight = 0;
 
     public static int getMaxPanelHeight(final Resources res) {
-        if (MAX_PANEL_HEIGHT == 0) {
-            MAX_PANEL_HEIGHT = res.getDimensionPixelSize(R.dimen.max_panel_height);
+        if (maxPanelHeight == 0) {
+            maxPanelHeight = res.getDimensionPixelSize(R.dimen.max_panel_height);
         }
 
-        return MAX_PANEL_HEIGHT;
+        return maxPanelHeight;
     }
 
     public static int getMinPanelHeight(final Resources res) {
-        if (MIN_PANEL_HEIGHT == 0) {
-            MIN_PANEL_HEIGHT = res.getDimensionPixelSize(R.dimen.min_panel_height);
+        if (minPanelHeight == 0) {
+            minPanelHeight = res.getDimensionPixelSize(R.dimen.min_panel_height);
         }
 
-        return MIN_PANEL_HEIGHT;
+        return minPanelHeight;
     }
 
     public static int getMinKeyboardHeight(Context context) {
-        if (MIN_KEYBOARD_HEIGHT == 0) {
-            MIN_KEYBOARD_HEIGHT = context.getResources()
+        if (minKeyboardHeight == 0) {
+            minKeyboardHeight = context.getResources()
                     .getDimensionPixelSize(R.dimen.min_keyboard_height);
         }
-        return MIN_KEYBOARD_HEIGHT;
+        return minKeyboardHeight;
     }
 
 
