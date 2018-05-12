@@ -72,7 +72,7 @@ public class ChattingResolvedHandleByPlaceholderActivity extends AppCompatActivi
         KPSwitchConflictUtil.attach(panelRoot, plusIv, sendEdt,
                 new KPSwitchConflictUtil.SwitchClickListener() {
                     @Override
-                    public void onClickSwitch(boolean switchToPanel) {
+                    public void onClickSwitch(View v, boolean switchToPanel) {
                         if (switchToPanel) {
                             sendEdt.clearFocus();
                         } else {

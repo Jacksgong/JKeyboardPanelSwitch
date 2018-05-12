@@ -80,7 +80,7 @@ public class KPSwitchConflictUtil {
                 public void onClick(View v) {
                     final boolean switchToPanel = switchPanelAndKeyboard(panelLayout, focusView);
                     if (switchClickListener != null) {
-                        switchClickListener.onClickSwitch(switchToPanel);
+                        switchClickListener.onClickSwitch(v, switchToPanel);
                     }
                 }
             });
@@ -255,10 +255,11 @@ public class KPSwitchConflictUtil {
      */
     public interface SwitchClickListener {
         /**
+         * @param v The view that was clicked.
          * @param switchToPanel If true, switch to showing Panel; If false, switch to showing
          *                      Keyboard.
          */
-        void onClickSwitch(boolean switchToPanel);
+        void onClickSwitch(View v, boolean switchToPanel);
     }
 
     /**
@@ -317,7 +318,7 @@ public class KPSwitchConflictUtil {
                 }
 
                 if (switchClickListener != null && switchToPanel != null) {
-                    switchClickListener.onClickSwitch(switchToPanel);
+                    switchClickListener.onClickSwitch(v, switchToPanel);
                 }
             }
         });

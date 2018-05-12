@@ -138,7 +138,7 @@ public class ChattingResolvedActivity extends AppCompatActivity {
             KPSwitchConflictUtil.attach(mPanelRoot, mSendEdt,
                     new KPSwitchConflictUtil.SwitchClickListener() {
                         @Override
-                        public void onClickSwitch(boolean switchToPanel) {
+                        public void onClickSwitch(View v, boolean switchToPanel) {
                             if (switchToPanel) {
                                 mSendEdt.clearFocus();
                             } else {
@@ -153,7 +153,7 @@ public class ChattingResolvedActivity extends AppCompatActivity {
             KPSwitchConflictUtil.attach(mPanelRoot, mPlusIv, mSendEdt,
                     new KPSwitchConflictUtil.SwitchClickListener() {
                         @Override
-                        public void onClickSwitch(boolean switchToPanel) {
+                        public void onClickSwitch(View v, boolean switchToPanel) {
                             if (switchToPanel) {
                                 mSendEdt.clearFocus();
                             } else {
