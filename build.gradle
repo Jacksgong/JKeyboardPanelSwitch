@@ -20,11 +20,11 @@ def isForUpload2Maven() {
 buildscript {
     repositories {
         jcenter()
-	google()
+        google()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha14'
 
         File file = project.rootProject.file('local.properties')
         if (file.exists()) {
@@ -48,5 +48,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }

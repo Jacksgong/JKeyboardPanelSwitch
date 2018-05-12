@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "cn.dreamtobe.jkpswitch"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion COMPILE_SDK_VERSION as int
         versionCode VERSION_CODE as int
         versionName VERSION_NAME as String
@@ -20,8 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':library')
-    compile 'com.android.support:recyclerview-v7:25.2.0'
-    compile 'com.android.support:appcompat-v7:25.2.0'
+    implementation project(':library')
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }
