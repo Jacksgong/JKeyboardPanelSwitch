@@ -18,27 +18,6 @@ android {
     }
 }
 
-plugins.apply('checkstyle')
-
-task('checkstyle', type: Checkstyle) {
-    configFile rootProject.file('checkstyle.xml')
-    source 'src/main/java'
-    source 'src/test/java'
-    ignoreFailures false
-    showViolations true
-    include '**/*.java'
-
-    classpath = files()
-}
-
-afterEvaluate {
-    tasks.findByName('check').dependsOn('checkstyle')
-}
-
-checkstyle {
-    toolVersion = '6.18'
-}
-
 if (isForUpload2Maven()) {
     println ':library:include upload 2 maven methods'
     apply from: 'https://raw.githubusercontent.com/Jacksgong/JCenter/master/installv1.gradle'
