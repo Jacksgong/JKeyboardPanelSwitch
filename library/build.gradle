@@ -7,8 +7,6 @@ android {
     defaultConfig {
         minSdkVersion 3
         targetSdkVersion COMPILE_SDK_VERSION as int
-        versionCode VERSION_CODE as int
-        versionName VERSION_NAME as String
     }
     buildTypes {
         release {
@@ -18,8 +16,4 @@ android {
     }
 }
 
-if (isForUpload2Maven()) {
-    println ':library:include upload 2 maven methods'
-    apply from: 'https://raw.githubusercontent.com/Jacksgong/JCenter/master/installv1.gradle'
-    apply from: 'https://raw.githubusercontent.com/Jacksgong/JCenter/master/bintrayv1.gradle'
-}
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

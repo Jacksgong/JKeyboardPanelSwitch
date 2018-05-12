@@ -8,8 +8,6 @@ android {
         applicationId "cn.dreamtobe.jkpswitch"
         minSdkVersion 14
         targetSdkVersion COMPILE_SDK_VERSION as int
-        versionCode VERSION_CODE as int
-        versionName VERSION_NAME as String
     }
     buildTypes {
         release {
