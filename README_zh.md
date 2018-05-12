@@ -2,6 +2,7 @@
 
 [![Download][bintray_svg]][bintray_link]
 [![Build Status][build_status_svg]][build_status_link]
+[![](https://img.shields.io/badge/SnapShot-1.6.2-white.svg)](https://oss.sonatype.org/content/repositories/snapshots/cn/dreamtobe/kpswitch/)
 
 > [README DOC](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README.md)
 
@@ -33,6 +34,16 @@
 
 ```groovy
 compile 'cn.dreamtobe.kpswitch:library:1.6.1'
+```
+
+如果你希望引入SNAPSHOT版本，我们也有将SNAPSHOT版本推送到[SONATYPE的仓库](https://oss.sonatype.org/content/repositories/snapshots/cn/dreamtobe/kpswitch/)，因此你可以通过申明下面参库以引入SNAPSHOT版本:
+
+```groovy
+allprojects {
+  repositories {
+      maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+  }
+}
 ```
 
 ## 使用引导

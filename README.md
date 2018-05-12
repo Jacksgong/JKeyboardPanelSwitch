@@ -2,6 +2,7 @@
 
 [![Download][bintray_svg]][bintray_link]
 [![Build Status][build_status_svg]][build_status_link]
+[![](https://img.shields.io/badge/SnapShot-1.6.2-white.svg)](https://oss.sonatype.org/content/repositories/snapshots/cn/dreamtobe/kpswitch/)
 
 > [中文文档](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README_zh.md)
 
@@ -32,6 +33,15 @@ JKeyboardPanelSwitch is installed by adding the following dependency to your `bu
 
 ```groovy
 compile 'cn.dreamtobe.kpswitch:library:1.6.1'
+```
+
+If you want to import snapshot version, We have already publish the snapshot version to [the sonatype](https://oss.sonatype.org/content/repositories/snapshots/cn/dreamtobe/kpswitch/) so you can import snapshot version after declare the following repository: 
+```groovy
+allprojects {
+  repositories {
+      maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+  }
+}
 ```
 
 ## USAGE
