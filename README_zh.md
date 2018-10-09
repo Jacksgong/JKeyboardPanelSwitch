@@ -2,7 +2,7 @@
 
 [![Download][bintray_svg]][bintray_link]
 [![Build Status][build_status_svg]][build_status_link]
-[![](https://img.shields.io/badge/SnapShot-1.6.3-white.svg)](https://oss.sonatype.org/content/repositories/snapshots/cn/dreamtobe/kpswitch/library/)
+[![](https://img.shields.io/badge/SnapShot-1.6.3-origin.svg)](https://oss.sonatype.org/content/repositories/snapshots/cn/dreamtobe/kpswitch/library/)
 
 > [README DOC](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/README.md)
 
