@@ -3,7 +3,11 @@
 
 > [中文迭代文档](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/CHANGELOG_zh.md)
 
-### Version 1.6.0 (2018-01-12)
+### Version 1.6.2 (2018-10-09)
+
+- Feat: carry back the clicked view to the SwitchClickListener closes #87
+
+### Version 1.6.1 (2018-01-12)
 
 - Fix(crash): Cover the case of user-root-view not ready on global-changed callback, refs: http://crashes.to/s/00beea75992
 

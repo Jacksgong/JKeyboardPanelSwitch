@@ -3,7 +3,11 @@
 
 > [Change log in english](https://github.com/Jacksgong/JKeyboardPanelSwitch/blob/master/CHANGELOG.md)
 
-### Version 1.6.0 (2016-08-11)
+### Version 1.6.2 (2018-10-09)
+
+- 需求: 在`SwitchClickListener`的点击事件返回被点击的`View`。 closes #87
+
+### Version 1.6.1 (2016-08-11)
 
 - 修复(crash): 覆盖在 `GlobalLayoutChanged`回调中用户层级父view还没有ready的情况。 refs: http://crashes.to/s/00beea75992
 
