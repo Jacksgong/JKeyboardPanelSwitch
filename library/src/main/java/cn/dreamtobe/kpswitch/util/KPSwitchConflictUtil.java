@@ -41,6 +41,9 @@ import cn.dreamtobe.kpswitch.handler.KPSwitchRootLayoutHandler;
  */
 public class KPSwitchConflictUtil {
 
+    // whether current activity is in multi window mode
+    private static boolean mIsInMultiWindowMode = false;
+
     /**
      * @see #attach(View, View, View, SwitchClickListener)
      */
@@ -202,6 +205,8 @@ public class KPSwitchConflictUtil {
         KeyboardUtil.showKeyboard(focusView);
         if (isHandleByPlaceholder(activity)) {
             panelLayout.setVisibility(View.INVISIBLE);
+        } else if (mIsInMultiWindowMode) {
+            panelLayout.setVisibility(View.GONE);
         }
     }
 
@@ -335,4 +340,9 @@ public class KPSwitchConflictUtil {
         }
         boundTriggerSubPanelView.setVisibility(View.VISIBLE);
     }
+
+    public static void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+        mIsInMultiWindowMode = isInMultiWindowMode;
+    }
+
 }

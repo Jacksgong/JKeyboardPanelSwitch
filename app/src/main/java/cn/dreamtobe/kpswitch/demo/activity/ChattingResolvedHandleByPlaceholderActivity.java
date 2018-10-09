@@ -122,4 +122,11 @@ public class ChattingResolvedHandleByPlaceholderActivity extends AppCompatActivi
         }
         return super.dispatchKeyEvent(event);
     }
+
+    // 当屏幕分屏/多窗口变化时回调
+    @Override
+    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode);
+        KPSwitchConflictUtil.onMultiWindowModeChanged(isInMultiWindowMode);
+    }
 }
