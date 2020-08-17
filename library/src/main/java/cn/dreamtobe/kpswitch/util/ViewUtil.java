@@ -80,7 +80,7 @@ public class ViewUtil {
             hasDrawsSysBarBackgroundsFlag = (activity.getWindow().getAttributes().flags
                     & WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0;
         }
-        return hasTranslucentStatusFlag && hasDrawsSysBarBackgroundsFlag;
+        return hasTranslucentStatusFlag || hasDrawsSysBarBackgroundsFlag;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
