@@ -69,11 +69,18 @@ public class ViewUtil {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static boolean isTranslucentStatus(final Activity activity) {
         //noinspection SimplifiableIfStatement
+        boolean hasTranslucentStatusFlag = false;
+        boolean hasDrawsSysBarBackgroundsFlag = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return (activity.getWindow().getAttributes().flags
+            hasTranslucentStatusFlag = (activity.getWindow().getAttributes().flags
                     & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0;
         }
-        return false;
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            hasDrawsSysBarBackgroundsFlag = (activity.getWindow().getAttributes().flags
+                    & WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0;
+        }
+        return hasTranslucentStatusFlag && hasDrawsSysBarBackgroundsFlag;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
