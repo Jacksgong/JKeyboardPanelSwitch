@@ -16,8 +16,10 @@
 package cn.dreamtobe.kpswitch.util;
 
 import android.app.Activity;
+import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import cn.dreamtobe.kpswitch.handler.KPSwitchFSPanelLayoutHandler;
 import cn.dreamtobe.kpswitch.handler.KPSwitchPanelLayoutHandler;
@@ -91,15 +93,32 @@ public class KPSwitchConflictUtil {
 
         if (isHandleByPlaceholder(activity)) {
             focusView.setOnTouchListener(new View.OnTouchListener() {
+                private PointF downPoint = new PointF();
+                private PointF currentMovePoint = new PointF();
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        /*
-                         * Show the fake empty keyboard-same-height panel to fix the conflict when
-                         * keyboard going to show.
-                         * @see KPSwitchConflictUtil#showKeyboard(View, View)
-                         */
-                        panelLayout.setVisibility(View.INVISIBLE);
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            downPoint.set(event.getRawX(), event.getRawY());
+                            currentMovePoint.set(event.getRawX(), event.getRawY());
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            currentMovePoint.set(event.getRawX(), event.getRawY());
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            /*
+                             * Show the fake empty keyboard-same-height panel to fix the conflict when
+                             * keyboard going to show.
+                             * @see KPSwitchConflictUtil#showKeyboard(View, View)
+                             */
+
+                            //判断是否是和滑动操作
+                            int scaledTouchSlop = ViewConfiguration.get(activity).getScaledTouchSlop();
+                            if (Math.abs(currentMovePoint.x - downPoint.x) <= scaledTouchSlop
+                                    && Math.abs(currentMovePoint.y - downPoint.y) <= scaledTouchSlop) {
+                                panelLayout.setVisibility(View.INVISIBLE);
+                            }
+                            break;
                     }
                     return false;
                 }
